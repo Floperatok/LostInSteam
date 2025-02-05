@@ -10,12 +10,12 @@ html, body {
 }
 
 body {
-	background-color: #2b3d4f;
+	background-color: #32475c;
 }
 
 input {
 	height: 3em;
-	width: 20em;
+	width: 30em;
 	background-color: #1a242f;
 	border-color: white;
 	border-style:solid;
@@ -45,6 +45,7 @@ button {
 	transform: translate(-50%, 0);
 	background: #bfc1c700;
 	border: 0.3vh solid #ffffff;
+	border-radius: 10px;
 	padding: 0.2vh 60px 0.2vh 60px;
 }
 
@@ -54,10 +55,13 @@ header {
 }
 
 img {
-	position: relative;
+	position: absolute;
 	left: 50%;
+	margin-top: 5px;
 	transform: translate(-50%, 0%);
-	height: 95vh;
+	height: 90vh;
+	border: 5px solid #1a242f;
+	border-radius: 10px;
 }
 
 #guess_form {
@@ -67,6 +71,33 @@ img {
 	transform: translate(-50%, 0);
 	display: flex;
 	flex-direction: row;
+}
+
+#scoreboard {
+	position: absolute;
+	color: white;
+	right: 19px;
+	width: 24vh;
+	height: 70vh;
+	bottom: 14vh;
+}
+
+table, th, td {
+	border: 4px solid #1a242f;
+
+}
+
+table {
+	border-radius: 10px;
+	border-collapse: collapse; 
+	border-style: hidden;
+	box-shadow: 0 0 0 4px #1a242f;
+	height: 400px;
+}
+
+td {
+	max-width: 10px; 
+	overflow: hidden;
 }
 
 footer {

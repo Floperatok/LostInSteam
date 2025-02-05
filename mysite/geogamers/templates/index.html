@@ -21,11 +21,22 @@
         </div>
     </header>
     <body>
+        <div id="scoreboard">
+            <table>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Time</th>
+                <tr>
+                    <td>player1aaaaaaaaaaaaaaaaaaaaaa</td>
+                    <td>score2</td>
+                </tr>
+            </table> 
+        </div>
         <img src="{% static 'image/cat.jpg' %}">
         
         <form id="guess_form" action="">
             <input type="text" required minlength="4" maxlength="15">
-            <button id="guess_button" class="button" onclick="foo()">Send</button>
+            <button id="guess_button" class="button" onclick="foo()">Submit</button>
         </form>
         <footer>Copyright© 2069 par personne. Tout droits reversés.</footer>
     </body>
