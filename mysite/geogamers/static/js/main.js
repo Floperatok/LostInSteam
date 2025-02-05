@@ -1,3 +1,3 @@
-function fonction_1() {
+function foo() {
     console.log("hello")
 }

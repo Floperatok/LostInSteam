@@ -4,9 +4,15 @@
 	margin: 0;
 }
 
-html {
+html, body {
+	height: 100vh;
+	overflow: hidden;
+}
+
+body {
 	background-color: #2b3d4f;
 }
+
 input {
 	height: 3em;
 	width: 20em;
@@ -15,57 +21,55 @@ input {
 	border-style:solid;
 	border-radius: 10px;
 	margin-right: 1em;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 	color: white;
 }
+
 button {
 	background-color: #1a242f;
 	color: white;
 	border-radius: 10px;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 	font-weight: bold;
 }
-#game {
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%, 0);
-	width: 70vh;
-	margin-top: 10vh;
-	min-width: 30em;
-}
+
 #title {
-	font-size: 30px;
+	font-size: 3vh;
 	text-align: center;
 	color: rgb(255, 255, 255);
 }
-#cadre {
+
+#title_frame {
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0);
 	background: #bfc1c700;
-	border: 2px solid #ffffff;
-	padding: 2px 60px 2px 60px;
+	border: 0.3vh solid #ffffff;
+	padding: 0.2vh 60px 0.2vh 60px;
 }
+
 header {
 	background-color: #1a242f;
-	height: 50px;
+	height: 5vh;
 }
+
 img {
 	position: relative;
-	width: 100%;
-	border-radius: 10px;
-	border-style: solid;
-	border-width: 0.4em;
-	border-color: #1a242f;
-	box-shadow: 0.5em 0.5em 1em #080d13be;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	height: 95vh;
 }
+
 #guess_form {
 	position: absolute;
-	bottom: 20%;
+	bottom: 8%;
 	left: 50%;
 	transform: translate(-50%, 0);
 	display: flex;
 	flex-direction: row;
 }
-#pied {
+
+footer {
 	position: absolute;
 	bottom: 1%;
 	color: white;

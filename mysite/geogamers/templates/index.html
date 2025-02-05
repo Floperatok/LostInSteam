@@ -16,21 +16,17 @@
         <link rel="icon" href="{% static 'image/logocat.png' %}"/>
     </head>
     <header>
-        <div id="cadre">
+        <div id="title_frame">
             <h1 id="title"> Geogamers </h1>
         </div>
     </header>
     <body>
-        <div id="game">
-            <img src="{% static 'image/cat.jpg' %}">
-        </div>
+        <img src="{% static 'image/cat.jpg' %}">
         
         <form id="guess_form" action="">
             <input type="text" required minlength="4" maxlength="15">
-            <button id="button_formulaire" class="button" onclick="fonction_1()">Send</button>
+            <button id="guess_button" class="button" onclick="foo()">Send</button>
         </form>
-        <div id="pied">
-            <p>Copyright© 2069 par personne. Tout droits reversés.</p>
-        </div>
+        <footer>Copyright© 2069 par personne. Tout droits reversés.</footer>
     </body>
 </html>
