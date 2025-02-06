@@ -76,23 +76,24 @@ img {
 #scoreboard {
 	position: absolute;
 	color: white;
-	right: 19px;
+	right: 45px;
 	width: 24vh;
 	height: 70vh;
 	bottom: 14vh;
 }
 
-table, th, td {
-	border: 4px solid #1a242f;
-
+th, td {
+	border: 3px solid #1a242f;
+	padding: 10px;
+	height: 20px;
+	width: 60px;
 }
 
 table {
 	border-radius: 10px;
 	border-collapse: collapse; 
 	border-style: hidden;
-	box-shadow: 0 0 0 4px #1a242f;
-	height: 400px;
+	box-shadow: 0 0 0 3px #1a242f;
 }
 
 td {
