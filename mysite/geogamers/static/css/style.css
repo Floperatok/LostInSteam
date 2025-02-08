@@ -106,3 +106,7 @@ footer {
 	bottom: 1%;
 	color: white;
 }
+
+#pano {
+    height: 100%;
+}
