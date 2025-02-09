@@ -1,3 +1,7 @@
 env/
-__pycache__
-# mysize/geogamers/static/pano/*
+mysite/db.sqlite3
+mysite/geogamers/__pycache__
+mysite/geogamers/migrations
+mysite/mysite/__pycache__
+# mysite/geogamers/static/pano/*
+todo
