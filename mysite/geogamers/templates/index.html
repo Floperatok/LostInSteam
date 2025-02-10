@@ -1,31 +1,20 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        
+
+         <!-- css import -->
+         <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
         <title>Geogamers</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
-        <style>@-ms-viewport { width: device-width; }</style>
-
-        <!-- css import -->
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-        <!-- js import -->
-        <script src="{% static 'js/marzipano.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
-
-        <!-- favicons import  -->
-        <link rel="icon" href="{% static 'image/logocat.png' %}"/>
     </head>
-    <header>
-        <div id="title_frame">
-            <h1 id="title"> Geogamers </h1>
-        </div>
+    <header id="header_menu">
+        <img id="logo" src="{% static 'image/logo.png' %}">
+
     </header>
-    <body>
-        <!-- <div id="scoreboard">
+    <body id="bg_menu">
+        <div id="scoreboard">
             <table>
                 <th>Player</th>
                 <th>Score</th>
@@ -81,15 +70,8 @@
                     <td></td>
                 </tr>
             </table> 
-        </div> -->
-        <div id="pano"></div>
-        <!-- <img src="{% static 'image/cat.jpg' %}"> -->
-        
-        <form id="guess_form" action="">
-            <input type="text" required minlength="4" maxlength="15">
-            <button id="guess_button">Submit</button>
-            <button id="dev_change_pano_button" class="dev" onclick="foo()">Switch image</button>
-        </form>
-        <footer>Copyright© 2069 par personne. Tout droits reversés.</footer>
+        </div>
+        <a href="/game"><button id="start_game">Start the game</button></a>
+        <footer id="copyright">Copyright© 2069 par personne. Tout droits reversés.</p></footer>
     </body>
 </html>
