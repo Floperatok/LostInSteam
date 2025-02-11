@@ -12,10 +12,6 @@
         <!-- css import -->
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-        <!-- js import -->
-        <script src="{% static 'js/marzipano.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
-
         <!-- favicons import  -->
         <link rel="icon" href="{% static 'image/logocat.png' %}"/>
     </head>
@@ -34,5 +30,11 @@
             <button id="dev_change_pano_button" class="dev" onclick="foo()">Switch image</button>
             <a href="/"><button id="menu_button">back to main menu</button></a>
         </div>
+
+		<!-- js import -->
+		<script src="{% static 'js/marzipano.js' %}"></script>
+		<script src="{% static 'js/panorama.js' %}"></script>
+		<!-- <script src="{% static 'js/map.js' %}"></script> -->
+		<script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>

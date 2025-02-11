@@ -1,0 +1,21 @@
+[
+    {
+		"name": "sea_of_thieves",
+        "pretty_name": "Sea of Theives",
+        "panoramas": [
+
+        ]
+    },
+    {
+        "name": "middle_earth",
+        "pretty_name": "Middle Earth: Shadow of War",
+        "panoramas": [
+            {
+                "number": 0,
+                "posx": 0.6969,
+                "posy": 0.420,
+                "tileDepth": 3
+            }
+        ]
+    }
+]

@@ -4,4 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("game/", views.game, name="game"),
+    path("api/panoinfo/<str:game_name>/<int:pano_number>", views.get_pano_info, name="get_pano_info"),
+	path("api/tiles/<str:game_name>/<int:pano_number>/<int:zoom>/<str:face>/<int:y>/<int:x>.jpg", 
+		views.get_pano_tiles, name="get_pano_tiles"),
 ]
