@@ -8,12 +8,17 @@ class Game(models.Model):
     game_name = models.CharField(max_length=100, default="")
     files_path = models.CharField(max_length=100, default="/")
     def __str__(self):
-        return f'"{self.game_name}"'
+        return f'GameObj {self.id} ; "{self.game_name}"'
 
 class Pano(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    id = models.PositiveIntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
+    pano_id = models.PositiveIntegerField(default=-1)
     posx = models.FloatField(default=0)
     posy = models.FloatField(default=0)
+
+    class Meta:
+        unique_together = ('game', 'pano_id')
+
     def __str__(self):
-        return f'"{self.game.game_name}" x={self.posx} y={self.posy}'
+        return f'PanoObj {self.id} ; "{self.game.game_name}" id={self.pano_id} x={self.posx} y={self.posy}'

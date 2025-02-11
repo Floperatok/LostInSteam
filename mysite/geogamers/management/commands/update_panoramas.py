@@ -21,18 +21,18 @@ class Command(BaseCommand):
                     files_path = game["path"],
                 )
                 if created:
-                    self.stdout.write(self.style.SUCCESS(f"New game : {gameObj.__str__()}"))
+                    self.stdout.write(self.style.SUCCESS(f"New game               : {gameObj.__str__()}"))
                 else:
-                    self.stdout.write(self.style.SUCCESS(f"Game already exist : {gameObj.__str__()}"))
+                    self.stdout.write(self.style.SUCCESS(f"Game already exist     : {gameObj.__str__()}"))
                 
                 for pano in game["panoramas"]:
                     panoObj, created = Pano.objects.get_or_create(
                         game = gameObj,
-                        id = pano["id"],
+                        pano_id = pano["id"],
                         posx = pano["posx"],
                         posy = pano["posy"],
                     )
                     if created:
-                        self.stdout.write(self.style.SUCCESS(f"New panorama : {panoObj.__str__()}"))
+                        self.stdout.write(self.style.SUCCESS(f"New panorama           : {panoObj.__str__()}"))
                     else:
                         self.stdout.write(self.style.SUCCESS(f"Panorama already exist : {panoObj.__str__()}"))
