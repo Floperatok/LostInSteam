@@ -1,20 +1,35 @@
 [
     {
 		"name": "sea_of_thieves",
-        "pretty_name": "Sea of Theives",
+        "pretty_name": "Sea of Thieves",
+		"accepted_names": [
+			"sea of thieves",
+			"sot"
+		],
         "panoramas": [
-
+			{
+				"number": 0,
+				"posx": 0.6969,
+                "posy": 0.420
+			}
         ]
     },
     {
-        "name": "middle_earth",
+        "name": "shadow_of_war",
         "pretty_name": "Middle Earth: Shadow of War",
+		"accepted_names": [
+			"middle earth: shadow of war",
+			"middle earth shadow of war",
+			"la terre du milieu: l'ombre de la guerre",
+			"la terre du milieu l'ombre de la guerre",
+			"shadow of war",
+			"l'ombre de la guerre"
+		],
         "panoramas": [
             {
                 "number": 0,
                 "posx": 0.6969,
-                "posy": 0.420,
-                "tileDepth": 3
+                "posy": 0.420
             }
         ]
     }
