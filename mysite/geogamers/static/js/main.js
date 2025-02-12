@@ -11,7 +11,7 @@
     });
 
 	var viewer = initMarzipano();
-	var scene = await createPanoScene(viewer, "middle_earth", 0);
+	var scene = await createPanoScene(viewer, 2, 0);
 
 	scene.switchTo();
 

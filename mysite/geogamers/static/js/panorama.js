@@ -5,8 +5,8 @@ const MAX_RESOLUTION_ZOOM_MULT = 5
 const MAX_V_FOV = 100
 const MAX_H_FOV = 120
 
-async function getPanoInfos(game_name, pano_number) {
-	const path = `/api/panoinfo/${game_name}/${pano_number}`
+async function getPanoInfos(game_id, pano_number) {
+	const path = `/api/panoinfo/${game_id}/${pano_number}`
 	try {
 		const response = await fetch(path, {method: "GET"});
 		if (!response.ok) {
@@ -21,16 +21,16 @@ async function getPanoInfos(game_name, pano_number) {
 	}
 }
 
-async function createPanoScene(viewer, game_name, pano_number) {
+async function createPanoScene(viewer, game_id, pano_number) {
 	var Marzipano = window.Marzipano;
 
-	const panoInfo = await getPanoInfos(game_name, pano_number);
+	const panoInfo = await getPanoInfos(game_id, pano_number);
 	if (!panoInfo) {
 		console.error("No panorama informations found")
 		return null;
 	}
 	const urlPrefix = "/api/tiles";
-	var tilesUrl = `${urlPrefix}/${panoInfo["game_name"]}/${panoInfo["number"]}`;
+	var tilesUrl = `${urlPrefix}/${panoInfo["game_id"]}/${panoInfo["number"]}`;
 
 	try {
 		var source = Marzipano.ImageUrlSource.fromString(
