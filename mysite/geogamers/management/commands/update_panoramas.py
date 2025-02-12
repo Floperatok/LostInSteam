@@ -21,11 +21,12 @@ class Command(BaseCommand):
 			game_obj, created = Game.objects.get_or_create(
 				name = game["name"],
 				pretty_name = game["pretty_name"],
+				accepted_names = game["accepted_names"],
 			)
 			if created:
 				self.stdout.write(self.style.SUCCESS(f"New game               : {game_obj.__str__()}"))
 			else:
-				self.stdout.write(self.style.SUCCESS(f"Game already exist     : {game_obj.__str__()}"))
+				self.stdout.write(f"Game already exist     : {game_obj.__str__()}")
 			
 			for pano in game["panoramas"]:
 				pano_settings_path = (
@@ -52,4 +53,4 @@ class Command(BaseCommand):
 				if created:
 					self.stdout.write(self.style.SUCCESS(f"New panorama           : {pano_obj.__str__()}"))
 				else:
-					self.stdout.write(self.style.SUCCESS(f"Panorama already exist : {pano_obj.__str__()}"))
+					self.stdout.write(f"Panorama already exist : {pano_obj.__str__()}")
