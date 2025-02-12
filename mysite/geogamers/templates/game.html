@@ -24,16 +24,18 @@
         <div id="pano"></div>
         <!-- <img src="{% static 'image/cat.jpg' %}"> -->
         
-        <div id="guess_form">
-            <input type="text" required minlength="4" maxlength="15">
+        <form id="guess_form">
+			{% csrf_token %}
+            <input id="guess_input" type="text">
             <button id="guess_button">Submit</button>
-            <button id="dev_change_pano_button" class="dev" onclick="foo()">Switch image</button>
+            <button id="dev_change_pano_button" class="dev">Switch image</button>
             <a href="/"><button id="menu_button">back to main menu</button></a>
-        </div>
+        </form>
 
 		<!-- js import -->
 		<script src="{% static 'js/marzipano.js' %}"></script>
 		<script src="{% static 'js/panorama.js' %}"></script>
+		<script src="{% static 'js/guess.js' %}"></script>
 		<!-- <script src="{% static 'js/map.js' %}"></script> -->
 		<script src="{% static 'js/main.js' %}"></script>
     </body>

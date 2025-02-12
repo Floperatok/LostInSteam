@@ -5,13 +5,17 @@ const MAX_RESOLUTION_ZOOM_MULT = 5
 const MAX_V_FOV = 100
 const MAX_H_FOV = 120
 
-async function getPanoInfos(game_id, pano_number) {
-	const path = `/api/panoinfo/${game_id}/${pano_number}`
+async function getRandomPanoInfos(currentPanoId=0) {
+	const path = `/api/randompano/`
 	try {
-		const response = await fetch(path, {method: "GET"});
-		if (!response.ok) {
-			throw new Error(`${response.status} - ${path}`);
-		}
+		const response = await fetch(path, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"X-CSRFToken": csrftoken
+			},
+			body: JSON.stringify({ currentPanoId })
+		});
 		const data = await response.json();
 		return data;
 
@@ -21,10 +25,9 @@ async function getPanoInfos(game_id, pano_number) {
 	}
 }
 
-async function createPanoScene(viewer, game_id, pano_number) {
+async function createPanoScene(viewer, panoInfo) {
 	var Marzipano = window.Marzipano;
 
-	const panoInfo = await getPanoInfos(game_id, pano_number);
 	if (!panoInfo) {
 		console.error("No panorama informations found")
 		return null;
