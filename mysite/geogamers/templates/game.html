@@ -24,7 +24,7 @@
         <div id="pano"></div>
         <!-- <img src="{% static 'image/cat.jpg' %}"> -->
         
-        <form id="guess_form">
+        <form id="guess_form", autocomplete="off">
 			{% csrf_token %}
             <input id="guess_input" type="text">
             <button id="guess_button">Submit</button>
