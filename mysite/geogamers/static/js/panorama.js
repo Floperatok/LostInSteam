@@ -33,7 +33,7 @@ async function createPanoScene(viewer, panoInfo) {
 		return null;
 	}
 	const urlPrefix = "/api/tiles";
-	var tilesUrl = `${urlPrefix}/${panoInfo["game_id"]}/${panoInfo["number"]}`;
+	var tilesUrl = `${urlPrefix}/${panoInfo["id"]}`;
 
 	try {
 		var source = Marzipano.ImageUrlSource.fromString(
