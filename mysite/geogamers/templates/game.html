@@ -11,7 +11,9 @@
 
         <!-- css import -->
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+			integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+			crossorigin=""/>
         <!-- favicons import  -->
         <link rel="icon" href="{% static 'image/logocat.png' %}"/>
     </head>
@@ -22,7 +24,8 @@
     </header>
         <body id="bg_game">
         <div id="pano"></div>
-        <!-- <img src="{% static 'image/cat.jpg' %}"> -->
+
+		<div id="map" style="display: none;"></div>
         
         <form id="guess_form", autocomplete="off">
 			{% csrf_token %}
@@ -33,10 +36,14 @@
         </form>
 
 		<!-- js import -->
-		<script src="{% static 'js/marzipano.js' %}"></script>
+		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+			integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+			crossorigin=""></script>
+		<script src="{% static 'js/imports/marzipano.js' %}"></script>
+		<script src="{% static 'js/imports/SmoothWheelZoom.js' %}"></script>
 		<script src="{% static 'js/panorama.js' %}"></script>
+		<script src="{% static 'js/map.js' %}"></script>
 		<script src="{% static 'js/guess.js' %}"></script>
-		<!-- <script src="{% static 'js/map.js' %}"></script> -->
 		<script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>

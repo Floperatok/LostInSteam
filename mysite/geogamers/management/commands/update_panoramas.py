@@ -37,12 +37,12 @@ class Command(BaseCommand):
 			self.stdout.write(f"Panorama already exist : {pano_obj.__str__()}")
 
 	
-	def create_map_obj(self, map_data, game_obj, game_path):
-		map_path = f"{game_path}/map"
+	def create_map_obj(self, map_data, game_obj):
 		try:
 			map_obj, created = Map.objects.get_or_create(
 				game = game_obj,
-				max_zoom = map_data["max_zoom"],
+				tile_depth = map_data["tile_depth"],
+				attribution = map_data["attribution"],
 			)
 		except Exception as err:
 			self.stderr.write(self.style.ERROR(f"Error creating map for the game {game_obj.name}: {err}"))
@@ -70,7 +70,7 @@ class Command(BaseCommand):
 		else:
 			self.stdout.write(f"Game already exist     : {game_obj.__str__()}")
 		
-		self.create_map_obj(game_data["map"], game_obj, game_data["path"])
+		self.create_map_obj(game_data["map"], game_obj)
 
 		for pano_data in game_data["panoramas"]:
 			pano_data["path"] = f"{game_data["path"]}/{pano_data["number"]}"

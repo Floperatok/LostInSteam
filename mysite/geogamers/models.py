@@ -28,8 +28,9 @@ class Pano(models.Model):
 
 class Map(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-	max_zoom = models.PositiveIntegerField(default=7)
+	tile_depth = models.PositiveIntegerField(default=7)
 	game = models.ForeignKey(Game, on_delete=models.CASCADE)
+	attribution = models.CharField(max_length=200, default="")
 	
 	def __str__(self):
 		return f"MapObj {self.id} ; '{self.game.name}'"

@@ -12,7 +12,12 @@
 				"posx": 0.6969,
 				"posy": 0.420
 			}
-		]
+		],
+		"map": {
+			"tile_depth": 6,
+			"attribution": "https://maps.seaofthieves.rarethief.com"
+
+		}
 	},
 	{
 		"name": "shadow_of_war",
@@ -31,6 +36,10 @@
 				"posx": 0.6969,
 				"posy": 0.420
 			}
-		]
+		],
+		"map": {
+			"tile_depth": 7,
+			"attribution": "https://rdr2map.com/"
+		}
 	}
 ]

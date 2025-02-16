@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from geogamers.models import Game, Pano
+from geogamers.models import Game, Pano, Map
 from django.http import JsonResponse, \
 						HttpResponseBadRequest, \
 						HttpResponseNotFound, \
@@ -22,12 +22,13 @@ def get_random_pano(request):
 	if request.method == "POST":
 		try:
 			current_pano_id = json.loads(request.body).get("currentPanoId")
+			print(current_pano_id)
 		except json.JSONDecodeError:
 			print("Invalid JSON format")
 			return HttpResponseBadRequest()
 
 		panos = list(Pano.objects.all())
-		if (not current_pano_id):
+		if not current_pano_id:
 			pano = random.choice(panos)
 		else:
 			try:
@@ -52,7 +53,7 @@ def get_random_pano(request):
 		return HttpResponseNotAllowed()
 
 
-def get_pano_tiles(request, pano_id, zoom, face, y, x):
+def get_pano_tile(request, pano_id, z, f, y, x):
 	if request.method == "GET":
 		try:
 			pano = get_object_or_404(Pano, id=pano_id)
@@ -60,14 +61,35 @@ def get_pano_tiles(request, pano_id, zoom, face, y, x):
 			print(f"No panorama matches the given query 'id={pano_id}'")
 			return HttpResponseNotFound()
 
-		tile_path = f"geogamers/data/{pano.game.name}/{pano.number}/{zoom}/{face}/{y}/{x}.jpg"
+		tile_path = f"geogamers/data/{pano.game.name}/{pano.number}/{z}/{f}/{y}/{x}.jpg"
 		try:
 			with open(tile_path, "rb") as file:
 				return HttpResponse(file.read(), content_type="image/jpg")
 		except OSError:
-			print(f"{tile_path} found in database but not in file tree")
+			print(f"{tile_path} not found in file tree")
 			return HttpResponseServerError()
 
+	else:
+		print(f"{request.method} not allowed")
+		return HttpResponseNotAllowed()
+
+
+def get_map_tile(request, map_id, z, x, y):
+	if request.method == "GET":
+		try:
+			map = get_object_or_404(Map, id=map_id)
+		except Pano.DoesNotExist:
+			print(f"No map matches the given query 'id={map.id}'")
+			return HttpResponseNotFound()
+		
+		tile_path = f"geogamers/data/{map.game.name}/map/{z}/{x}/{y}.jpg"
+		try:
+			with open(tile_path, "rb") as file:
+				return HttpResponse(file.read(), content_type="image/jpg")
+		except OSError:
+			print(f"{tile_path} not found in file tree")
+			return HttpResponseServerError()
+			
 	else:
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
@@ -108,16 +130,33 @@ def guess_game(request):
 		except Game.DoesNotExist:
 			print(f"No Game matches the given query 'id={game_id}'")
 			return HttpResponseNotFound()
+		
+		try:
+			map = get_object_or_404(Map, game=game)
+		except Map.DoesNotExist:
+			print(f"No Map matches the given query 'game={game.__str__()}'")
+			return HttpResponseNotFound()
 
 		if valid_game_guess(game, guess):
 			data = {
 				"valid": True,
-				"pretty_name": game.pretty_name 
+				"pretty_name": game.pretty_name,
+				"map": {
+					"id": map.id,
+					"tile_depth":  map.tile_depth,
+					"attribution": map.attribution
+				}
+
 			}
 		else:
 			data = {
 				"valid": False,
-				"pretty_name": "" 
+				"pretty_name": "",
+				"map": {
+					"id": 0,
+					"tile_depth": 0,
+					"attribution": ""
+				}
 			}
 		return JsonResponse(data)
 	else:

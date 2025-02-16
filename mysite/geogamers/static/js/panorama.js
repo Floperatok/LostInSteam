@@ -5,7 +5,7 @@ const MAX_RESOLUTION_ZOOM_MULT = 5
 const MAX_V_FOV = 100
 const MAX_H_FOV = 120
 
-async function getRandomPanoInfos(currentPanoId=0) {
+async function getRandomPanoInfos(currentPanoId) {
 	const path = `/api/randompano/`
 	try {
 		const response = await fetch(path, {
@@ -25,27 +25,27 @@ async function getRandomPanoInfos(currentPanoId=0) {
 	}
 }
 
-async function createPanoScene(viewer, panoInfo) {
+async function createPanoScene(viewer, panoInfos) {
 	var Marzipano = window.Marzipano;
 
-	if (!panoInfo) {
+	if (!panoInfos) {
 		console.error("No panorama informations found")
 		return null;
 	}
-	const urlPrefix = "/api/tiles";
-	var tilesUrl = `${urlPrefix}/${panoInfo["id"]}`;
+	const urlPrefix = "/api/panos";
+	var tilesUrl = `${urlPrefix}/${panoInfos["id"]}`;
 
 	try {
 		var source = Marzipano.ImageUrlSource.fromString(
 			`${tilesUrl}/{z}/{f}/{y}/{x}.jpg`,
 			{ cubeMapPreviewUrl: `${tilesUrl}/preview.jpg` });
-		var geometry = new Marzipano.CubeGeometry(panoInfo["settings"].levels);
+		var geometry = new Marzipano.CubeGeometry(panoInfos["settings"].levels);
 		var limiter = Marzipano.RectilinearView.limit.traditional(
-			panoInfo["settings"].faceSize*MAX_RESOLUTION_ZOOM_MULT, 
+			panoInfos["settings"].faceSize*MAX_RESOLUTION_ZOOM_MULT, 
 			MAX_V_FOV*Math.PI/180, 
 			MAX_H_FOV*Math.PI/180);
 		var view = new Marzipano.RectilinearView(
-			panoInfo["settings"].initialViewParameters, 
+			panoInfos["settings"].initialViewParameters, 
 			limiter);
 		
 		var scene = viewer.createScene({
@@ -54,7 +54,6 @@ async function createPanoScene(viewer, panoInfo) {
 			view: view,
 			pinFirstLevel: false
 		});
-		console.log("Scene created");
 		return (scene);
 
 	} catch (error) {
@@ -81,4 +80,11 @@ function initMarzipano() {
 	var viewer = new Marzipano.Viewer(panoElement, viewerOpts);
 
 	return (viewer);
+}
+
+async function switchRandomScene(viewer, currentPanoId) {
+	var panoInfos = await getRandomPanoInfos(currentPanoId);
+	var scene = await createPanoScene(viewer, panoInfos);
+	scene.switchTo();
+	return panoInfos;
 }

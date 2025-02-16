@@ -19,31 +19,32 @@ if (!csrftoken) {
 	console.error("CSRFtoken not found");
 }
 
+
+
+
 (async function() {
 
 	var viewer = initMarzipano();
 	var panoInfo = null;
-	var scene = null;
 
-    var devChangePanoButton = document.getElementById("dev_change_pano_button");
+	var devChangePanoButton = document.getElementById("dev_change_pano_button");
 	var guessInput = document.getElementById("guess_input");
 	var guessGameForm = document.getElementById("guess_form");
+	var mapBlock = document.getElementById("map");
 
-    devChangePanoButton.addEventListener("click", async function(e) {
-		panoInfo = await getRandomPanoInfos(panoInfo["id"]);
-		scene = await createPanoScene(viewer, panoInfo);
-		scene.switchTo();
-    });
+	devChangePanoButton.addEventListener("click", async function(e) {
+		panoInfo = await switchRandomScene(viewer, panoInfo["id"]);
+	});
 
 	guessGameForm.addEventListener("submit", async function(event) {
 		event.preventDefault()
 		if (guessInput.value.trim() !== '') {
 			const data = await guess_game(panoInfo["game_id"], guessInput.value);
 			if (data.valid) {
+				mapBlock.style.display = "block";
+				loadMap(data["map"]);
 				alert(`Correct! ${data["pretty_name"]}`);
-				panoInfo = await getRandomPanoInfos(panoInfo["id"]);
-				scene = await createPanoScene(viewer, panoInfo);
-				scene.switchTo();
+				guessGameForm.style.display = "none";
 			} else {
 				alert(`Incorrect.`);
 			}
@@ -52,8 +53,6 @@ if (!csrftoken) {
 		}
 	});
 
-	panoInfo = await getRandomPanoInfos();
-	scene = await createPanoScene(viewer, panoInfo);
-	scene.switchTo();
+	panoInfo = await switchRandomScene(viewer, "");
 
 })();
