@@ -23,8 +23,8 @@ class Command(BaseCommand):
 			pano_obj, created = Pano.objects.get_or_create(
 				game = game_obj,
 				number = pano_data["number"],
-				posx = pano_data["posx"],
-				posy = pano_data["posy"],
+				lat = pano_data["lat"],
+				lng = pano_data["lng"],
 				settings = pano_settings,
 			)
 		except Exception as err:
@@ -43,6 +43,8 @@ class Command(BaseCommand):
 				game = game_obj,
 				tile_depth = map_data["tile_depth"],
 				attribution = map_data["attribution"],
+				bounds = map_data["bounds"],
+				bg_color = map_data["bg_color"],
 			)
 		except Exception as err:
 			self.stderr.write(self.style.ERROR(f"Error creating map for the game {game_obj.name}: {err}"))

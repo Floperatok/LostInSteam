@@ -19,7 +19,7 @@ if (!csrftoken) {
 	console.error("CSRFtoken not found");
 }
 
-
+var mapMarker = null;
 
 
 (async function() {
@@ -29,8 +29,9 @@ if (!csrftoken) {
 
 	var devChangePanoButton = document.getElementById("dev_change_pano_button");
 	var guessInput = document.getElementById("guess_input");
-	var guessGameForm = document.getElementById("guess_form");
-	var mapBlock = document.getElementById("map");
+	var guessGameForm = document.getElementById("guess_game_form");
+	var mapWrapper = document.getElementById("map_wrapper");
+	var guessPosBtn = document.getElementById("guess_pos_btn");
 
 	devChangePanoButton.addEventListener("click", async function(e) {
 		panoInfo = await switchRandomScene(viewer, panoInfo["id"]);
@@ -39,9 +40,9 @@ if (!csrftoken) {
 	guessGameForm.addEventListener("submit", async function(event) {
 		event.preventDefault()
 		if (guessInput.value.trim() !== '') {
-			const data = await guess_game(panoInfo["game_id"], guessInput.value);
+			const data = await guessGame(panoInfo["game_id"], guessInput.value);
 			if (data.valid) {
-				mapBlock.style.display = "block";
+				mapWrapper.style.display = "block";
 				loadMap(data["map"]);
 				alert(`Correct! ${data["pretty_name"]}`);
 				guessGameForm.style.display = "none";
@@ -52,6 +53,13 @@ if (!csrftoken) {
 			guessInput.value = "";
 		}
 	});
+
+	guessPosBtn.addEventListener("click", async function(event) {
+		console.log(mapMarker._latlng);
+		const data = await guessPos(mapMarker._latlng, panoInfo["id"]);
+		console.log(`Distance : ${data["distance"]}`);
+	});
+
 
 	panoInfo = await switchRandomScene(viewer, "");
 

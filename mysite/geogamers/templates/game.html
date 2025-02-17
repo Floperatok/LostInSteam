@@ -25,12 +25,16 @@
         <body id="bg_game">
         <div id="pano"></div>
 
-		<div id="map" style="display: none;"></div>
+		<div id="map_wrapper" style="display: none;">
+			<div id="map">
+				<button id="guess_pos_btn" style="display: none;">GUESS</button>
+			</div>
+		</div>
         
-        <form id="guess_form", autocomplete="off">
+        <form id="guess_game_form", autocomplete="off">
 			{% csrf_token %}
             <input id="guess_input" type="text">
-            <button id="guess_button">Submit</button>
+            <button id="guess_game_button">Submit</button>
             <button id="dev_change_pano_button" class="dev">Switch image</button>
             <a href="/"><button id="menu_button">back to main menu</button></a>
         </form>

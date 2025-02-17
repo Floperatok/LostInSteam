@@ -9,14 +9,18 @@
 		"panoramas": [
 			{
 				"number": 0,
-				"posx": 0.6969,
-				"posy": 0.420
+				"lat": 6.010,
+				"lng": -100.77
 			}
 		],
 		"map": {
 			"tile_depth": 6,
-			"attribution": "https://maps.seaofthieves.rarethief.com"
-
+			"attribution": "https://maps.seaofthieves.rarethief.com",
+			"bounds": [
+				[76, -169], 
+				[-83, 122]
+			],
+			"bg_color": "#f3e2a5"
 		}
 	},
 	{
@@ -33,13 +37,18 @@
 		"panoramas": [
 			{
 				"number": 0,
-				"posx": 0.6969,
-				"posy": 0.420
+				"lat": 0.6969,
+				"lng": 0.420
 			}
 		],
 		"map": {
 			"tile_depth": 7,
-			"attribution": "https://rdr2map.com/"
+			"attribution": "https://rdr2map.com/",
+			"bounds": [
+				[76, -169], 
+				[-83, 122]
+			],
+			"bg_color": "#000000"
 		}
 	}
 ]

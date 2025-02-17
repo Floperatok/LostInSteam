@@ -1,8 +1,8 @@
 
 'use strict';
 
-async function guess_game(game_id, guess) {
-	const path = "/api/guess/";
+async function guessGame(gameId, guess) {
+	const path = "/api/guess/game/";
 	try {
 		const response = await fetch(path, {
 			method: "POST",
@@ -10,7 +10,7 @@ async function guess_game(game_id, guess) {
 				"Content-Type": "application/json",
 				"X-CSRFToken": csrftoken
 			},
-			body: JSON.stringify({ game_id, guess })
+			body: JSON.stringify({ gameId, guess })
 		});
 		if (!response.ok) {
 			throw new Error(`${response.status} - ${path}`);

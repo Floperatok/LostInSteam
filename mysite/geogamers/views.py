@@ -6,7 +6,7 @@ from django.http import JsonResponse, \
 						HttpResponseServerError, \
 						HttpResponseNotAllowed, \
 						HttpResponse
-import json, uuid, random
+import json, uuid, random, math
 
 from geogamers.input_parsing import valid_game_guess
 
@@ -43,8 +43,6 @@ def get_random_pano(request):
 		data = {
 			"id": pano.id,
 			"game_id": pano.game.id,
-			"posx": pano.posx,
-			"posy": pano.posy,
 			"settings": pano.settings,
 		}
 		return JsonResponse(data)
@@ -118,9 +116,9 @@ def get_pano_preview(request, pano_id):
 def guess_game(request):
 	if request.method == "POST":
 		try:
-			data = json.loads(request.body)
-			game_id = data.get("game_id")
-			guess = data.get("guess")
+			request_body = json.loads(request.body)
+			game_id = request_body.get("gameId")
+			guess = request_body.get("guess")
 		except json.JSONDecodeError:
 			print("Invalid JSON format")
 			return HttpResponseBadRequest()
@@ -144,7 +142,9 @@ def guess_game(request):
 				"map": {
 					"id": map.id,
 					"tile_depth":  map.tile_depth,
-					"attribution": map.attribution
+					"attribution": map.attribution,
+					"bounds": map.bounds,
+					"bg_color": map.bg_color,
 				}
 
 			}
@@ -155,9 +155,38 @@ def guess_game(request):
 				"map": {
 					"id": 0,
 					"tile_depth": 0,
-					"attribution": ""
+					"attribution": "",
+					"bounds": "[[], []]",
 				}
 			}
+		return JsonResponse(data)
+	else:
+		print(f"{request.method} not allowed")
+		return HttpResponseNotAllowed()
+	
+
+def guess_pos(request):
+	if request.method == "POST":
+		try:
+			request_body = json.loads(request.body)
+			print(f"request body  = {request_body}")
+			pano_id = request_body.get("panoId")
+			pos = request_body.get("pos")
+		except json.JSONDecodeError:
+			print("Invalid JSON format")
+			return HttpResponseBadRequest()
+
+		try:
+			pano = get_object_or_404(Pano, id=pano_id)
+		except Game.DoesNotExist:
+			print(f"No panorama matches the given query 'id={pano_id}'")
+			return HttpResponseNotFound()
+		
+		distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
+
+		data = {
+			"distance": distance,
+		}
 		return JsonResponse(data)
 	else:
 		print(f"{request.method} not allowed")
