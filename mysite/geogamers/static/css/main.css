@@ -1,0 +1,29 @@
+
+* {
+	margin: 0;
+}
+
+/* header */
+#header {
+	background-color: #2436426e;
+	height: 5vh;
+}
+#title {
+	font-size: 3vh;
+	text-align: center;
+	color: rgb(255, 255, 255);
+}
+#title_frame {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+	background: #bfc1c700;
+	border: 0.3vh solid #ffffff;
+	border-radius: 10px;
+	padding: 0.2vh 60px 0.2vh 60px;
+}
+
+/* dev objects */
+.dev {
+    background-color: red;
+}

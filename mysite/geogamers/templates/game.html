@@ -9,20 +9,21 @@
         <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
         <style>@-ms-viewport { width: device-width; }</style>
 
-        <!-- css import -->
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'css/game/game.css' %}">
+        <link rel="stylesheet" href="{% static 'css/game/result.css' %}">
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 			integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
 			crossorigin=""/>
-        <!-- favicons import  -->
-        <link rel="icon" href="{% static 'image/logocat.png' %}"/>
+
+		<link rel="icon" href="{% static 'image/logocat.png' %}"/>
     </head>
-    <header id="header_game">
+    <header id="header">
         <div id="title_frame">
             <h1 id="title"> Geogamers </h1>
         </div>
     </header>
-        <body id="bg_game">
+        <body>
         <div id="pano"></div>
 
 		<div id="map_wrapper" style="display: none;">
@@ -39,7 +40,6 @@
             <a href="/"><button id="menu_button">back to main menu</button></a>
         </form>
 
-		<!-- js import -->
 		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 			integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 			crossorigin=""></script>

@@ -1,0 +1,57 @@
+
+
+/* scoreboard */
+#scoreboard {
+	position: absolute;
+	color: rgb(0, 0, 0);
+	right: 45px;
+	width: 24vh;
+	height: 70vh;
+	bottom: 14vh;
+}
+th, td {
+	border: 3px solid #243642;
+	padding: 10px;
+	height: 20px;
+	width: 60px;
+}
+table {
+	border-radius: 10px;
+	border-collapse: collapse;
+	border-style: hidden;
+	box-shadow: 0 0 0 3px #243642;
+}
+td {
+	max-width: 10px; 
+	overflow: hidden;
+}
+
+
+#bg_menu {
+	background-color: #E2F1E7;
+}
+
+#logo {
+	position: absolute;
+	left: 15vh;
+	bottom: 80.7vh;
+	transform: translate(-50%, 0%);
+	height: 31vh;
+	border: none;
+}
+
+#start_game {
+	background-color: #243642;
+	color: white;
+	border-radius: 10px;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+	font-weight: bold;
+    margin-left: 1em;
+	position: absolute;
+}
+
+#copyright {
+	position: absolute;
+	bottom: 1%;
+	color: rgb(0, 0, 0);
+}
