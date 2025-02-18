@@ -18,36 +18,52 @@
 
 		<link rel="icon" href="{% static 'image/logocat.png' %}"/>
     </head>
-    <header id="header">
-        <div id="title_frame">
-            <h1 id="title"> Geogamers </h1>
-        </div>
-    </header>
-        <body>
-        <div id="pano"></div>
+    <body>
+		<header id="header">
+			<div id="title_frame">
+				<h1 id="title"> Geogamers </h1>
+			</div>
+		</header>
 
-		<div id="map_wrapper" style="display: none;">
-			<div id="map">
-				<button id="guess_pos_btn" style="display: none;">GUESS</button>
+		<!-- GAME SCREEN -->
+		<div class="screen" id="game_screen">
+			<div id="pano"></div>
+
+			<div id="map_wrapper" style="display: none;">
+				<div id="map">
+					<button id="guess_pos_btn" style="display: none;">GUESS</button>
+				</div>
+			</div>
+			
+			<form id="guess_game_form", autocomplete="off">
+				{% csrf_token %}
+				<input id="guess_input" type="text">
+				<button id="guess_game_button">Submit</button>
+				<button id="dev_change_pano_button" class="dev">Switch image</button>
+				<a href="/"><button id="menu_button">back to main menu</button></a>
+			</form>
+		</div>
+
+		<!-- RESULT SCREEN -->
+		<div class="screen" id="result_screen">
+			<div id="result_map_wrapper">
+				<div id="result_map"></div>
+			</div>
+			<div id="bottom_bar">
+				<p id="distance"></p>
+				<button id="next_btn"> NEXT </button>
+				<p id="points">Points: ???</p>
 			</div>
 		</div>
-        
-        <form id="guess_game_form", autocomplete="off">
-			{% csrf_token %}
-            <input id="guess_input" type="text">
-            <button id="guess_game_button">Submit</button>
-            <button id="dev_change_pano_button" class="dev">Switch image</button>
-            <a href="/"><button id="menu_button">back to main menu</button></a>
-        </form>
 
 		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 			integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 			crossorigin=""></script>
-		<script src="{% static 'js/imports/marzipano.js' %}"></script>
-		<script src="{% static 'js/imports/SmoothWheelZoom.js' %}"></script>
-		<script src="{% static 'js/panorama.js' %}"></script>
-		<script src="{% static 'js/map.js' %}"></script>
-		<script src="{% static 'js/guess.js' %}"></script>
 		<script src="{% static 'js/main.js' %}"></script>
+		<script src="{% static 'js/game/imports/marzipano.js' %}"></script>
+		<script src="{% static 'js/game/imports/SmoothWheelZoom.js' %}"></script>
+		<script src="{% static 'js/game/panorama.js' %}"></script>
+		<script src="{% static 'js/game/map.js' %}"></script>
+		<script src="{% static 'js/game/game.js' %}"></script>
     </body>
 </html>

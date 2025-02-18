@@ -3,6 +3,16 @@
 	margin: 0;
 }
 
+.hidden {
+	display: none;
+}
+
+/* screens */
+.screen {
+	height: 95vh;
+	width: 100vw;
+}
+
 /* header */
 #header {
 	background-color: #2436426e;

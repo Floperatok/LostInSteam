@@ -20,7 +20,7 @@
 				[76, -169], 
 				[-83, 122]
 			],
-			"bg_color": "#f3e2a5"
+			"bg_color": "#000000"
 		}
 	},
 	{
@@ -42,11 +42,11 @@
 			}
 		],
 		"map": {
-			"tile_depth": 7,
-			"attribution": "https://rdr2map.com/",
+			"tile_depth": 0,
+			"attribution": "",
 			"bounds": [
-				[76, -169], 
-				[-83, 122]
+				[0, 0], 
+				[0, 0]
 			],
 			"bg_color": "#000000"
 		}

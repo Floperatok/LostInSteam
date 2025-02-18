@@ -18,25 +18,12 @@ def game(request):
 	return render(request, "game.html")
 
 
-def get_random_pano(request):
-	if request.method == "POST":
-		try:
-			current_pano_id = json.loads(request.body).get("currentPanoId")
-			print(current_pano_id)
-		except json.JSONDecodeError:
-			print("Invalid JSON format")
-			return HttpResponseBadRequest()
-
+def get_random_pano(request, current_pano_id=None):
+	if request.method == "GET":
 		panos = list(Pano.objects.all())
 		if not current_pano_id:
 			pano = random.choice(panos)
 		else:
-			try:
-				current_pano_id = uuid.UUID(current_pano_id)
-			except ValueError:
-				print("Invalid UUID format")
-				return HttpResponseBadRequest()
-			
 			filtered_panos = [p for p in panos if p.id != current_pano_id]
 			pano = random.choice(filtered_panos) if filtered_panos else None
 
@@ -45,6 +32,37 @@ def get_random_pano(request):
 			"game_id": pano.game.id,
 			"settings": pano.settings,
 		}
+		return JsonResponse(data)
+	else:
+		print(f"{request.method} not allowed")
+		return HttpResponseNotAllowed()
+	
+
+def get_map_infos(request, map_id):
+	if request.method == "GET":
+		try:
+			map = get_object_or_404(Map, id=map_id)
+		except Map.DoesNotExist:
+			print(f"No map matches the given query 'id={map_id}'")
+			return HttpResponseNotFound()
+
+
+		if map.tile_depth == 0:
+			data = {
+				"id": uuid.UUID("00000000-0000-0000-0000-000000000000"),
+				"tile_depth":  7,
+				"attribution": "",
+				"bounds": [[-185, -280], [50, 115]],
+				"bg_color": "#000000",
+			}
+		else:
+			data = {
+				"id": map.id,
+				"tile_depth":  map.tile_depth,
+				"attribution": map.attribution,
+				"bounds": map.bounds,
+				"bg_color": map.bg_color,
+			}
 		return JsonResponse(data)
 	else:
 		print(f"{request.method} not allowed")
@@ -74,13 +92,16 @@ def get_pano_tile(request, pano_id, z, f, y, x):
 
 def get_map_tile(request, map_id, z, x, y):
 	if request.method == "GET":
-		try:
-			map = get_object_or_404(Map, id=map_id)
-		except Pano.DoesNotExist:
-			print(f"No map matches the given query 'id={map.id}'")
-			return HttpResponseNotFound()
-		
-		tile_path = f"geogamers/data/{map.game.name}/map/{z}/{x}/{y}.jpg"
+		if map_id == uuid.UUID("00000000-0000-0000-0000-000000000000"):
+			tile_path = f"geogamers/data/placeholder/map/{z}/{x}/{y}.jpg"
+		else:
+			try:
+				map = get_object_or_404(Map, id=map_id)
+			except Map.DoesNotExist:
+				print(f"No map matches the given query 'id={map.id}'")
+				return HttpResponseNotFound()
+			tile_path = f"geogamers/data/{map.game.name}/map/{z}/{x}/{y}.jpg"
+
 		try:
 			with open(tile_path, "rb") as file:
 				return HttpResponse(file.read(), content_type="image/jpg")
@@ -139,25 +160,13 @@ def guess_game(request):
 			data = {
 				"valid": True,
 				"pretty_name": game.pretty_name,
-				"map": {
-					"id": map.id,
-					"tile_depth":  map.tile_depth,
-					"attribution": map.attribution,
-					"bounds": map.bounds,
-					"bg_color": map.bg_color,
-				}
-
+				"map_id": map.id,
 			}
 		else:
 			data = {
 				"valid": False,
 				"pretty_name": "",
-				"map": {
-					"id": 0,
-					"tile_depth": 0,
-					"attribution": "",
-					"bounds": "[[], []]",
-				}
+				"map_id": 0,
 			}
 		return JsonResponse(data)
 	else:
@@ -169,7 +178,6 @@ def guess_pos(request):
 	if request.method == "POST":
 		try:
 			request_body = json.loads(request.body)
-			print(f"request body  = {request_body}")
 			pano_id = request_body.get("panoId")
 			pos = request_body.get("pos")
 		except json.JSONDecodeError:
@@ -178,14 +186,18 @@ def guess_pos(request):
 
 		try:
 			pano = get_object_or_404(Pano, id=pano_id)
-		except Game.DoesNotExist:
+		except Pano.DoesNotExist:
 			print(f"No panorama matches the given query 'id={pano_id}'")
 			return HttpResponseNotFound()
 		
 		distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
 
 		data = {
-			"distance": distance,
+			"guess_lng": pos["lng"],
+			"guess_lat": pos["lat"],
+			"answer_lng": pano.lng,
+			"answer_lat": pano.lat,
+			"distance": round(distance, 2),
 		}
 		return JsonResponse(data)
 	else:

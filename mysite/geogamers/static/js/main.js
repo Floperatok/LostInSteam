@@ -1,6 +1,26 @@
 
 'use strict';
 
+function switchToScreen(screenId) {
+	const screens = document.querySelectorAll('.screen');
+	screens.forEach(screen => screen.classList.add("hidden"));
+
+	const activeScreen = document.getElementById(screenId);
+	if (!activeScreen) {
+		console.error(`No screen with id ${screenId} found`);
+		return ;
+	}
+	activeScreen.classList.remove("hidden");
+	switch (screenId) {
+		case "game_screen":
+			loadGameScreen();
+			return ;
+		case "result_screen":
+			loadResultScreen();
+			return ;
+	}
+}
+
 function getCSRFToken() {
 	let cookieValue = null;
 	const cookies = document.cookie.split(';');
@@ -14,53 +34,10 @@ function getCSRFToken() {
 	return cookieValue;
 }
 
+
+var guessMarker = null;
 const csrftoken = getCSRFToken();
 if (!csrftoken) {
 	console.error("CSRFtoken not found");
 }
 
-var mapMarker = null;
-
-
-(async function() {
-
-	var viewer = initMarzipano();
-	var panoInfo = null;
-
-	var devChangePanoButton = document.getElementById("dev_change_pano_button");
-	var guessInput = document.getElementById("guess_input");
-	var guessGameForm = document.getElementById("guess_game_form");
-	var mapWrapper = document.getElementById("map_wrapper");
-	var guessPosBtn = document.getElementById("guess_pos_btn");
-
-	devChangePanoButton.addEventListener("click", async function(e) {
-		panoInfo = await switchRandomScene(viewer, panoInfo["id"]);
-	});
-
-	guessGameForm.addEventListener("submit", async function(event) {
-		event.preventDefault()
-		if (guessInput.value.trim() !== '') {
-			const data = await guessGame(panoInfo["game_id"], guessInput.value);
-			if (data.valid) {
-				mapWrapper.style.display = "block";
-				loadMap(data["map"]);
-				alert(`Correct! ${data["pretty_name"]}`);
-				guessGameForm.style.display = "none";
-			} else {
-				alert(`Incorrect.`);
-			}
-
-			guessInput.value = "";
-		}
-	});
-
-	guessPosBtn.addEventListener("click", async function(event) {
-		console.log(mapMarker._latlng);
-		const data = await guessPos(mapMarker._latlng, panoInfo["id"]);
-		console.log(`Distance : ${data["distance"]}`);
-	});
-
-
-	panoInfo = await switchRandomScene(viewer, "");
-
-})();
