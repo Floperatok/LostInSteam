@@ -77,7 +77,6 @@ async function loadGameScreen() {
 			} else {
 				alert(`Incorrect.`);
 			}
-			guessInput.value = "";
 		}
 	}
 

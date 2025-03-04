@@ -3,3 +3,5 @@ __pycache__/
 mysite/db.sqlite3
 mysite/geogamers/migrations
 todo
+*.png
+*.jpg
