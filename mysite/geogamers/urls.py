@@ -6,7 +6,6 @@ urlpatterns = [
 	path("game/", views.game, name="game"),
 
 	path("api/randompano/", views.get_random_pano, name="get_random_pano"),
-	path("api/randompano/<uuid:current_pano_id>", views.get_random_pano, name="get_random_pano"),
 	path("api/map/<uuid:map_id>/", views.get_map_infos, name="get_map_infos"),
 
 	path("api/panos/<uuid:pano_id>/preview.jpg", views.get_pano_preview, name="get_pano_preview"),

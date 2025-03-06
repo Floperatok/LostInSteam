@@ -15,8 +15,7 @@ async function guessGame(gameId, guess) {
 		if (!response.ok) {
 			throw new Error(`${response.status} - ${path}`);
 		}
-		const data = await response.json();
-		return data;
+		return (response.json());
 
 	} catch (error) {
 		console.error(`Fetch: ${error}`);
@@ -25,98 +24,101 @@ async function guessGame(gameId, guess) {
 }
 
 
-async function loadResultScreen() {
+function createMapContainer() {
+	const	mapDiv = document.createElement("div");
+	const	guessPosBtn = document.createElement("button");
 
-	function handleNext(event) {
-		unloadMap(map);
-		next_btn.removeEventListener("click", handleNext);
-		switchToScreen("game_screen");
-	}
-
-	const data = JSON.parse(localStorage.getItem("data"));
-	var map = loadMap("result_map", data.map_id);
-	var next_btn = document.getElementById("next_btn");
-
-	document.getElementById("distance").innerHTML = `Distance: ${data.distance}`;
-
-	const icon = L.icon({
-		iconUrl: '/static/image/marker-icon.png',
-		shadowUrl: '/static/image/marker-shadow.png',
-		iconAnchor: [12, 41],
-	})
+	guessPosBtn.id = "guess_pos_btn";
+	guessPosBtn.innerHTML = "Guess";
 	
-	map = await map;
-	var userMarker = new L.marker(L.latLng(data.guess_lat, data.guess_lng)).addTo(map);
-	var answerMarker = new L.marker(L.latLng(data.answer_lat, data.answer_lng), {icon: icon}).addTo(map);
-
-	var polyline = L.polyline([userMarker.getLatLng(), answerMarker.getLatLng()], {
-		color: "white",
-		dashArray: "20, 20",
-	}).addTo(map);
-	map.setView(polyline.getCenter(), map.getBoundsZoom(polyline.getBounds()));
-	
-	next_btn.addEventListener("click", handleNext);
+	mapDiv.id = "map";
+	mapDiv.appendChild(guessPosBtn);
+	return (mapDiv);
 }
 
 
+function resultScreen(map, mapDiv, result) {
+	const resultScreenDiv = document.getElementById("result_screen"); 
+	resultScreenDiv.insertBefore(mapDiv, resultScreenDiv.firstChild);
+	document.getElementById("distance").innerHTML = `Distance: ${result.distance}`;
+	displayResultMap(map, mapDiv, result);
+	displayScreen("result_screen");
+	logMapLayers(map);
 
-async function loadGameScreen() {
+}
+
+
+function gameScreen(mapDiv) {
+	mapDiv.style.display = "none";
+	document.getElementById("game_screen").appendChild(mapDiv);
+	document.getElementById("guess_input").value = "";
+	displayScreen("game_screen");
+}
+
+
+let	mapLayerGroup = null;
+
+document.addEventListener("DOMContentLoaded", game)
+
+async function game() {
+
+	const	mapDiv = createMapContainer();
+
+	const	viewer = initMarzipano();
+	const	map = initLeaflet(mapDiv);
+	let		pano = {};
+
+	const	guessGameForm		= document.getElementById("guess_game_form");
+	const	nextBtn				= document.getElementById("next_btn");
+
+	guessGameForm.addEventListener("submit", handleGuessGame);
+	nextBtn.addEventListener("click", handleNext);
+	document.body.addEventListener("click", handleDynamicButton);
 
 	async function handleGuessGame(event) {
-		event.preventDefault()
-		if (guessInput.value.trim() !== '') {
-			response = await guessGame(panoInfo.game_id, guessInput.value);
-			if (response.valid) {
-				mapWrapper.style.display = "block";
-				map = loadMap("map", response["map_id"], true);
-				alert(`Correct! ${response["pretty_name"]}`);
-				guessGameForm.style.display = "none";
-				map = await map;
-				addMarkerOnClick(map);
-				L.DomUtil.addClass(map._container,'crosshair-cursor-enabled');
-			} else {
-				alert(`Incorrect.`);
-			}
+		event.preventDefault();
+		const guess = document.getElementById("guess_input").value;
+		if (guess.trim() == "") {
+			return ;
+		}
+		if (guess.trim() == "/skip") {
+			skipscene();
+			return ;
+		}
+		const response = await guessGame(pano.game_id, guess);
+		if (response.valid) {
+			alert(`Correct! ${response.prettyName}`);
+			event.target.style.display = "none";
+			loadMap(map, response.mapId, mapDiv);
+			displayMinimap(map, mapDiv);
+		} else {
+			alert(`Incorrect.`);
 		}
 	}
 
-	async function handleDevSwitch(event) {
-		panoInfo = await switchRandomScene(viewer, localStorage.getItem("currentPanoId"));
-		localStorage.setItem("currentPanoId", panoInfo.id);
+
+	async function handleDynamicButton(event) {
+		if (event.target.id == "guess_pos_btn") {
+			let result = await guessPos(mapLayerGroup.getLayers()[0]._latlng, pano.id);
+			resultScreen(map, mapDiv, result);
+			pano = await switchToRandomScene(viewer);
+		}
 	}
 
-	async function handleGuessPos(event) {
-		let data = await guessPos(guessMarker._latlng, panoInfo.id);
-		unloadViewer(viewer);
-		unloadMap(await map); // car loadmap n'est pas en await, elle renvoie donc une promesse
-		data["map_id"] = response["map_id"];
-		localStorage.setItem("data", JSON.stringify(data));
-		devChangePanoButton.removeEventListener("click", handleDevSwitch);
-		guessGameForm.removeEventListener("submit", handleGuessGame);
-		guessPosBtn.removeEventListener("click", handleGuessPos);
-		switchToScreen("result_screen");
+
+	async function handleNext(event) {
+		logMapLayers(map);
+		gameScreen(mapDiv);
 	}
 
-	var viewer = initMarzipano();
-	var map = null;
-	var panoInfo = null;
-	var response = null;
 
-	const guessInput = document.getElementById("guess_input");
-	const mapWrapper = document.getElementById("map_wrapper");
-	const devChangePanoButton = document.getElementById("dev_change_pano_button");
-	const guessGameForm = document.getElementById("guess_game_form");
-	const guessPosBtn = document.getElementById("guess_pos_btn");
+	async function skipscene() {
+		pano = await switchToRandomScene(viewer);
+		gameScreen(mapDiv);
+	}
 
-	devChangePanoButton.addEventListener("click", handleDevSwitch);
-	guessGameForm.addEventListener("submit", handleGuessGame);
-	guessPosBtn.addEventListener("click", handleGuessPos);
 
-	panoInfo = await switchRandomScene(viewer, localStorage.getItem("currentPanoId"));
-	localStorage.setItem("currentPanoId", panoInfo.id);
+	logMapLayers(map);
+	pano = await switchToRandomScene(viewer);
+	gameScreen(mapDiv);
 }
-
-(async function() {
-	localStorage.setItem("currentPanoId", "");
-	switchToScreen("game_screen");
-})();

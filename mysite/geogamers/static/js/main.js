@@ -1,7 +1,7 @@
 
 'use strict';
 
-function switchToScreen(screenId) {
+function displayScreen(screenId) {
 	const screens = document.querySelectorAll('.screen');
 	screens.forEach(screen => screen.classList.add("hidden"));
 
@@ -11,15 +11,8 @@ function switchToScreen(screenId) {
 		return ;
 	}
 	activeScreen.classList.remove("hidden");
-	switch (screenId) {
-		case "game_screen":
-			loadGameScreen();
-			return ;
-		case "result_screen":
-			loadResultScreen();
-			return ;
-	}
 }
+
 
 function getCSRFToken() {
 	let cookieValue = null;

@@ -234,7 +234,7 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
+			"tile_depth": 6,
 			"attribution": "",
 			"bounds": [
 				[0, 0], 

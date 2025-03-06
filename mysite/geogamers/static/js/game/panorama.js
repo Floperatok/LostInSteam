@@ -5,8 +5,8 @@ const MAX_RESOLUTION_ZOOM_MULT = 5
 const MAX_V_FOV = 100
 const MAX_H_FOV = 120
 
-async function getRandomPanoInfos(currentPanoId) {
-	const path = `/api/randompano/${currentPanoId}`
+async function getRandomPanoInfos() {
+	const path = `/api/randompano/`
 	try {
 		const response = await fetch(path, {
 			method: "GET",
@@ -14,8 +14,7 @@ async function getRandomPanoInfos(currentPanoId) {
 				"X-CSRFToken": csrftoken
 			},
 		});
-		const data = response.json();
-		return data;
+		return (response.json());
 
 	} catch (error) {
 		console.error(`Fetch: ${error}`);
@@ -24,27 +23,27 @@ async function getRandomPanoInfos(currentPanoId) {
 }
 
 
-async function createPanoScene(viewer, panoInfos) {
+async function loadPanoScene(viewer, pano) {
 	var Marzipano = window.Marzipano;
 
-	if (!panoInfos) {
-		console.error("No panorama informations found")
+	if (!pano) {
+		console.error("Cannot load scene: No panorama informations found")
 		return null;
 	}
 	const urlPrefix = "/api/panos";
-	var tilesUrl = `${urlPrefix}/${panoInfos.id}`;
+	var tilesUrl = `${urlPrefix}/${pano.id}`;
 
 	try {
 		var source = Marzipano.ImageUrlSource.fromString(
 			`${tilesUrl}/{z}/{f}/{y}/{x}.jpg`,
 			{ cubeMapPreviewUrl: `${tilesUrl}/preview.jpg` });
-		var geometry = new Marzipano.CubeGeometry(panoInfos.settings.levels);
+		var geometry = new Marzipano.CubeGeometry(pano.settings.levels);
 		var limiter = Marzipano.RectilinearView.limit.traditional(
-			panoInfos.settings.faceSize*MAX_RESOLUTION_ZOOM_MULT, 
+			pano.settings.faceSize*MAX_RESOLUTION_ZOOM_MULT, 
 			MAX_V_FOV*Math.PI/180, 
 			MAX_H_FOV*Math.PI/180);
 		var view = new Marzipano.RectilinearView(
-			panoInfos.settings.initialViewParameters, 
+			pano.settings.initialViewParameters, 
 			limiter);
 		
 		var scene = viewer.createScene({
@@ -61,11 +60,6 @@ async function createPanoScene(viewer, panoInfos) {
 	}
 }
 
-function unloadViewer(viewer) {
-	if (viewer) {
-		viewer.destroy();
-	}
-}
 
 function initMarzipano() {
 	var data = {
@@ -87,14 +81,18 @@ function initMarzipano() {
 	return (viewer);
 }
 
-async function switchRandomScene(viewer, currentPanoId) {
+
+async function switchToRandomScene(viewer) {
 	const mapWrapper = document.getElementById("map_wrapper");
 	const guessGameForm = document.getElementById("guess_game_form");
-	mapWrapper.style.display = "none";
 	guessGameForm.style.display = "flex";
 
-	var panoInfos = await getRandomPanoInfos(currentPanoId);
-	var scene = await createPanoScene(viewer, panoInfos);
+	const pano = await getRandomPanoInfos();
+	viewer.destroyAllScenes();
+	var scene = await loadPanoScene(viewer, pano);
+	if (!scene) {
+		return null;
+	}
 	scene.switchTo();
-	return panoInfos;
+	return (pano);
 }

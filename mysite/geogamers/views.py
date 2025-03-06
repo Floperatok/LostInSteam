@@ -18,14 +18,10 @@ def game(request):
 	return render(request, "game.html")
 
 
-def get_random_pano(request, current_pano_id=None):
+def get_random_pano(request):
 	if request.method == "GET":
 		panos = list(Pano.objects.all())
-		if not current_pano_id:
-			pano = random.choice(panos)
-		else:
-			filtered_panos = [p for p in panos if p.id != current_pano_id]
-			pano = random.choice(filtered_panos) if filtered_panos else None
+		pano = random.choice(panos)
 
 		data = {
 			"id": pano.id,
@@ -107,7 +103,7 @@ def get_map_tile(request, map_id, z, x, y):
 				return HttpResponse(file.read(), content_type="image/jpg")
 		except OSError:
 			print(f"{tile_path} not found in file tree")
-			return HttpResponseServerError()
+			return HttpResponseNotFound()
 			
 	else:
 		print(f"{request.method} not allowed")
@@ -159,8 +155,8 @@ def guess_game(request):
 		if valid_game_guess(game, guess):
 			data = {
 				"valid": True,
-				"pretty_name": game.pretty_name,
-				"map_id": map.id,
+				"prettyName": game.pretty_name,
+				"mapId": map.id,
 			}
 		else:
 			data = {
@@ -193,8 +189,6 @@ def guess_pos(request):
 		distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
 
 		data = {
-			"guess_lng": pos["lng"],
-			"guess_lat": pos["lat"],
 			"answer_lng": pano.lng,
 			"answer_lat": pano.lat,
 			"distance": round(distance, 2),

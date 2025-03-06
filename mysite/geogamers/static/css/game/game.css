@@ -42,16 +42,18 @@ button {
 
 
 /* map */
-#map_wrapper {
-	display: none;
-	position: absolute;
+.map_ingame {
+	position: absolute !important;
 	bottom: 1em;
 	right: 1em;
-}
-#map {
 	height: 500px;
 	width: 500px;
 	background-color: rgb(0, 0, 0);
+}
+.map_result {
+	position: relative;
+	flex: 1 1 auto;
+	height: 100%;
 }
 #guess_pos_btn {
 	display: block;
