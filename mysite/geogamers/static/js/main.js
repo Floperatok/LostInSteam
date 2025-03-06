@@ -1,6 +1,42 @@
 
 'use strict';
 
+async function getApi(path) {
+	try {
+		const response = await fetch(path, {
+			method: "GET",
+			headers: {
+				"X-CSRFToken": csrftoken
+			},
+		});
+		return (response.json());
+
+	} catch (error) {
+		console.error(`Fetch: ${error}`);
+		return null;
+	}
+}
+
+
+async function postApi(path, data) {
+	try {
+		const response = await fetch(path, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"X-CSRFToken": csrftoken
+			},
+			body: JSON.stringify(data)
+		});
+		return (response.json());
+
+	} catch (error) {
+		console.error(`Fetch: ${error}`);
+		return null;
+	}
+}
+
+
 function displayScreen(screenId) {
 	const screens = document.querySelectorAll('.screen');
 	screens.forEach(screen => screen.classList.add("hidden"));

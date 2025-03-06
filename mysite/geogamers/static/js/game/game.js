@@ -1,29 +1,6 @@
 
 'use strict';
 
-async function guessGame(gameId, guess) {
-	const path = "/api/guess/game/";
-	try {
-		const response = await fetch(path, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"X-CSRFToken": csrftoken
-			},
-			body: JSON.stringify({ gameId, guess })
-		});
-		if (!response.ok) {
-			throw new Error(`${response.status} - ${path}`);
-		}
-		return (response.json());
-
-	} catch (error) {
-		console.error(`Fetch: ${error}`);
-		return null;
-	}
-}
-
-
 function createMapContainer() {
 	const	mapDiv = document.createElement("div");
 	const	guessPosBtn = document.createElement("button");
@@ -77,15 +54,18 @@ async function game() {
 
 	async function handleGuessGame(event) {
 		event.preventDefault();
-		const guess = document.getElementById("guess_input").value;
-		if (guess.trim() == "") {
+		const guess = document.getElementById("guess_input").value.trim();
+		if (guess == "") {
 			return ;
 		}
-		if (guess.trim() == "/skip") {
-			skipscene();
+		if (guess[0] == "/") {
+			manageCommands(guess.slice(1));
 			return ;
 		}
-		const response = await guessGame(pano.game_id, guess);
+		const response = await postApi("/api/guess/game/", {
+			gameId: pano.gameId, 
+			guess: guess,
+		});
 		if (response.valid) {
 			alert(`Correct! ${response.prettyName}`);
 			event.target.style.display = "none";
@@ -99,7 +79,10 @@ async function game() {
 
 	async function handleDynamicButton(event) {
 		if (event.target.id == "guess_pos_btn") {
-			let result = await guessPos(mapLayerGroup.getLayers()[0]._latlng, pano.id);
+			let result = await postApi("/api/guess/pos/", {
+				pos: mapLayerGroup.getLayers()[0]._latlng,
+				panoId: pano.id,
+			});
 			resultScreen(map, mapDiv, result);
 			pano = await switchToRandomScene(viewer);
 		}
@@ -112,8 +95,31 @@ async function game() {
 	}
 
 
-	async function skipscene() {
+	function manageCommands(guess) {
+		if (guess == "skip")
+			skipScene();
+		else if (guess.split(" ")[0] == "goto") {
+			gotoScene(guess.split(" ")[1], guess.split(" ")[2]);
+		}
+	}
+
+
+	async function skipScene() {
 		pano = await switchToRandomScene(viewer);
+		gameScreen(mapDiv);
+	}
+
+
+	async function gotoScene(gameName, panoNumber) {
+		let path;
+		if (panoNumber) {
+			path = `/api/command/goto/${gameName}/${panoNumber}`;
+		} else {
+			path = `/api/command/goto/${gameName}`;
+		}
+		const pano = await getApi(path);
+		var scene = await loadPanoScene(viewer, pano);
+		scene.switchTo();
 		gameScreen(mapDiv);
 	}
 

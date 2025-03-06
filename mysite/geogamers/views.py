@@ -25,14 +25,32 @@ def get_random_pano(request):
 
 		data = {
 			"id": pano.id,
-			"game_id": pano.game.id,
+			"gameId": pano.game.id,
 			"settings": pano.settings,
 		}
 		return JsonResponse(data)
 	else:
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
-	
+
+
+def	goto_pano_command(request, game_name, pano_number=-1):
+	if request.method == "GET":
+		panos = Pano.objects.filter(game__name=game_name);
+		if not len(panos):
+			print(f"No pano matches the given query 'game_name={game_name}'")
+			return HttpResponseNotFound()
+		if pano_number == -1:
+			pano = random.choice(panos)
+		else:
+			pano = panos.filter(number=pano_number)[0]
+		data = {
+			"id": pano.id,
+			"gameId": pano.game.id,
+			"settings": pano.settings,
+		}
+		return JsonResponse(data)
+		
 
 def get_map_infos(request, map_id):
 	if request.method == "GET":
@@ -46,18 +64,18 @@ def get_map_infos(request, map_id):
 		if map.tile_depth == 0:
 			data = {
 				"id": uuid.UUID("00000000-0000-0000-0000-000000000000"),
-				"tile_depth":  7,
+				"tileDepth":  7,
 				"attribution": "",
 				"bounds": [[-185, -280], [50, 115]],
-				"bg_color": "#000000",
+				"bgColor": "#000000",
 			}
 		else:
 			data = {
 				"id": map.id,
-				"tile_depth":  map.tile_depth,
+				"tileDepth":  map.tile_depth,
 				"attribution": map.attribution,
 				"bounds": map.bounds,
-				"bg_color": map.bg_color,
+				"bgColor": map.bg_color,
 			}
 		return JsonResponse(data)
 	else:
@@ -161,8 +179,8 @@ def guess_game(request):
 		else:
 			data = {
 				"valid": False,
-				"pretty_name": "",
-				"map_id": 0,
+				"prettyName": "",
+				"mapId": 0,
 			}
 		return JsonResponse(data)
 	else:
@@ -189,11 +207,12 @@ def guess_pos(request):
 		distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
 
 		data = {
-			"answer_lng": pano.lng,
-			"answer_lat": pano.lat,
+			"answerLng": pano.lng,
+			"answerLat": pano.lat,
 			"distance": round(distance, 2),
 		}
 		return JsonResponse(data)
 	else:
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
+	

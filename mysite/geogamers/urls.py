@@ -14,4 +14,7 @@ urlpatterns = [
 
 	path("api/guess/game/", views.guess_game, name="guess_game"),
 	path("api/guess/pos/", views.guess_pos, name="guess_pos"),
+
+	path("api/command/goto/<str:game_name>/", views.goto_pano_command, name="goto_pano_command"),
+	path("api/command/goto/<str:game_name>/<int:pano_number>", views.goto_pano_command, name="goto_pano_command"),
 ]

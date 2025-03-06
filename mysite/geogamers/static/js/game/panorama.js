@@ -5,24 +5,6 @@ const MAX_RESOLUTION_ZOOM_MULT = 5
 const MAX_V_FOV = 100
 const MAX_H_FOV = 120
 
-async function getRandomPanoInfos() {
-	const path = `/api/randompano/`
-	try {
-		const response = await fetch(path, {
-			method: "GET",
-			headers: {
-				"X-CSRFToken": csrftoken
-			},
-		});
-		return (response.json());
-
-	} catch (error) {
-		console.error(`Fetch: ${error}`);
-		return null;
-	}
-}
-
-
 async function loadPanoScene(viewer, pano) {
 	var Marzipano = window.Marzipano;
 
@@ -87,12 +69,9 @@ async function switchToRandomScene(viewer) {
 	const guessGameForm = document.getElementById("guess_game_form");
 	guessGameForm.style.display = "flex";
 
-	const pano = await getRandomPanoInfos();
+	const pano = await getApi(`/api/randompano/`);
 	viewer.destroyAllScenes();
 	var scene = await loadPanoScene(viewer, pano);
-	if (!scene) {
-		return null;
-	}
 	scene.switchTo();
 	return (pano);
 }

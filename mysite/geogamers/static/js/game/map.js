@@ -1,47 +1,6 @@
 
 'use strict';
 
-async function guessPos(pos, panoId) {
-	const path = "/api/guess/pos/";
-	try {
-		const response = await fetch(path, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"X-CSRFToken": csrftoken
-			},
-			body: JSON.stringify({ pos, panoId })
-		});
-		if (!response.ok) {
-			throw new Error(`${response.status} - ${path}`);
-		}
-		return (response.json());
-
-	} catch (error) {
-		console.error(`Fetch: ${error}`);
-		return null;
-	}
-}
-
-
-async function getMapInfos(mapId) {
-	const path = `/api/map/${mapId}`
-	try {
-		const response = await fetch(path, {
-			method: "GET",
-			headers: {
-				"X-CSRFToken": csrftoken
-			},
-		});
-		return (response.json());
-
-	} catch (error) {
-		console.error(`Fetch: ${error}`);
-		return null;
-	}
-}
-
-
 function logMapLayers(map) {
 	let tiles = 0;
 	let marker = 0;
@@ -93,10 +52,10 @@ function addMarkerOnClick(map) {
 
 
 async function loadMap(map, mapId, container) {
-	var mapData = await getMapInfos(mapId);
+	const mapData = await getApi(`/api/map/${mapId}`);
 	document.querySelector(".leaflet-control-attribution").innerHTML = 
-		mapData["attribution"] ? `<a href="${mapData['attribution']}" target="_blank">Map</a>` : "";
-	container.style.backgroundColor = mapData["bg_color"];
+		mapData.attribution ? `<a href="${mapData.attribution}" target="_blank">Map</a>` : "";
+	container.style.backgroundColor = mapData.bgColor;
 
 	if (mapLayerGroup.getLayers().length > 0) {
 		mapLayerGroup.clearLayers();
@@ -108,11 +67,11 @@ async function loadMap(map, mapId, container) {
 	});
 
 
-	var baseUrl = `/api/maps/${mapData["id"]}`;
+	var baseUrl = `/api/maps/${mapData.id}`;
 	L.tileLayer(`${baseUrl}/{z}/{x}/{y}.jpg`, {
 		noWrap: true,
-		maxNativeZoom: mapData["tile_depth"],
-		maxZoom: mapData["tile_depth"] + 1,
+		maxNativeZoom: mapData.tileDepth,
+		maxZoom: mapData.tileDepth + 1,
 		minZoom: 1,
 		tms: true,
 		keepBuffer: 20,
@@ -150,7 +109,7 @@ async function displayResultMap(map, container, result) {
 		iconAnchor: [12, 41],
 	})
 
-	var answerMarker = new L.marker(L.latLng(result.answer_lat, result.answer_lng), {icon: icon})
+	var answerMarker = new L.marker(L.latLng(result.answerLat, result.answerLng), {icon: icon})
 		.addTo(mapLayerGroup);
 	var polyline = L.polyline([guessMarker.getLatLng(), answerMarker.getLatLng()], {
 		color: "white",
