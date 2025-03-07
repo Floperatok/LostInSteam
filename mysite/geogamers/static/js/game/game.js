@@ -59,7 +59,7 @@ async function game() {
 			return ;
 		}
 		if (guess[0] == "/") {
-			manageCommands(guess.slice(1));
+			manageCheatCommands(guess.slice(1));
 			return ;
 		}
 		const response = await postApi("/api/guess/game/", {
@@ -68,7 +68,7 @@ async function game() {
 		});
 		if (response.valid) {
 			alert(`Correct! ${response.prettyName}`);
-			event.target.style.display = "none";
+			guessGameForm.style.display = "none";
 			loadMap(map, response.mapId, mapDiv);
 			displayMinimap(map, mapDiv);
 		} else {
@@ -95,29 +95,46 @@ async function game() {
 	}
 
 
-	function manageCommands(guess) {
-		if (guess == "skip")
-			skipScene();
-		else if (guess.split(" ")[0] == "goto") {
-			gotoScene(guess.split(" ")[1], guess.split(" ")[2]);
+	function manageCheatCommands(guess) {
+		const guessWords = guess.split(" ");
+
+		switch (guessWords[0]) {
+			case "skip":
+				cheatSkipScene();
+				break;
+			case "goto":
+				cheatGotoScene(guess.split(" ")[1], guess.split(" ")[2]);
+				break;
+			case "find":
+				cheatFindGame();
+				break;
+			default:
+				console.log(`Unknown command "${guessWords[0]}"`);
 		}
 	}
 
 
-	async function skipScene() {
+	async function cheatSkipScene() {
 		pano = await switchToRandomScene(viewer);
 		gameScreen(mapDiv);
 	}
 
 
-	async function gotoScene(gameName, panoNumber) {
-		let path;
-		if (panoNumber) {
-			path = `/api/command/goto/${gameName}/${panoNumber}`;
-		} else {
-			path = `/api/command/goto/${gameName}`;
-		}
-		const pano = await getApi(path);
+	async function cheatFindGame() {
+		const response = await postApi("/api/command/find/", {
+			gameId: pano.gameId,
+		});
+		guessGameForm.style.display = "none";
+		loadMap(map, response.mapId, mapDiv);
+		displayMinimap(map, mapDiv);
+	}
+
+
+	async function cheatGotoScene(gameName, panoNumber) {
+		const pano = await postApi("/api/command/goto", {
+			gameName: gameName,
+			panoNumber: panoNumber,
+		});
 		var scene = await loadPanoScene(viewer, pano);
 		scene.switchTo();
 		gameScreen(mapDiv);

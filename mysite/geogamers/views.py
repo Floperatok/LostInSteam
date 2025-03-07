@@ -23,33 +23,64 @@ def get_random_pano(request):
 		panos = list(Pano.objects.all())
 		pano = random.choice(panos)
 
-		data = {
+		return JsonResponse({
 			"id": pano.id,
 			"gameId": pano.game.id,
 			"settings": pano.settings,
-		}
-		return JsonResponse(data)
+		})
 	else:
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
 
 
-def	goto_pano_command(request, game_name, pano_number=-1):
-	if request.method == "GET":
-		panos = Pano.objects.filter(game__name=game_name);
-		if not len(panos):
+def find_game_command(request):
+	if request.method == "POST":
+		try:
+			request_body = json.loads(request.body)
+			game_id = request_body.get("gameId")
+		except json.JSONDecodeError:
+			print("Invalid JSON format")
+			return HttpResponseBadRequest()
+		try:
+			map = Map.objects.get(game__id=game_id)
+		except Map.DoesNotExist:
+			print(f"No map matches the given query 'gameId={game_id}'")
+			return HttpResponseNotFound()
+		return JsonResponse({
+			"mapId": map.id,
+		})
+	else:
+		print(f"{request.method} not allowed")
+		return HttpResponseNotAllowed()
+
+
+def	goto_pano_command(request):
+	if request.method == "POST":
+		try:
+			request_body = json.loads(request.body)
+			game_name = request_body.get("gameName")
+			pano_number = request_body.get("panoNumber")
+		except json.JSONDecodeError:
+			print("Invalid JSON format")
+			return HttpResponseBadRequest()
+		try:
+			panos = Pano.objects.get(game__name=game_name)
+		except Pano.DoesNotExist:
 			print(f"No pano matches the given query 'game_name={game_name}'")
 			return HttpResponseNotFound()
-		if pano_number == -1:
+
+		if not pano_number or pano_number == -1:
 			pano = random.choice(panos)
 		else:
 			pano = panos.filter(number=pano_number)[0]
-		data = {
+		return JsonResponse({
 			"id": pano.id,
 			"gameId": pano.game.id,
 			"settings": pano.settings,
-		}
-		return JsonResponse(data)
+		})
+	else:
+		print(f"{request.method} not allowed")
+		return HttpResponseNotAllowed()
 		
 
 def get_map_infos(request, map_id):
@@ -62,22 +93,21 @@ def get_map_infos(request, map_id):
 
 
 		if map.tile_depth == 0:
-			data = {
+			return JsonResponse({
 				"id": uuid.UUID("00000000-0000-0000-0000-000000000000"),
 				"tileDepth":  7,
 				"attribution": "",
 				"bounds": [[-185, -280], [50, 115]],
 				"bgColor": "#000000",
-			}
+			})
 		else:
-			data = {
+			return JsonResponse({
 				"id": map.id,
 				"tileDepth":  map.tile_depth,
 				"attribution": map.attribution,
 				"bounds": map.bounds,
 				"bgColor": map.bg_color,
-			}
-		return JsonResponse(data)
+			})
 	else:
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
@@ -171,18 +201,17 @@ def guess_game(request):
 			return HttpResponseNotFound()
 
 		if valid_game_guess(game, guess):
-			data = {
+			return JsonResponse({
 				"valid": True,
 				"prettyName": game.pretty_name,
 				"mapId": map.id,
-			}
+			})
 		else:
-			data = {
+			return JsonResponse({
 				"valid": False,
 				"prettyName": "",
 				"mapId": 0,
-			}
-		return JsonResponse(data)
+			})
 	else:
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
@@ -206,12 +235,11 @@ def guess_pos(request):
 		
 		distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
 
-		data = {
+		return JsonResponse({
 			"answerLng": pano.lng,
 			"answerLat": pano.lat,
 			"distance": round(distance, 2),
-		}
-		return JsonResponse(data)
+		})
 	else:
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
