@@ -1,5 +1,22 @@
 [
 	{
+		"name": "placeholder",
+		"pretty_name": "Placeholder",
+		"accepted_names": [
+			"placeholder"
+		],
+		"panoramas": [],
+		"map": {
+			"tile_depth": 7,
+			"attribution": "",
+			"bounds": [
+				[-185, -280],
+				[50, 115]
+			],
+			"bg_color": "#000000"
+		}
+	},
+	{
 		"name": "american_truck_simulator",
 		"pretty_name": "American Truck Simulator",
 		"accepted_names": [

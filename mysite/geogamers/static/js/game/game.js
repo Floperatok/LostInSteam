@@ -6,7 +6,7 @@ function createMapContainer() {
 	const	guessPosBtn = document.createElement("button");
 
 	guessPosBtn.id = "guess_pos_btn";
-	guessPosBtn.innerHTML = "Guess";
+	guessPosBtn.innerText = "Guess";
 	
 	mapDiv.id = "map";
 	mapDiv.appendChild(guessPosBtn);
@@ -14,13 +14,31 @@ function createMapContainer() {
 }
 
 
+function errorScreen(status, statusText) {
+
+	document.getElementById("error_title").innerText = statusText;
+	const errorMsg = document.getElementById("error_msg");
+
+	switch (status) {
+		case 404:
+			errorMsg.innerText = "Seems like the ressource you are trying to access does not exist...";
+			break;
+		case 500:
+			errorMsg.innerText = "Congratulations ! You broke our server. Press F5 to pay respect...";
+			break;
+		default:
+			errorMsg.innerText = "This might not be your fault, refresh the page. Please contact the devs if this keep happening";
+	}
+	displayScreen("error_screen");
+}
+
+
 function resultScreen(map, mapDiv, result) {
 	const resultScreenDiv = document.getElementById("result_screen"); 
 	resultScreenDiv.insertBefore(mapDiv, resultScreenDiv.firstChild);
-	document.getElementById("distance").innerHTML = `Distance: ${result.distance}`;
+	document.getElementById("distance").innerText = `Distance: ${result.distance}`;
 	displayResultMap(map, mapDiv, result);
 	displayScreen("result_screen");
-	logMapLayers(map);
 
 }
 
@@ -45,16 +63,17 @@ async function game() {
 	const	map = initLeaflet(mapDiv);
 	let		pano = {};
 
-	const	guessGameForm		= document.getElementById("guess_game_form");
-	const	nextBtn				= document.getElementById("next_btn");
+	const	guessGameForm	= document.getElementById("guess_game_form");
+	const	guessInput		= document.getElementById("guess_input");
+	const	nextBtn			= document.getElementById("next_btn");
 
 	guessGameForm.addEventListener("submit", handleGuessGame);
 	nextBtn.addEventListener("click", handleNext);
-	document.body.addEventListener("click", handleDynamicButton);
+	document.body.addEventListener("click", handleDynamicBtn);
 
 	async function handleGuessGame(event) {
 		event.preventDefault();
-		const guess = document.getElementById("guess_input").value.trim();
+		const guess = guessInput.value.trim();
 		if (guess == "") {
 			return ;
 		}
@@ -62,35 +81,44 @@ async function game() {
 			manageCheatCommands(guess.slice(1));
 			return ;
 		}
-		const response = await postApi("/api/guess/game/", {
-			gameId: pano.gameId, 
-			guess: guess,
-		});
-		if (response.valid) {
-			alert(`Correct! ${response.prettyName}`);
-			guessGameForm.style.display = "none";
-			loadMap(map, response.mapId, mapDiv);
-			displayMinimap(map, mapDiv);
-		} else {
-			alert(`Incorrect.`);
+		try {
+			const response = await postApi("/api/guess/game/", {
+				gameId: pano.gameId, 
+				guess: guess,
+			});
+			if (response.valid) {
+				alert(`Correct! ${response.prettyName}`);
+				guessGameForm.style.display = "none";
+				loadMap(map, response.mapId, mapDiv);
+				displayMinimap(map, mapDiv);
+			} else {
+				alert(`Incorrect.`);
+			}
+		} catch (error) {
+			errorScreen(error.status, error.message);
+			return ;
 		}
 	}
 
 
-	async function handleDynamicButton(event) {
+	async function handleDynamicBtn(event) {
 		if (event.target.id == "guess_pos_btn") {
-			let result = await postApi("/api/guess/pos/", {
-				pos: mapLayerGroup.getLayers()[0]._latlng,
-				panoId: pano.id,
-			});
-			resultScreen(map, mapDiv, result);
-			pano = await switchToRandomScene(viewer);
+			try {
+				let result = await postApi("/api/guess/pos/", {
+					pos: mapLayerGroup.getLayers()[0]._latlng,
+					panoId: pano.id,
+				});
+				resultScreen(map, mapDiv, result);
+				pano = await switchToRandomScene(viewer);
+			} catch (error) {
+				errorScreen(error.status, error.message);
+				return ;
+			}
 		}
 	}
 
 
 	async function handleNext(event) {
-		logMapLayers(map);
 		gameScreen(mapDiv);
 	}
 
@@ -101,12 +129,15 @@ async function game() {
 		switch (guessWords[0]) {
 			case "skip":
 				cheatSkipScene();
+				guessInput.value = "";
 				break;
 			case "goto":
-				cheatGotoScene(guess.split(" ")[1], guess.split(" ")[2]);
+				cheatGotoScene(guessWords[1], guessWords[2]);
+				guessInput.value = "";
 				break;
 			case "find":
 				cheatFindGame();
+				guessInput.value = "";
 				break;
 			default:
 				console.log(`Unknown command "${guessWords[0]}"`);
@@ -115,33 +146,64 @@ async function game() {
 
 
 	async function cheatSkipScene() {
-		pano = await switchToRandomScene(viewer);
-		gameScreen(mapDiv);
+		try {
+			pano = await switchToRandomScene(viewer);
+			gameScreen(mapDiv);
+		} catch (error) {
+			if (error.status == 404) {
+				console.error("/skip tried to skip to an inexistent scene");
+			} else {
+				console.error(`/skip crashed : ${error.message}`);
+			}
+			return ;
+		}
 	}
 
 
 	async function cheatFindGame() {
-		const response = await postApi("/api/command/find/", {
-			gameId: pano.gameId,
-		});
-		guessGameForm.style.display = "none";
-		loadMap(map, response.mapId, mapDiv);
-		displayMinimap(map, mapDiv);
+		try {
+			const response = await postApi("/api/command/find/", {
+				gameId: pano.gameId,
+			});
+			guessGameForm.style.display = "none";
+			loadMap(map, response.mapId, mapDiv);
+			displayMinimap(map, mapDiv);
+		} catch (error) {
+			console.error(`/find crashed : ${error.message}`);
+			return ;
+		}
 	}
 
 
 	async function cheatGotoScene(gameName, panoNumber) {
-		const pano = await postApi("/api/command/goto", {
-			gameName: gameName,
-			panoNumber: panoNumber,
-		});
+		try {
+			pano = await postApi("/api/command/goto/", {
+				gameName: gameName,
+				panoNumber: panoNumber,
+			});
+		} catch (error) {
+			if (error.status == 404) {
+				if (panoNumber) {
+					console.error(`goto: Game or scene not found: ${gameName} ${panoNumber}`);
+				} else {
+					console.error(`goto: Game not found: ${gameName}`);
+				}
+			} else {
+				errorScreen(error.status, error.message);
+			}
+			return ;
+		}
 		var scene = await loadPanoScene(viewer, pano);
 		scene.switchTo();
 		gameScreen(mapDiv);
 	}
 
 
-	logMapLayers(map);
-	pano = await switchToRandomScene(viewer);
-	gameScreen(mapDiv);
+	try {
+		pano = await switchToRandomScene(viewer);
+		gameScreen(mapDiv);
+	} catch (error) {
+		console.log(error.status);
+		errorScreen(error.status, error.message);
+	}
 }

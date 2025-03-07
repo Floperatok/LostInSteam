@@ -1,0 +1,12 @@
+
+
+#error_screen {
+	background-color: #243642;
+}
+
+#error_text_div {
+	color: rgb(158, 190, 186);
+	position: relative;
+	top: 35%;
+	text-align: center;
+}

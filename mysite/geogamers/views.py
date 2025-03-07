@@ -46,6 +46,9 @@ def find_game_command(request):
 		except Map.DoesNotExist:
 			print(f"No map matches the given query 'gameId={game_id}'")
 			return HttpResponseNotFound()
+		except Map.MultipleObjectsReturned:
+			print(f"Multiple map matches the given query 'gameId={game_id}'")
+			return HttpResponseServerError()
 		return JsonResponse({
 			"mapId": map.id,
 		})
@@ -63,16 +66,22 @@ def	goto_pano_command(request):
 		except json.JSONDecodeError:
 			print("Invalid JSON format")
 			return HttpResponseBadRequest()
-		try:
-			panos = Pano.objects.get(game__name=game_name)
-		except Pano.DoesNotExist:
-			print(f"No pano matches the given query 'game_name={game_name}'")
-			return HttpResponseNotFound()
-
 		if not pano_number or pano_number == -1:
+			panos = Pano.objects.filter(game__name=game_name)
+			if len(panos) == 0:
+				print(f"No pano matches the given query 'game_name={game_name}'")
+				return HttpResponseNotFound()
 			pano = random.choice(panos)
 		else:
-			pano = panos.filter(number=pano_number)[0]
+			try:
+				pano = Pano.objects.get(game__name=game_name, number=pano_number)
+			except Pano.DoesNotExist:
+				print(f"No pano matches the given query 'game_name={game_name} number={pano_number}'")
+				return HttpResponseNotFound()
+			except Pano.MultipleObjectsReturned:
+				print(f"Multiple panos matches the given query 'game_name={game_name} number={pano_number}'")
+				return HttpResponseServerError()
+
 		return JsonResponse({
 			"id": pano.id,
 			"gameId": pano.game.id,

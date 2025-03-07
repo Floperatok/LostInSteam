@@ -9,11 +9,15 @@ async function getApi(path) {
 				"X-CSRFToken": csrftoken
 			},
 		});
-		return (response.json());
-
+		if (!response.ok) {
+			const error = new Error(`${response.status} - ${response.statusText}`);
+			error.status = response.status;
+			throw (error);
+		}
+		const responseData = await response.json();
+		return (responseData);
 	} catch (error) {
-		console.error(`Fetch: ${error}`);
-		return null;
+		throw (error);
 	}
 }
 
@@ -28,11 +32,15 @@ async function postApi(path, data) {
 			},
 			body: JSON.stringify(data)
 		});
-		return (response.json());
-
+		if (!response.ok) {
+			const error = new Error(`${response.status} - ${response.statusText}`);
+			error.status = response.status;
+			throw (error);
+		}
+		const responseData = await response.json();
+		return (responseData);
 	} catch (error) {
-		console.error(`Fetch: ${error}`);
-		return null;
+		throw (error);
 	}
 }
 

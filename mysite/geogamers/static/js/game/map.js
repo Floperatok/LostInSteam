@@ -10,17 +10,13 @@ function logMapLayers(map) {
 	map.eachLayer(function(layer) {
 		if (layer instanceof L.TileLayer) {
 			tiles++;
-		}
-		else if (layer instanceof L.Marker) {
+		} else if (layer instanceof L.Marker) {
 			marker++;
-		}
-		else if (layer instanceof L.Polyline) {
+		} else if (layer instanceof L.Polyline) {
 			line++;
-		}
-		else if (layer instanceof L.LayerGroup) {
+		} else if (layer instanceof L.LayerGroup) {
 			layerGroup++;
-		}
-		else {
+		} else {
 			other++;
 		}
 	});
@@ -32,7 +28,6 @@ function addMarkerOnClick(map) {
 	var guessPosBtn = document.getElementById('guess_pos_btn')
 
 	function onMapClick(e) {
-		logMapLayers(map);
 		guessPosBtn.style.display = "block";
 		if (mapLayerGroup.getLayers().length > 0) {
 			mapLayerGroup.clearLayers();
@@ -116,8 +111,8 @@ async function displayResultMap(map, container, result) {
 		dashArray: "20, 20",
 	}).addTo(mapLayerGroup);
 
-	map.setView(polyline.getCenter(), map.getBoundsZoom(polyline.getBounds()));
 	map.invalidateSize()
+	map.setView(polyline.getCenter(), map.getBoundsZoom(polyline.getBounds()));
 }
 
 
