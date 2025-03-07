@@ -111,8 +111,8 @@ async function displayResultMap(map, container, result) {
 		dashArray: "20, 20",
 	}).addTo(mapLayerGroup);
 
-	map.invalidateSize()
 	map.setView(polyline.getCenter(), map.getBoundsZoom(polyline.getBounds()));
+	setTimeout(function(){ map.invalidateSize(true)}, 100);
 }
 
 
