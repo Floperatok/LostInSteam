@@ -47,7 +47,7 @@ def find_game_command(request):
 			print(f"No map matches the given query 'gameId={game_id}'")
 			return HttpResponseNotFound()
 		except Map.MultipleObjectsReturned:
-			print(f"Multiple map matches the given query 'gameId={game_id}'")
+			print(f"Multiple maps matches the given query 'gameId={game_id}'")
 			return HttpResponseServerError()
 		return JsonResponse({
 			"mapId": map.id,
@@ -95,11 +95,12 @@ def	goto_pano_command(request):
 def get_map_infos(request, map_id):
 	if request.method == "GET":
 		try:
-			map = get_object_or_404(Map, id=map_id)
+			map = Map.objects.get(id=map_id)
 		except Map.DoesNotExist:
 			print(f"No map matches the given query 'id={map_id}'")
 			return HttpResponseNotFound()
-
+		except Map.MultipleObjectsReturned:
+			print(f"Multiple maps matches the given query 'id={map_id}'")
 
 		if map.tile_depth == 0:
 			return JsonResponse({
@@ -125,9 +126,9 @@ def get_map_infos(request, map_id):
 def get_pano_tile(request, pano_id, z, f, y, x):
 	if request.method == "GET":
 		try:
-			pano = get_object_or_404(Pano, id=pano_id)
+			pano = Pano.objects.get(id=pano_id)
 		except Pano.DoesNotExist:
-			print(f"No panorama matches the given query 'id={pano_id}'")
+			print(f"No pano matches the given query 'id={pano_id}'")
 			return HttpResponseNotFound()
 
 		tile_path = f"geogamers/data/{pano.game.name}/{pano.number}/{z}/{f}/{y}/{x}.jpg"
@@ -149,10 +150,13 @@ def get_map_tile(request, map_id, z, x, y):
 			tile_path = f"geogamers/data/placeholder/map/{z}/{x}/{y}.jpg"
 		else:
 			try:
-				map = get_object_or_404(Map, id=map_id)
+				map = Map.objects.get(id=map_id)
 			except Map.DoesNotExist:
-				print(f"No map matches the given query 'id={map.id}'")
+				print(f"No map matches the given query 'id={map_id}'")
 				return HttpResponseNotFound()
+			except Map.MultipleObjectsReturned:
+				print(f"Multiple maps matches the given query 'id={map_id}'")
+				return HttpResponseServerError()
 			tile_path = f"geogamers/data/{map.game.name}/map/{z}/{x}/{y}.jpg"
 
 		try:
@@ -170,10 +174,13 @@ def get_map_tile(request, map_id, z, x, y):
 def get_pano_preview(request, pano_id):
 	if request.method == "GET":
 		try:
-			pano = get_object_or_404(Pano, id=pano_id)
+			pano = Pano.objects.get(id=pano_id)
 		except Pano.DoesNotExist:
-			print(f"No panorama matches the given query 'id={pano_id}'")
+			print(f"No pano matches the given query 'id={pano_id}'")
 			return HttpResponseNotFound()
+		except Pano.MultipleObjectsReturned:
+			print(f"Multiple panos matches the given query 'id={pano_id}'")
+			return HttpResponseServerError()
 
 		preview_path = f"geogamers/data/{pano.game.name}/{pano.number}/preview.jpg"
 		try:
@@ -198,17 +205,15 @@ def guess_game(request):
 			return HttpResponseBadRequest()
 		
 		try:
-			game = get_object_or_404(Game, id=game_id)
-		except Game.DoesNotExist:
-			print(f"No Game matches the given query 'id={game_id}'")
-			return HttpResponseNotFound()
-		
-		try:
-			map = get_object_or_404(Map, game=game)
+			map = Map.objects.get(game__id=game_id)
 		except Map.DoesNotExist:
-			print(f"No Map matches the given query 'game={game.__str__()}'")
+			print(f"No map matches the given query 'game__id={game_id}'")
 			return HttpResponseNotFound()
-
+		except Map.MultipleObjectsReturned:
+			print(f"Multiple maps matches the given query 'game__id={game_id}'")
+			return HttpResponseServerError()
+		
+		game = map.game
 		if valid_game_guess(game, guess):
 			return JsonResponse({
 				"valid": True,
@@ -237,13 +242,15 @@ def guess_pos(request):
 			return HttpResponseBadRequest()
 
 		try:
-			pano = get_object_or_404(Pano, id=pano_id)
+			pano = Pano.objects.get(id=pano_id)
 		except Pano.DoesNotExist:
-			print(f"No panorama matches the given query 'id={pano_id}'")
+			print(f"No pano matches the given query 'id={pano_id}'")
 			return HttpResponseNotFound()
+		except Pano.MultipleObjectsReturned:
+			print(f"Multiple panos matches the given query 'id={pano_id}'")
+			return HttpResponseServerError()
 		
 		distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
-
 		return JsonResponse({
 			"answerLng": pano.lng,
 			"answerLat": pano.lat,
