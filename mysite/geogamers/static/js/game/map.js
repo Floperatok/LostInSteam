@@ -47,7 +47,7 @@ function addMarkerOnClick(map) {
 
 
 async function loadMap(map, mapId, container) {
-	const mapData = await getApi(`/api/map/${mapId}`);
+	const mapData = await getApi(`/api/map/info/${mapId}`);
 	document.querySelector(".leaflet-control-attribution").innerHTML = 
 		mapData.attribution ? `<a href="${mapData.attribution}" target="_blank">Map</a>` : "";
 	container.style.backgroundColor = mapData.bgColor;
@@ -62,7 +62,7 @@ async function loadMap(map, mapId, container) {
 	});
 
 
-	var baseUrl = `/api/maps/${mapData.id}`;
+	var baseUrl = `/api/map/${mapData.id}`;
 	L.tileLayer(`${baseUrl}/{z}/{x}/{y}.jpg`, {
 		noWrap: true,
 		maxNativeZoom: mapData.tileDepth,

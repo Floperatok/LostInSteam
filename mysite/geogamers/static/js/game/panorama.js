@@ -12,7 +12,7 @@ async function loadPanoScene(viewer, pano) {
 		console.error("Cannot load scene: No panorama informations found")
 		return null;
 	}
-	const urlPrefix = "/api/panos";
+	const urlPrefix = "/api/pano";
 	var tilesUrl = `${urlPrefix}/${pano.id}`;
 
 	try {
