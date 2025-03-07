@@ -89,7 +89,7 @@ async function game() {
 			if (response.valid) {
 				alert(`Correct! ${response.prettyName}`);
 				guessGameForm.style.display = "none";
-				loadMap(map, response.mapId, mapDiv);
+				await loadMap(map, response.mapId, mapDiv);
 				displayMinimap(map, mapDiv);
 			} else {
 				alert(`Incorrect.`);
@@ -166,7 +166,7 @@ async function game() {
 				gameId: pano.gameId,
 			});
 			guessGameForm.style.display = "none";
-			loadMap(map, response.mapId, mapDiv);
+			await loadMap(map, response.mapId, mapDiv);
 			displayMinimap(map, mapDiv);
 		} catch (error) {
 			console.error(`/find crashed : ${error.message}`);

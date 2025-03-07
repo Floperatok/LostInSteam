@@ -140,5 +140,5 @@ async function displayMinimap(map, container) {
 	enableMarkerOnClick(map);
 	L.DomUtil.addClass(map._container, 'crosshair-cursor-enabled');
 	map.setView([0, 0], 3);
-	map.invalidateSize()
+	setTimeout(function(){ map.invalidateSize(true)}, 100);
 }
