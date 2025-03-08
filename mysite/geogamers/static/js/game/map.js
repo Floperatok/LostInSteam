@@ -68,26 +68,35 @@ async function loadMap(map, mapId, container) {
 			map.removeLayer(layer);
 		}
 	});
-
+	
 	var baseUrl = `/api/map/${mapData.id}`;
-	L.tileLayer(`${baseUrl}/{z}/{x}/{y}.jpg`, {
+	L.tileLayer(`${baseUrl}/{z}/{x}/{y}.png`, {
 		noWrap: true,
 		maxNativeZoom: mapData.tileDepth,
 		maxZoom: mapData.tileDepth + 1,
-		minZoom: 1,
-		tms: true,
+		minZoom: 0,
 		keepBuffer: 20,
 	}).addTo(map);
+
+	var center = L.latLng(
+		(mapData.bounds[0][0] + mapData.bounds[1][0]) / 2, 
+		(mapData.bounds[0][1] + mapData.bounds[1][1]) / 2
+	);
+	map.invalidateSize();
+	map.setView(center, map.getBoundsZoom(mapData.bounds) + 0.5);
+
 }
 
 
 function initLeaflet(container) {
 
 	var map = L.map(container, {
+		zoomSnap: 0.1,
         scrollWheelZoom: false,
         smoothWheelZoom: true,
         smoothSensitivity: 1,
 		doubleClickZoom: false,
+		crs: L.CRS.Simple,
 	});
 	mapLayerGroup = L.layerGroup().addTo(map);
 	return (map);
@@ -122,7 +131,7 @@ async function displayResultMap(map, container, result) {
 	L.DomUtil.removeClass(map._container, 'crosshair-cursor-enabled');
 
 	map.setView(polyline.getCenter(), map.getBoundsZoom(polyline.getBounds()));
-	setTimeout(function(){ map.invalidateSize(true)}, 100);
+	setTimeout(function(){ map.invalidateSize(true);}, 100);
 }
 
 
@@ -135,10 +144,9 @@ async function displayMinimap(map, container) {
 		container.classList.toggle("map_ingame");
 	}
 
+	setTimeout(function(){ map.invalidateSize(true);}, 100);
+
 	container.style.display = "block";
-	
 	enableMarkerOnClick(map);
 	L.DomUtil.addClass(map._container, 'crosshair-cursor-enabled');
-	map.setView([0, 0], 3);
-	setTimeout(function(){ map.invalidateSize(true)}, 100);
 }

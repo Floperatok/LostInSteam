@@ -42,7 +42,7 @@ def get_map_infos(request, map_id):
 def get_map_tile(request, map_id, z, x, y):
 	if request.method == "GET":
 		if map_id == uuid.UUID("00000000-0000-0000-0000-000000000000"):
-			tile_path = f"geogamers/data/placeholder/map/{z}/{x}/{y}.jpg"
+			tile_path = f"geogamers/data/placeholder/map/{z}/{x}/{y}.png"
 		else:
 			try:
 				map = Map.objects.get(id=map_id)
@@ -52,11 +52,11 @@ def get_map_tile(request, map_id, z, x, y):
 			except Map.MultipleObjectsReturned:
 				print(f"Multiple maps matches the given query 'id={map_id}'")
 				return HttpResponseServerError()
-			tile_path = f"geogamers/data/{map.game.name}/map/{z}/{x}/{y}.jpg"
+			tile_path = f"geogamers/data/{map.game.name}/map/{z}/{x}/{y}.png"
 
 		try:
 			with open(tile_path, "rb") as file:
-				return HttpResponse(file.read(), content_type="image/jpg")
+				return HttpResponse(file.read(), content_type="image/png")
 		except OSError:
 			print(f"{tile_path} not found in file tree")
 			return HttpResponseNotFound()

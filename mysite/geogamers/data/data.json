@@ -914,8 +914,8 @@
 			"tile_depth": 6,
 			"attribution": "https://maps.seaofthieves.rarethief.com",
 			"bounds": [
-				[76, -169], 
-				[-83, 122]
+				[0, 0], 
+				[-220, 218]
 			],
 			"bg_color": "#000000"
 		}
