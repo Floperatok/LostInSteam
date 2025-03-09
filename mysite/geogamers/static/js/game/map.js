@@ -144,8 +144,6 @@ async function displayMinimap(map, mapId, container) {
 
 	const mapData = await loadMap(map, mapId, container);
 
-	L.marker(mapData.bounds[0]).addTo(mapLayerGroup).bindPopup(`${mapData.bounds[0]}`);
-	L.marker(mapData.bounds[1]).addTo(mapLayerGroup).bindPopup(`${mapData.bounds[1]}`);
 	var center = L.latLng(
 		(mapData.bounds[0][0] + mapData.bounds[1][0]) / 2, 
 		(mapData.bounds[0][1] + mapData.bounds[1][1]) / 2
