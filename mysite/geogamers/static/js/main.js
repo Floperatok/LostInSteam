@@ -16,7 +16,12 @@ async function getApi(path) {
 		}
 		const responseData = await response.json();
 		return (responseData);
+	
 	} catch (error) {
+		if (error instanceof TypeError) {
+			error = new Error(`503 - Service Unavailable`);
+			error.status = 503;
+		}
 		throw (error);
 	}
 }
@@ -40,8 +45,32 @@ async function postApi(path, data) {
 		const responseData = await response.json();
 		return (responseData);
 	} catch (error) {
+		if (error instanceof TypeError) {
+			error = new Error(`503 - Service Unavailable`);
+			error.status = 503;
+		}
 		throw (error);
 	}
+}
+
+
+function errorScreen(status, statusText) {
+	document.getElementById("error_title").innerText = statusText;
+	const errorMsg = document.getElementById("error_msg");
+	switch (status) {
+		case 404:
+			errorMsg.innerText = "Seems like the ressource you are trying to access does not exist...";
+			break;
+		case 500:
+			errorMsg.innerText = "Congratulations ! You broke our server. Press F5 to pay respect...";
+			break;
+		case 503:
+			errorMsg.innerText = "Server is down, please come again !"
+			break;
+		default:
+			errorMsg.innerText = "This might not be your fault, refresh the page. Please contact the devs if this keep happening";
+	}
+	displayScreen("error_screen");
 }
 
 
