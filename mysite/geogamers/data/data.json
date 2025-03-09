@@ -45,11 +45,11 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
+			"tile_depth": 9,
 			"attribution": "",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-35, 40], 
+				[-164, 172]
 			],
 			"bg_color": "#000000"
 		}

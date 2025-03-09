@@ -69,22 +69,17 @@ async function loadMap(map, mapId, container) {
 		}
 	});
 	
-	var baseUrl = `/api/map/${mapData.id}`;
-	L.tileLayer(`${baseUrl}/{z}/{x}/{y}.png`, {
+	L.tileLayer(`/api/map/${mapData.id}/{z}/{y}/{x}.png`, {
+		noWrap: true,
+		maxNativeZoom: 9,
+		maxZoom: 10,
 		noWrap: true,
 		maxNativeZoom: mapData.tileDepth,
 		maxZoom: mapData.tileDepth + 1,
 		minZoom: 0,
 		keepBuffer: 20,
 	}).addTo(map);
-
-	var center = L.latLng(
-		(mapData.bounds[0][0] + mapData.bounds[1][0]) / 2, 
-		(mapData.bounds[0][1] + mapData.bounds[1][1]) / 2
-	);
-	map.invalidateSize();
-	map.setView(center, map.getBoundsZoom(mapData.bounds) + 0.5);
-
+	return (mapData);
 }
 
 
@@ -135,7 +130,7 @@ async function displayResultMap(map, container, result) {
 }
 
 
-async function displayMinimap(map, container) {
+async function displayMinimap(map, mapId, container) {
 	container.querySelector("#guess_pos_btn").style.display = "none";
 	if (container.classList.contains("map_result")) {
 		container.classList.toggle("map_result");
@@ -143,10 +138,22 @@ async function displayMinimap(map, container) {
 	if (!container.classList.contains("map_ingame")) {
 		container.classList.toggle("map_ingame");
 	}
-
-	setTimeout(function(){ map.invalidateSize(true);}, 100);
-
+	container.style.opacity = "0";
 	container.style.display = "block";
+	map.invalidateSize();
+
+	const mapData = await loadMap(map, mapId, container);
+
+	L.marker(mapData.bounds[0]).addTo(mapLayerGroup).bindPopup(`${mapData.bounds[0]}`);
+	L.marker(mapData.bounds[1]).addTo(mapLayerGroup).bindPopup(`${mapData.bounds[1]}`);
+	var center = L.latLng(
+		(mapData.bounds[0][0] + mapData.bounds[1][0]) / 2, 
+		(mapData.bounds[0][1] + mapData.bounds[1][1]) / 2
+	);
+	map.setView(center, map.getBoundsZoom(mapData.bounds));
+
 	enableMarkerOnClick(map);
 	L.DomUtil.addClass(map._container, 'crosshair-cursor-enabled');
+	container.style.animation = "fadeIn 0.2s";
+	container.style.opacity = "1";
 }
