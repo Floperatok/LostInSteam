@@ -5,6 +5,7 @@ from django.http import JsonResponse, \
 						HttpResponseServerError, \
 						HttpResponseNotAllowed
 import json, random
+from .map import get_placeholder_map
 
 
 def find_game_command(request):
@@ -18,11 +19,17 @@ def find_game_command(request):
 		try:
 			map = Map.objects.get(game__id=game_id)
 		except Map.DoesNotExist:
-			print(f"No map matches the given query 'gameId={game_id}'")
-			return HttpResponseNotFound()
+			print(f"No map matches the given query 'game__id={game_id}', using placeholder")
+			map = get_placeholder_map()
+			if not map:
+				return HttpResponseServerError()
 		except Map.MultipleObjectsReturned:
 			print(f"Multiple maps matches the given query 'gameId={game_id}'")
 			return HttpResponseServerError()
+
+		if map.tile_depth == 0:
+			print("invalid map, using placeholder")
+			map = get_placeholder_map()
 		return JsonResponse({
 			"mapId": map.id,
 		})

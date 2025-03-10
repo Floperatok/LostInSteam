@@ -7,6 +7,18 @@ from django.http import JsonResponse, \
 import uuid
 
 
+def get_placeholder_map():
+	try:
+		map = Map.objects.get(game__name="placeholder")
+		return map
+	except Map.DoesNotExist:
+		print("Placeholder map not found")
+		return 
+	except Map.MultipleObjectsReturned:
+		print(f"Multiple maps matches the given query 'game_name=placeholder'")
+		return
+
+
 def get_map_infos(request, map_id):
 	if request.method == "GET":
 		try:
@@ -17,22 +29,13 @@ def get_map_infos(request, map_id):
 		except Map.MultipleObjectsReturned:
 			print(f"Multiple maps matches the given query 'id={map_id}'")
 
-		if map.tile_depth == 0:
-			return JsonResponse({
-				"id": uuid.UUID("00000000-0000-0000-0000-000000000000"),
-				"tileDepth":  7,
-				"attribution": "",
-				"bounds": [[-185, -280], [50, 115]],
-				"bgColor": "#000000",
-			})
-		else:
-			return JsonResponse({
-				"id": map.id,
-				"tileDepth":  map.tile_depth,
-				"attribution": map.attribution,
-				"bounds": map.bounds,
-				"bgColor": map.bg_color,
-			})
+		return JsonResponse({
+			"id": map.id,
+			"tileDepth":  map.tile_depth,
+			"attribution": map.attribution,
+			"bounds": map.bounds,
+			"bgColor": map.bg_color,
+		})
 	else:
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
