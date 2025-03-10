@@ -82,9 +82,6 @@ button {
 #guess_pos_btn:active {
 	transform: scale(0.95);
 }
-.leaflet-tile {
-    image-rendering: pixelated;
-}
 .leaflet-container.crosshair-cursor-enabled {
     cursor:crosshair;
 }
