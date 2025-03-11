@@ -42,18 +42,51 @@ button {
 
 
 /* map */
+.map_ingame.scale0 {
+	height: 300px;
+	width: 300px;
+}
+.map_ingame.scale1 {
+	height: 500px;
+	width: 500px;
+}
+.map_ingame.scale2 {
+	height: 600px;
+	width: 700px;
+}
+.map_ingame.scale3 {
+	height: 700px;
+	width: 1000px;
+}
+.map_ingame.scale4 {
+	height: 800px;
+	width: 1300px;
+}
 .map_ingame {
+	transition: 
+		width 500ms ease, 
+		height 500ms ease,
+		opacity 200ms;
 	position: absolute !important;
 	bottom: 1em;
 	right: 1em;
-	height: 500px;
-	width: 500px;
 	background-color: rgb(0, 0, 0);
+	border-radius: 10px;
 }
 .map_result {
 	position: relative;
 	flex: 1 1 auto;
 	height: 100%;
+}
+.map_result #guess_pos_btn {
+	display: none;
+}
+.map_result .leaflet-control-container .leaflet-top .leaflet-control {
+	display: none;
+}
+.leaflet-control-scale > a {
+	font-size:x-large;
+	font-weight: bold;
 }
 #guess_pos_btn {
 	display: block;
@@ -84,9 +117,4 @@ button {
 }
 .leaflet-container.crosshair-cursor-enabled {
     cursor:crosshair;
-}
-
-@keyframes fadeIn {
-	from { opacity: 0; }
-	to { opacity: 1; }
 }

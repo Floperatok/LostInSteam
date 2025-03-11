@@ -9,6 +9,7 @@ function createMapContainer() {
 	guessPosBtn.innerText = "Guess";
 	
 	mapDiv.id = "map";
+	mapDiv.classList.add("scale1");
 	mapDiv.appendChild(guessPosBtn);
 	return (mapDiv);
 }
@@ -179,10 +180,21 @@ async function game() {
 	}
 
 
+	const resizeObserver = new ResizeObserver(entries => {
+		for (let entry of entries) {
+			if (entry.target.id === "map") {
+				console.log(`Size changed to: ${entry.contentRect.width}px x ${entry.contentRect.height}px`);
+				map.invalidateSize();
+			}
+		}
+	});
+
+
 	try {
 		pano = await switchToRandomScene(viewer);
 		gameScreen(mapDiv);
-	} catch (error) {
+		resizeObserver.observe(document.getElementById("map"));
+} catch (error) {
 		console.log(error.status);
 		errorScreen(error.status, error.message);
 	}

@@ -41,16 +41,14 @@ function disableMarkerOnClick(map) {
 function enableMarkerOnClick(map) {
 	const guessPosBtn = document.getElementById('guess_pos_btn');
 
-	guessPosBtn.removeEventListener('click', handleDisableMarkerOnButtonPress);
-	guessPosBtn.addEventListener('click', handleDisableMarkerOnButtonPress);
 	map.on('click', onMapClick);
 
-	function handleDisableMarkerOnButtonPress(event) {
+	guessPosBtn.addEventListener('click', function(event) {
 		map.off('click', onMapClick);
 		setTimeout(() => {
 			map.on('click', onMapClick);
 		}, 10);
-	}
+	});
 }
 
 
@@ -83,6 +81,73 @@ async function loadMap(map, mapId, container) {
 }
 
 
+function getContainerScale(container) {
+	let scaleClass = container.className.match(/\bscale\d+\b/);
+	console.log(scaleClass);
+	let scaleLevel;
+	if (scaleClass) {
+		scaleLevel = parseInt(scaleClass[0].replace("scale", ""), 10);
+	} else {
+		scaleLevel = 0;
+	}
+	console.log(`SCALE: ${scaleLevel}`);
+	return (scaleLevel);
+}
+
+
+function scaleUpMap(container) {
+	let scale = getContainerScale(container);
+	if (scale >= 4) {
+		return ;
+	}
+	container.classList.remove(`scale${scale}`);
+	container.classList.add(`scale${scale + 1}`);
+}
+
+
+function scaleDownMap(container) {
+	let scale = getContainerScale(container);
+	if (scale <= 0) {
+		return ;
+	}
+	container.classList.remove(`scale${scale}`);
+	container.classList.add(`scale${scale - 1}`);
+}
+
+
+function leafletControls(map, container) {
+	const scaleMapControl = L.control({ position: "topleft"});
+
+	scaleMapControl.onAdd = function() {
+		const div = L.DomUtil.create("div", "leaflet-bar leaflet-control leaflet-control-scale");
+		div.innerHTML = `
+			<a href="#" id="scale_up_map">+</a>
+        	<a href="#" id="scale_down_map">-</a>
+		`;
+		div.querySelector("#scale_up_map").addEventListener("click", function(e) {
+			e.preventDefault();
+			scaleUpMap(container);
+			map.off('click', onMapClick);
+			setTimeout(() => {
+				map.on('click', onMapClick);
+			}, 10);
+		});
+		div.querySelector("#scale_down_map").addEventListener("click", function(e) {
+			e.preventDefault();
+			scaleDownMap(container);
+			map.off('click', onMapClick);
+			setTimeout(() => {
+				map.on('click', onMapClick);
+			}, 10);
+		});
+
+		return (div);
+	};
+
+	scaleMapControl.addTo(map);
+}
+
+
 function initLeaflet(container) {
 
 	var map = L.map(container, {
@@ -91,16 +156,17 @@ function initLeaflet(container) {
         smoothWheelZoom: true,
         smoothSensitivity: 1,
 		doubleClickZoom: false,
+		zoomControl: false,
 		crs: L.CRS.Simple,
 	});
 	mapLayerGroup = L.layerGroup().addTo(map);
+	leafletControls(map, container);
 	return (map);
 }
 
 
 async function displayResultMap(map, container, result) {
 
-	container.querySelector("#guess_pos_btn").style.display = "none";
 	if (!container.classList.contains("map_result")) {
 		container.classList.toggle("map_result");
 	}
@@ -126,7 +192,6 @@ async function displayResultMap(map, container, result) {
 	L.DomUtil.removeClass(map._container, 'crosshair-cursor-enabled');
 
 	map.setView(polyline.getCenter(), map.getBoundsZoom(polyline.getBounds()));
-	setTimeout(function(){ map.invalidateSize(true);}, 100);
 }
 
 
@@ -140,18 +205,15 @@ async function displayMinimap(map, mapId, container) {
 	}
 	container.style.opacity = "0";
 	container.style.display = "block";
-	map.invalidateSize();
 
 	const mapData = await loadMap(map, mapId, container);
-
 	var center = L.latLng(
 		(mapData.bounds[0][0] + mapData.bounds[1][0]) / 2, 
 		(mapData.bounds[0][1] + mapData.bounds[1][1]) / 2
 	);
-	map.setView(center, map.getBoundsZoom(mapData.bounds));
+	map.setView(center, map.getBoundsZoom(mapData.bounds), false);
 
 	enableMarkerOnClick(map);
 	L.DomUtil.addClass(map._container, 'crosshair-cursor-enabled');
-	container.style.animation = "fadeIn 0.2s";
 	container.style.opacity = "1";
 }
