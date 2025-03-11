@@ -79,7 +79,7 @@ button {
 	height: 100%;
 }
 .map_result #guess_pos_btn {
-	display: none;
+	display: none !important;
 }
 .map_result .leaflet-control-container .leaflet-top .leaflet-control {
 	display: none;
