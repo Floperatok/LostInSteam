@@ -15,7 +15,6 @@ function createMapContainer() {
 }
 
 
-
 function resultScreen(map, mapDiv, result) {
 	const resultScreenDiv = document.getElementById("result_screen"); 
 	resultScreenDiv.insertBefore(mapDiv, resultScreenDiv.firstChild);
@@ -52,7 +51,6 @@ async function game() {
 
 	guessGameForm.addEventListener("submit", handleGuessGame);
 	nextBtn.addEventListener("click", handleNext);
-	document.body.addEventListener("click", handleDynamicBtn);
 
 	async function handleGuessGame(event) {
 		event.preventDefault();
@@ -83,19 +81,18 @@ async function game() {
 	}
 
 
-	async function handleDynamicBtn(event) {
-		if (event.target.id == "guess_pos_btn") {
-			try {
-				let result = await postApi("/api/guess/pos/", {
-					pos: mapLayerGroup.getLayers()[0]._latlng,
-					panoId: pano.id,
-				});
-				resultScreen(map, mapDiv, result);
-				pano = await switchToRandomScene(viewer);
-			} catch (error) {
-				errorScreen(error.status, error.message);
-				return ;
-			}
+	async function handleGuessPos(event) {
+		event.stopPropagation();
+		try {
+			let result = await postApi("/api/guess/pos/", {
+				pos: mapLayerGroup.getLayers()[0]._latlng,
+				panoId: pano.id,
+			});
+			resultScreen(map, mapDiv, result);
+			pano = await switchToRandomScene(viewer);
+		} catch (error) {
+			errorScreen(error.status, error.message);
+			return ;
 		}
 	}
 
@@ -193,6 +190,8 @@ async function game() {
 	try {
 		pano = await switchToRandomScene(viewer);
 		gameScreen(mapDiv);
+
+		document.getElementById("guess_pos_btn").addEventListener("click", handleGuessPos);
 		resizeObserver.observe(document.getElementById("map"));
 } catch (error) {
 		console.log(error.status);

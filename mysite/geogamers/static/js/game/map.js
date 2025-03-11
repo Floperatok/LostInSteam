@@ -39,16 +39,7 @@ function disableMarkerOnClick(map) {
 
 
 function enableMarkerOnClick(map) {
-	const guessPosBtn = document.getElementById('guess_pos_btn');
-
 	map.on('click', onMapClick);
-
-	guessPosBtn.addEventListener('click', function(event) {
-		map.off('click', onMapClick);
-		setTimeout(() => {
-			map.on('click', onMapClick);
-		}, 10);
-	});
 }
 
 
@@ -126,19 +117,13 @@ function leafletControls(map, container) {
 		`;
 		div.querySelector("#scale_up_map").addEventListener("click", function(e) {
 			e.preventDefault();
+			e.stopPropagation();
 			scaleUpMap(container);
-			map.off('click', onMapClick);
-			setTimeout(() => {
-				map.on('click', onMapClick);
-			}, 10);
 		});
 		div.querySelector("#scale_down_map").addEventListener("click", function(e) {
 			e.preventDefault();
+			e.stopPropagation();
 			scaleDownMap(container);
-			map.off('click', onMapClick);
-			setTimeout(() => {
-				map.on('click', onMapClick);
-			}, 10);
 		});
 
 		return (div);
