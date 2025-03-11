@@ -62,9 +62,8 @@ function disableMouseHover(map) {
 
 function enableMouseHover(map, container) {
 	function onMouseOver(e) {
-		container.style.opacity = "1";
 		if (map._containerScale) {
-			container.classList.remove("scale0");
+			container.classList.remove("map_mouse_out");
 			container.classList.add(map._containerScale);
 		}
 	}
@@ -72,8 +71,7 @@ function enableMouseHover(map, container) {
 	function onMouseOut(e) {
 		map._containerScale = getContainerScaleClass(container);
 		container.classList.remove(map._containerScale);
-		container.classList.add("scale0");
-		container.style.opacity = "0.5";
+		container.classList.add("map_mouse_out");
 	}
 	map._mouseOverHandling = onMouseOver;
 	map._mouseOutHandling = onMouseOut;

@@ -29,8 +29,8 @@ async function displayResultMap(map, container, result) {
 	if (!container.classList.contains("map_result")) {
 		container.classList.toggle("map_result");
 	}
-	if (container.classList.contains("map_ingame")) {
-		container.classList.toggle("map_ingame");
+	if (container.classList.contains("minimap")) {
+		container.classList.toggle("minimap");
 	}
 
 	disableMarkerOnClick(map);
@@ -60,8 +60,8 @@ async function displayMinimap(map, mapId, container) {
 	if (container.classList.contains("map_result")) {
 		container.classList.toggle("map_result");
 	}
-	if (!container.classList.contains("map_ingame")) {
-		container.classList.toggle("map_ingame");
+	if (!container.classList.contains("minimap")) {
+		container.classList.toggle("minimap");
 	}
 	container.style.opacity = "0";
 	container.style.display = "block";
