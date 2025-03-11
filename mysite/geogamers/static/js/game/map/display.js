@@ -72,7 +72,7 @@ async function displayMinimap(map, mapId, container) {
 		(mapData.bounds[0][0] + mapData.bounds[1][0]) / 2, 
 		(mapData.bounds[0][1] + mapData.bounds[1][1]) / 2
 	);
-	map.setView(center, map.getBoundsZoom(mapData.bounds), false);
+	map.setView(center, map.getBoundsZoom(mapData.bounds) + 1, false);
 
 	enableMarkerOnClick(map);
 	enableMouseHover(map, container);

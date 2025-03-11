@@ -7,11 +7,11 @@
 		],
 		"panoramas": [],
 		"map": {
-			"tile_depth": 7,
+			"tile_depth": 6,
 			"attribution": "",
 			"bounds": [
-				[-185, -280],
-				[50, 115]
+				[-61, 24],
+				[-212, 222]
 			],
 			"bg_color": "#000000"
 		}
@@ -46,7 +46,7 @@
 		],
 		"map": {
 			"tile_depth": 9,
-			"attribution": "",
+			"attribution": "https://mapgenie.io/american-truck-simulator/maps/north-america",
 			"bounds": [
 				[-57, 38], 
 				[-137, 126]
@@ -94,11 +94,11 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 6,
+			"attribution": "https://mapgenie.io/assassins-creed-mirage/maps/baghdad",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-12.06, 14.38], 
+				[-244.21, 241.95]
 			],
 			"bg_color": "#000000"
 		}
@@ -148,11 +148,11 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 7,
+			"attribution": "https://mapgenie.io/borderlands-2/maps/world",
 			"bounds": [
 				[0, 0], 
-				[0, 0]
+				[-255, 255]
 			],
 			"bg_color": "#000000"
 		}
@@ -202,13 +202,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 8,
+			"attribution": "https://mapgenie.io/borderlands-3/maps/pandora",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-37.97, 25.31], 
+				[-148.40, 224.35]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#1a1624"
 		}
 	},
 	{
@@ -251,11 +251,11 @@
 			}
 		],
 		"map": {
-			"tile_depth": 6,
-			"attribution": "",
+			"tile_depth": 5,
+			"attribution": "https://fallout.fandom.com/wiki/Fallout:_New_Vegas_high_resolution_maps?file=Mojave_Wasteland_map.jpg",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-7.70, 7.72], 
+				[-248.31, 248.29]
 			],
 			"bg_color": "#000000"
 		}
@@ -295,13 +295,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 7,
+			"attribution": "https://mapgenie.io/forza-horizon-5/maps/mexico",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-64.00, 64.00], 
+				[-191.99, 192.01]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#242621"
 		}
 	},
 	{
@@ -334,13 +334,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 7,
+			"attribution": "https://mapgenie.io/god-of-war-2018/maps/midgard",
 			"bounds": [
 				[0, 0], 
-				[0, 0]
+				[-255.00, 255.00]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#212121"
 		}
 	},
 	{
@@ -387,11 +387,11 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 4,
+			"attribution": "https://mapgenie.io/grounded/maps/yard",
 			"bounds": [
 				[0, 0], 
-				[0, 0]
+				[-255.00, 255.00]
 			],
 			"bg_color": "#000000"
 		}
@@ -533,13 +533,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 7,
+			"attribution": "https://mapgenie.io/hogwarts-legacy/maps/world",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-63.99, 78.06], 
+				[-191.99, 177.96]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#2c3039"
 		}
 	},
 	{
@@ -678,13 +678,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 7,
+			"attribution": "https://gamemap.uesp.net/mw/",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-26.30, 17.53], 
+				[-215.26, 234.28]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#7076aa"
 		}
 	},
 	{
@@ -755,13 +755,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 8,
+			"attribution": "https://mapgenie.io/palworld/maps/palpagos-islands",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-87.54, 43.77], 
+				[-200.25, 171.25]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#172537"
 		}
 	},
 	{
@@ -800,13 +800,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 5,
+			"attribution": "https://www.reddit.com/r/Portal/comments/uagkpk/every_portal_1_map_on_one_image/#lightbox",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-35.21, 56.54], 
+				[-228.41, 211.61]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#040605"
 		}
 	},
 	{
@@ -887,11 +887,11 @@
 			
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 8,
+			"attribution": "https://satisfactory-calculator.com/en/interactive-map",
 			"bounds": [
 				[0, 0], 
-				[0, 0]
+				[-255, 255]
 			],
 			"bg_color": "#000000"
 		}
@@ -906,15 +906,15 @@
 		"panoramas": [
 			{
 				"number": 0,
-				"lat": 6.010,
-				"lng": -100.77
+				"lat": -108.799,
+				"lng": 73.295
 			}
 		],
 		"map": {
-			"tile_depth": 6,
+			"tile_depth": 9,
 			"attribution": "https://maps.seaofthieves.rarethief.com",
 			"bounds": [
-				[0, 0], 
+				[-32.22, 30.08], 
 				[-220, 218]
 			],
 			"bg_color": "#000000"
@@ -1007,11 +1007,11 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 7,
+			"attribution": "https://mapgenie.io/skyrim/maps/skyrim",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-33.99, 8.01], 
+				[-221.98, 248.02]
 			],
 			"bg_color": "#000000"
 		}
@@ -1062,13 +1062,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 8,
+			"attribution": "https://mapgenie.io/sons-of-the-forest/maps/world",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-88.43, 87.26], 
+				[-165.95, 166.54]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#9eb5d5"
 		}
 	},
 	{
@@ -1113,13 +1113,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 7,
+			"attribution": "https://mapgenie.io/subnautica/maps/world",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-87.11, 74.45], 
+				[-163.80, 178.78]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#070908"
 		}
 	},
 	{
@@ -1167,13 +1167,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 6,
+			"attribution": "https://mapgenie.io/subnautica-below-zero/maps/world",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-72.85, 66.22], 
+				[-179.95, 189.20]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#070908"
 		}
 	},
 	{
@@ -1220,13 +1220,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
-			"attribution": "",
+			"tile_depth": 7,
+			"attribution": "https://mapgenie.io/the-forest/maps/the-peninsula",
 			"bounds": [
-				[0, 0], 
-				[0, 0]
+				[-53.78, 66.50], 
+				[-193.32, 199.59]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#0c1b26"
 		}
 	},
 	{
@@ -1273,13 +1273,13 @@
 			}
 		],
 		"map": {
-			"tile_depth": 0,
+			"tile_depth": 1,
 			"attribution": "",
 			"bounds": [
 				[0, 0], 
-				[0, 0]
+				[-256, 256]
 			],
-			"bg_color": "#000000"
+			"bg_color": "#ab8441"
 		}
 	}
 ]

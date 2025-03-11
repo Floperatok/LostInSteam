@@ -22,9 +22,7 @@
 }
 
 /* MINIMAP SCALE BUTTONS */
-.minimap.scale4 #scale_up_map {
-	color: grey !important;
-}
+.minimap.scale4 #scale_up_map,
 .minimap.scale0 #scale_down_map {
 	color: grey !important;
 }
