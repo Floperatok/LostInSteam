@@ -84,6 +84,10 @@ button {
 .map_result .leaflet-control-container .leaflet-top .leaflet-control {
 	display: none;
 }
+.leaflet-control-scale {
+	margin-bottom: 10px !important;
+	margin-right: 3px !important;
+}
 .leaflet-control-scale > a {
 	font-size:x-large;
 	font-weight: bold;

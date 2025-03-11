@@ -34,6 +34,7 @@ async function displayResultMap(map, container, result) {
 	}
 
 	disableMarkerOnClick(map);
+	disableMouseHover(map);
 
 	const guessMarker = mapLayerGroup.getLayers()[0];
 	const icon = L.icon({
@@ -74,6 +75,7 @@ async function displayMinimap(map, mapId, container) {
 	map.setView(center, map.getBoundsZoom(mapData.bounds), false);
 
 	enableMarkerOnClick(map);
+	enableMouseHover(map, container);
 	L.DomUtil.addClass(map._container, 'crosshair-cursor-enabled');
 	container.style.opacity = "1";
 }

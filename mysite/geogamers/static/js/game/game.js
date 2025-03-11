@@ -45,6 +45,15 @@ async function game() {
 	const	map = initLeaflet(mapDiv);
 	let		pano = {};
 
+	const resizeObserver = new ResizeObserver(entries => {
+		for (let entry of entries) {
+			if (entry.target.id === "map") {
+				map.invalidateSize();
+			}
+		}
+	});
+	resizeObserver.observe(mapDiv);
+
 	const	guessGameForm	= document.getElementById("guess_game_form");
 	const	guessInput		= document.getElementById("guess_input");
 	const	nextBtn			= document.getElementById("next_btn");
@@ -177,22 +186,11 @@ async function game() {
 	}
 
 
-	const resizeObserver = new ResizeObserver(entries => {
-		for (let entry of entries) {
-			if (entry.target.id === "map") {
-				console.log(`Size changed to: ${entry.contentRect.width}px x ${entry.contentRect.height}px`);
-				map.invalidateSize();
-			}
-		}
-	});
-
-
 	try {
 		pano = await switchToRandomScene(viewer);
 		gameScreen(mapDiv);
 
 		document.getElementById("guess_pos_btn").addEventListener("click", handleGuessPos);
-		resizeObserver.observe(document.getElementById("map"));
 } catch (error) {
 		console.log(error.status);
 		errorScreen(error.status, error.message);
