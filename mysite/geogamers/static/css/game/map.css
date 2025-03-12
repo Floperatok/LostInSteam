@@ -27,6 +27,10 @@
 	color: grey !important;
 }
 
+.minimap .leaflet-control-attribution {
+	display: none;
+}
+
 /* MINIMAP MOUSE OUT */
 .minimap.map_mouse_out {
 	height: 300px;
