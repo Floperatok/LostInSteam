@@ -68,10 +68,11 @@
 .map_result #guess_pos_btn {
 	display: none !important;
 }
-.map_result .leaflet-control-container .leaflet-top .leaflet-control {
+.map_result .leaflet-control-scale {
 	display: none;
 }
 
+/* SCALE BUTTONS */
 .leaflet-control-scale {
 	margin-bottom: 10px !important;
 	margin-right: 3px !important;
