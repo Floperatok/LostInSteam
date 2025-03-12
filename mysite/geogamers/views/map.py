@@ -28,6 +28,7 @@ def get_map_infos(request, map_id):
 			return HttpResponseNotFound()
 		except Map.MultipleObjectsReturned:
 			print(f"Multiple maps matches the given query 'id={map_id}'")
+			return HttpResponseServerError()
 
 		return JsonResponse({
 			"id": map.id,

@@ -45,13 +45,13 @@ def guess_game(request):
 		if valid_game_guess(game, guess):
 			return JsonResponse({
 				"valid": True,
-				"prettyName": game.pretty_name,
+				"prettyGameName": game.pretty_name,
 				"mapId": map.id,
 			})
 		else:
 			return JsonResponse({
 				"valid": False,
-				"prettyName": "",
+				"prettyGameName": "",
 				"mapId": 0,
 			})
 	else:

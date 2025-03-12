@@ -57,3 +57,43 @@ button:active {
 #guess_game_button {
     margin-left: 1em;
 }
+
+/* GAME ANSWER */
+#game_answer {
+	display: none;
+	justify-content: center;
+	flex-direction: column;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	transition: opacity 300ms;
+}
+#game_answer #game_name {
+	padding-left: 10px;
+	padding-right: 10px;
+	width: fit-content;
+	margin: 20px auto;
+	align-self: flex-start;
+	text-align: center;
+
+	background-color: #243642;
+
+	font-size: xx-large;
+	color: rgb(158, 190, 186);
+
+	border-color: #0a131a;
+	border-style:solid;
+	border-width: 3px;
+	border-radius: 10px;
+}
+#poster_wrapper > img {
+	border-color: #0a131a;
+	border-width: 5px;
+	border-style: solid;
+	border-radius: 10px;
+	width: 100%;
+    max-width: 800px;
+	height: 100%;
+    max-height: 700px;
+}

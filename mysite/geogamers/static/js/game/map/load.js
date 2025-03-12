@@ -2,7 +2,7 @@
 'use strict';
 
 async function loadMap(map, mapId, container) {
-	const mapData = await getApi(`/api/map/info/${mapId}`);
+	const mapData = await getApiJson(`/api/map/info/${mapId}`);
 	document.querySelector(".leaflet-control-attribution").innerHTML = 
 		mapData.attribution ? `<a href="${mapData.attribution}" target="_blank">Map</a>` : "";
 	container.style.backgroundColor = mapData.bgColor;

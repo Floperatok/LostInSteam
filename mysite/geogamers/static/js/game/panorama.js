@@ -69,7 +69,7 @@ async function switchToRandomScene(viewer) {
 	const guessGameForm = document.getElementById("guess_game_form");
 	guessGameForm.style.display = "flex";
 
-	const pano = await getApi(`/api/randompano/`);
+	const pano = await getApiJson(`/api/randompano/`);
 	viewer.destroyAllScenes();
 	var scene = await loadPanoScene(viewer, pano);
 	scene.switchTo();

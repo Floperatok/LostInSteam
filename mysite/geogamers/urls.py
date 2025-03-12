@@ -12,6 +12,8 @@ urlpatterns = [
 	path("api/map/<uuid:map_id>/<int:z>/<int:x>/<int:y>.png", map.get_map_tile, name="get_map_tile"),
 	path("api/map/info/<uuid:map_id>/", map.get_map_infos, name="get_map_infos"),
 
+	path("api/game/<uuid:game_id>/poster", game.get_poster, name="get_poster"),
+
 	path("api/guess/game/", guess.guess_game, name="guess_game"),
 	path("api/guess/pos/", guess.guess_pos, name="guess_pos"),
 

@@ -31,6 +31,12 @@
 		<div class="screen" id="game_screen">
 			<div id="pano"></div>
 
+			<div id="game_answer">
+				<div id="poster_wrapper"></div>
+				<div id="game_name"></div>
+			</div>
+
+
 			<form id="guess_game_form" autocomplete="off">
 				{% csrf_token %}
 				<input id="guess_input" type="text">

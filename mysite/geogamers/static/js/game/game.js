@@ -15,6 +15,46 @@ function createMapContainer() {
 }
 
 
+async function correctGuess(gameId, prettyGameName) {
+	try {
+		var posterImage = await getApiImage(`/api/game/${gameId}/poster`);
+	} catch (error) {
+		errorScreen(error.status, error.message);
+		return ;
+	}
+	const imageUrl = URL.createObjectURL(posterImage);
+	const imageElement = document.createElement("img");
+	imageElement.src = imageUrl;
+
+	const posterContainer = document.getElementById("poster_wrapper");
+	posterContainer.innerHTML = "";
+	posterContainer.appendChild(imageElement);
+
+	const gameNameElement = document.getElementById("game_name");
+	gameNameElement.innerHTML = `${prettyGameName}`;
+
+	const gameAnswerElement = document.getElementById("game_answer");
+	gameAnswerElement.style.display = "flex";
+
+    await new Promise((resolve) => {
+        function handleClick(e) {
+            gameAnswerElement.style.opacity = "0";
+            setTimeout(() => {
+                gameAnswerElement.style.display = "none";
+                document.body.removeEventListener("click", handleClick);
+                resolve();
+            }, 300);
+        }
+        document.body.addEventListener("click", handleClick);
+    });
+}
+
+
+function incorrectGuess() {
+
+}
+
+
 function resultScreen(map, mapDiv, result) {
 	const resultScreenDiv = document.getElementById("result_screen"); 
 	resultScreenDiv.insertBefore(mapDiv, resultScreenDiv.firstChild);
@@ -29,6 +69,8 @@ function gameScreen(mapDiv) {
 	mapDiv.style.display = "none";
 	document.getElementById("game_screen").appendChild(mapDiv);
 	document.getElementById("guess_input").value = "";
+	document.getElementById("game_answer").style.display = "none";
+	document.getElementById("game_answer").style.opacity = "1";
 	displayScreen("game_screen");
 }
 
@@ -72,20 +114,20 @@ async function game() {
 			return ;
 		}
 		try {
-			const response = await postApi("/api/guess/game/", {
+			var response = await postApiJson("/api/guess/game/", {
 				gameId: pano.gameId, 
 				guess: guess,
 			});
-			if (response.valid) {
-				alert(`Correct! ${response.prettyName}`);
-				guessGameForm.style.display = "none";
-				displayMinimap(map, response.mapId, mapDiv);
-			} else {
-				alert(`Incorrect.`);
-			}
 		} catch (error) {
 			errorScreen(error.status, error.message);
 			return ;
+		}
+		if (response.valid) {
+			guessGameForm.style.display = "none";
+			await correctGuess(pano.gameId, response.prettyGameName)
+			displayMinimap(map, response.mapId, mapDiv);
+		} else {
+			incorrectGuess();
 		}
 	}
 
@@ -93,7 +135,7 @@ async function game() {
 	async function handleGuessPos(event) {
 		event.stopPropagation();
 		try {
-			let result = await postApi("/api/guess/pos/", {
+			let result = await postApiJson("/api/guess/pos/", {
 				pos: mapLayerGroup.getLayers()[0]._latlng,
 				panoId: pano.id,
 			});
@@ -135,8 +177,8 @@ async function game() {
 
 	async function cheatSkipScene() {
 		try {
-			pano = await switchToRandomScene(viewer);
 			gameScreen(mapDiv);
+			pano = await switchToRandomScene(viewer);
 		} catch (error) {
 			if (error.status == 404) {
 				console.error("/skip tried to skip to an inexistent scene");
@@ -150,7 +192,7 @@ async function game() {
 
 	async function cheatFindGame() {
 		try {
-			const response = await postApi("/api/command/find/", {
+			const response = await postApiJson("/api/command/find/", {
 				gameId: pano.gameId,
 			});
 			guessGameForm.style.display = "none";
@@ -164,7 +206,7 @@ async function game() {
 
 	async function cheatGotoScene(gameName, panoNumber) {
 		try {
-			pano = await postApi("/api/command/goto/", {
+			pano = await postApiJson("/api/command/goto/", {
 				gameName: gameName,
 				panoNumber: panoNumber,
 			});
@@ -180,15 +222,15 @@ async function game() {
 			}
 			return ;
 		}
+		gameScreen(mapDiv);
 		var scene = await loadPanoScene(viewer, pano);
 		scene.switchTo();
-		gameScreen(mapDiv);
 	}
 
 
 	try {
-		pano = await switchToRandomScene(viewer);
 		gameScreen(mapDiv);
+		pano = await switchToRandomScene(viewer);
 
 		document.getElementById("guess_pos_btn").addEventListener("click", handleGuessPos);
 } catch (error) {

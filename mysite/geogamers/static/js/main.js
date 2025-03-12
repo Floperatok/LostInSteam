@@ -1,6 +1,7 @@
 
 'use strict';
 
+
 async function getApi(path) {
 	try {
 		const response = await fetch(path, {
@@ -14,8 +15,7 @@ async function getApi(path) {
 			error.status = response.status;
 			throw (error);
 		}
-		const responseData = await response.json();
-		return (responseData);
+		return (response);
 	
 	} catch (error) {
 		if (error instanceof TypeError) {
@@ -24,6 +24,18 @@ async function getApi(path) {
 		}
 		throw (error);
 	}
+}
+
+
+async function getApiJson(path) {
+	const response = await getApi(path);
+	return (await response.json());
+}
+
+
+async function getApiImage(path) {
+	const response = await getApi(path);
+	return (await response.blob());
 }
 
 
@@ -42,8 +54,7 @@ async function postApi(path, data) {
 			error.status = response.status;
 			throw (error);
 		}
-		const responseData = await response.json();
-		return (responseData);
+		return (response);
 	} catch (error) {
 		if (error instanceof TypeError) {
 			error = new Error(`503 - Service Unavailable`);
@@ -51,6 +62,12 @@ async function postApi(path, data) {
 		}
 		throw (error);
 	}
+}
+
+
+async function postApiJson(path, data) {
+	const response = await postApi(path, data);
+	return (await response.json());
 }
 
 
