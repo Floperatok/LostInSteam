@@ -51,7 +51,10 @@ async function correctGuess(gameId, prettyGameName) {
 
 
 function incorrectGuess() {
+	const inputElement = document.getElementById("guess_input");
 
+	inputElement.style.animation = "shake 300ms";
+	setTimeout(() => { inputElement.style.animation = ""; }, 300);
 }
 
 
@@ -107,6 +110,7 @@ async function game() {
 		event.preventDefault();
 		const guess = guessInput.value.trim();
 		if (guess == "") {
+			incorrectGuess();
 			return ;
 		}
 		if (guess[0] == "/") {
