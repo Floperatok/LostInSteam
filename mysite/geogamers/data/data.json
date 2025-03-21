@@ -483,7 +483,8 @@
 		"name": "hogwarts_legacy",
 		"pretty_name": "Hogwarts Legacy",
 		"accepted_names": [
-			"hogwarts legacy"
+			"hogwarts legacy",
+			"hogwart legacy"
 		],
 		"panoramas": [
 			{
