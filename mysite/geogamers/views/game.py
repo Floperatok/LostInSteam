@@ -17,4 +17,4 @@ def get_poster(request, game_id):
 	except Game.MultipleObjectsReturned:
 		print(f"Multiple games matches the given query 'id={game_id}'")
 		return HttpResponseServerError()
-	return HttpResponseAccelRedirect(f"{game.name}/poster.png")
+	return HttpResponseAccelRedirect(f"{game.name}/poster.jpg")

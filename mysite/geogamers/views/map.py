@@ -47,7 +47,7 @@ def get_map_tile(request, map_id, z, x, y):
 		print(f"{request.method} not allowed")
 		return HttpResponseNotAllowed()
 	if map_id == uuid.UUID("00000000-0000-0000-0000-000000000000"):
-		tile_path = f"placeholder/map/{z}/{x}/{y}.png"
+		tile_path = f"placeholder/map/{z}/{x}/{y}.jpg"
 	else:
 		try:
 			map = Map.objects.get(id=map_id)

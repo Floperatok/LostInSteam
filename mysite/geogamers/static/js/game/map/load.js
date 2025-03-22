@@ -16,7 +16,7 @@ async function loadMap(map, mapId, container) {
 		}
 	});
 	
-	L.tileLayer(`/api/map/${mapData.id}/{z}/{y}/{x}.png`, {
+	L.tileLayer(`/api/map/${mapData.id}/{z}/{y}/{x}.jpg`, {
 		noWrap: true,
 		maxNativeZoom: 9,
 		maxZoom: 10,
