@@ -32,6 +32,7 @@ def find_game_command(request):
 			map = get_placeholder_map()
 		return JsonResponse({
 			"mapId": map.id,
+			"prettyGameName": map.game.pretty_name
 		})
 	else:
 		print(f"{request.method} not allowed")
