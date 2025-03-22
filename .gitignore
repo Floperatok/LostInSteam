@@ -1,8 +1,9 @@
 env
 __pycache__/
-mysite/db.sqlite3
 mysite/geogamers/migrations
 todo
+*.sqlite3
+*.log
 *.png
 *.jpg
 *.xml

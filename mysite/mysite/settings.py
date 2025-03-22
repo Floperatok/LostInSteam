@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-s)!+)@(p9ojpf7b-qpi4-1co$o^l1spo6dymzl#8c_+4@sor6$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "geogamers", "static"),

@@ -5,6 +5,7 @@ from django.http import JsonResponse, \
 						HttpResponseNotAllowed, \
 						HttpResponse
 import uuid
+from .accel_redirect_response import HttpResponseAccelRedirect
 
 
 def get_placeholder_map():
@@ -20,7 +21,34 @@ def get_placeholder_map():
 
 
 def get_map_infos(request, map_id):
-	if request.method == "GET":
+	if request.method != "GET":
+		print(f"{request.method} not allowed")
+		return HttpResponseNotAllowed()
+	try:
+		map = Map.objects.get(id=map_id)
+	except Map.DoesNotExist:
+		print(f"No map matches the given query 'id={map_id}'")
+		return HttpResponseNotFound()
+	except Map.MultipleObjectsReturned:
+		print(f"Multiple maps matches the given query 'id={map_id}'")
+		return HttpResponseServerError()
+
+	return JsonResponse({
+		"id": map.id,
+		"tileDepth":  map.tile_depth,
+		"attribution": map.attribution,
+		"bounds": map.bounds,
+		"bgColor": map.bg_color,
+	})
+
+
+def get_map_tile(request, map_id, z, x, y):
+	if request.method != "GET":
+		print(f"{request.method} not allowed")
+		return HttpResponseNotAllowed()
+	if map_id == uuid.UUID("00000000-0000-0000-0000-000000000000"):
+		tile_path = f"placeholder/map/{z}/{x}/{y}.png"
+	else:
 		try:
 			map = Map.objects.get(id=map_id)
 		except Map.DoesNotExist:
@@ -29,41 +57,5 @@ def get_map_infos(request, map_id):
 		except Map.MultipleObjectsReturned:
 			print(f"Multiple maps matches the given query 'id={map_id}'")
 			return HttpResponseServerError()
-
-		return JsonResponse({
-			"id": map.id,
-			"tileDepth":  map.tile_depth,
-			"attribution": map.attribution,
-			"bounds": map.bounds,
-			"bgColor": map.bg_color,
-		})
-	else:
-		print(f"{request.method} not allowed")
-		return HttpResponseNotAllowed()
-
-
-
-def get_map_tile(request, map_id, z, x, y):
-	if request.method == "GET":
-		if map_id == uuid.UUID("00000000-0000-0000-0000-000000000000"):
-			tile_path = f"geogamers/data/placeholder/map/{z}/{x}/{y}.png"
-		else:
-			try:
-				map = Map.objects.get(id=map_id)
-			except Map.DoesNotExist:
-				print(f"No map matches the given query 'id={map_id}'")
-				return HttpResponseNotFound()
-			except Map.MultipleObjectsReturned:
-				print(f"Multiple maps matches the given query 'id={map_id}'")
-				return HttpResponseServerError()
-			tile_path = f"geogamers/data/{map.game.name}/map/{z}/{x}/{y}.png"
-
-		try:
-			with open(tile_path, "rb") as file:
-				return HttpResponse(file.read(), content_type="image/png")
-		except OSError:
-			print(f"{tile_path} not found in file tree")
-			return HttpResponseNotFound()
-	else:
-		print(f"{request.method} not allowed")
-		return HttpResponseNotAllowed()
+		tile_path = f"{map.game.name}/map/{z}/{x}/{y}.jpg"
+	return HttpResponseAccelRedirect(tile_path)
