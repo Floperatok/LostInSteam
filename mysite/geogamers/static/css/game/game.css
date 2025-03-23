@@ -9,6 +9,73 @@ html, body {
     height: 100%;
 }
 
+/* compass */
+#compass {
+	position: absolute;
+	top: 5vh;
+	left: 50vw;
+	transform: translate(-50%, 0);
+
+	width: 400px;
+	height: 40px;
+
+	background: #00000034;
+	backdrop-filter: blur(50px);
+	overflow: hidden;
+	mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, 
+                                         rgba(0, 0, 0, 1) 20%, 
+                                         rgba(0, 0, 0, 1) 80%, 
+                                         rgba(0, 0, 0, 0) 100%);
+}
+#compass_middle {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	left: 50%;
+	height: 100%;
+}
+#compass_middle .top{
+	width: 1px;
+	height: 13%;
+}
+#compass_middle .bottom{
+	position: absolute;
+	bottom: 0;
+	width: 1px;
+	height: 13%;
+}
+#compass_graduations {
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+.compass_graduations_chunk {
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+.compass_graduations_chunk p, .compass_graduations_chunk span {
+	margin-right: 12px;
+}
+.compass_graduations_chunk p {
+	font-weight: bold;
+	line-height: 1;
+}
+.compass_graduations_chunk span.big_grad{
+	width: 1px;
+	height: 32%;
+}
+.compass_graduations_chunk span.small_grad{
+	width: 1px;
+	height: 15%;
+}
+.compass_cardinal {
+	font-size: 30px;
+}
+.compass_semi_cardinal {
+	font-size: 15px;
+}
+
 
 /* guess game form */
 #guess_game_form {
@@ -51,7 +118,6 @@ button {
 	color: white;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
 	font-weight: bold;
-	font-family: system-ui;
 
 	border-color: #0a131a;
 	border-style:solid;

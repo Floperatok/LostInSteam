@@ -43,6 +43,18 @@ async function loadPanoScene(viewer, pano) {
 }
 
 
+function initCompass(viewer) {
+	const compass = document.getElementById("compass_graduations");
+	const compassChunk = document.getElementsByClassName("compass_graduations_chunk")[0];
+	const centerOffset = compassChunk.offsetWidth 
+		- document.getElementById("compass").offsetWidth / 2 
+		+ document.getElementsByClassName("compass_cardinal")[0].offsetWidth / 2;
+	viewer.addEventListener("viewChange", function() {
+		compass.style.transform = `translateX(${-viewer.view()._yaw * (compassChunk.offsetWidth / Math.PI / 2) - centerOffset}px)`;
+	})
+}
+
+
 function initMarzipano() {
 	var data = {
 		"settings": {
@@ -59,7 +71,6 @@ function initMarzipano() {
 		}
 	};
 	var viewer = new Marzipano.Viewer(panoElement, viewerOpts);
-
 	return (viewer);
 }
 

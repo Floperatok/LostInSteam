@@ -1,6 +1,7 @@
 
 * {
 	margin: 0;
+	font-family: sans-serif;
 }
 
 .hidden {
@@ -9,8 +10,17 @@
 
 /* screens */
 .screen {
+	position: relative;
 	height: 95vh;
 	width: 100vw;
+}
+
+p {
+	color: white;
+}
+
+span {
+	background-color: white;
 }
 
 /* header */

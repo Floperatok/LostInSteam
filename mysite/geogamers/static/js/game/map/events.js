@@ -3,14 +3,12 @@
 
 function getContainerScale(container) {
 	let scaleClass = container.className.match(/\bscale\d+\b/);
-	console.log(scaleClass);
 	let scaleLevel;
 	if (scaleClass) {
 		scaleLevel = parseInt(scaleClass[0].replace("scale", ""), 10);
 	} else {
 		scaleLevel = 0;
 	}
-	console.log(`SCALE: ${scaleLevel}`);
 	return ({ scaleLevel, scaleClass });
 }
 

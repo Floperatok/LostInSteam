@@ -240,13 +240,13 @@ async function game() {
 		scene.switchTo();
 	}
 
-
+	
 	try {
 		gameScreen(mapDiv);
 		pano = await switchToRandomScene(viewer);
-
+		initCompass(viewer);
 		document.getElementById("guess_pos_btn").addEventListener("click", handleGuessPos);
-} catch (error) {
+	} catch (error) {
 		console.log(error.status);
 		errorScreen(error.status, error.message);
 	}
