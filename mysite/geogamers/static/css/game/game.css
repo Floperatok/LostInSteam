@@ -16,7 +16,9 @@ html, body {
 	left: 50vw;
 	transform: translate(-50%, 0);
 
-	width: 400px;
+	width: 80vw;
+	max-width: 400px;
+	min-width: 200px;
 	height: 40px;
 
 	background: #00000034;
@@ -86,16 +88,17 @@ html, body {
 	display: flex;
 	flex-direction: row;
 }
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
+#guess_game_form button {
+    margin-left: 1em;
 }
-input {
+#guess_game_form button:active {
+	border-color: #224861;
+}
+#guess_game_form input {
 	height: 40px;
-	width: 500px;
+	width: 70vw;
+	max-width: 500px;
+	min-width: 100px;
 	
 	background-color: #243642;
 	color: white;
@@ -109,26 +112,16 @@ input {
 
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
-input:focus {
+#guess_game_form input:focus {
 	outline: none;
 	border-color: #224861;
 }
-button {
-	background-color: #243642;
-	color: white;
-	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
-	font-weight: bold;
-
-	border-color: #0a131a;
-	border-style:solid;
-	border-width: 3px;
-	border-radius: 10px;
-}
-button:active {
-	border-color: #224861;
-}
-#guess_game_button {
-    margin-left: 1em;
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
 }
 
 /* GAME ANSWER */
