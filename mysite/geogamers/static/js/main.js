@@ -114,7 +114,6 @@ function getCSRFToken() {
 			break;
 		}
 	}
-	console.log(cookieValue);
 	return (cookieValue);
 }
 

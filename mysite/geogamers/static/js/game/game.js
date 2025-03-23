@@ -15,6 +15,14 @@ function createMapContainer() {
 }
 
 
+function incorrectGuess() {
+	const inputElement = document.getElementById("guess_input");
+
+	inputElement.style.animation = "shake 300ms";
+	setTimeout(() => { inputElement.style.animation = ""; }, 300);
+}
+
+
 async function correctGuess(gameId, prettyGameName) {
 	try {
 		var posterImage = await getApiImage(`/api/game/${gameId}/poster`);
@@ -22,6 +30,13 @@ async function correctGuess(gameId, prettyGameName) {
 		errorScreen(error.status, error.message);
 		return ;
 	}
+	document.getElementById("guess_game_form").style.display = "none";
+	document.getElementById("guess_input").style.color = "";
+	await displayGameAnswer(posterImage, prettyGameName);
+}
+
+
+async function displayGameAnswer(posterImage, prettyGameName) {
 	const imageUrl = URL.createObjectURL(posterImage);
 	const imageElement = document.createElement("img");
 	imageElement.src = imageUrl;
@@ -47,14 +62,6 @@ async function correctGuess(gameId, prettyGameName) {
         }
         document.body.addEventListener("click", handleClick);
     });
-}
-
-
-function incorrectGuess() {
-	const inputElement = document.getElementById("guess_input");
-
-	inputElement.style.animation = "shake 300ms";
-	setTimeout(() => { inputElement.style.animation = ""; }, 300);
 }
 
 
@@ -118,6 +125,7 @@ async function game() {
 			return ;
 		}
 		try {
+			guessInput.style.color = "grey";
 			var response = await postApiJson("/api/guess/game/", {
 				gameId: pano.gameId, 
 				guess: guess,
@@ -127,10 +135,10 @@ async function game() {
 			return ;
 		}
 		if (response.valid) {
-			guessGameForm.style.display = "none";
-			await correctGuess(pano.gameId, response.prettyGameName)
+			await correctGuess(pano.gameId, response.prettyGameName);
 			displayMinimap(map, response.mapId, mapDiv);
 		} else {
+			guessInput.style.color = "";
 			incorrectGuess();
 		}
 	}
@@ -171,7 +179,6 @@ async function game() {
 				break;
 			case "find":
 				cheatFindGame();
-				guessInput.value = "";
 				break;
 			default:
 				console.log(`Unknown command "${guessWords[0]}"`);
@@ -196,11 +203,12 @@ async function game() {
 
 	async function cheatFindGame() {
 		try {
+			guessInput.style.color = "grey";
 			const response = await postApiJson("/api/command/find/", {
 				gameId: pano.gameId,
 			});
-			guessGameForm.style.display = "none";
 			await correctGuess(pano.gameId, response.prettyGameName);
+			guessInput.value = "";
 			displayMinimap(map, response.mapId, mapDiv);
 		} catch (error) {
 			console.error(`/find crashed : ${error.message}`);
