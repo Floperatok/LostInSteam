@@ -1,4 +1,4 @@
-from geogamers.models import Pano, Map
+from geogamers.models import Pano, Map, Game
 from django.http import JsonResponse, \
 						HttpResponseBadRequest, \
 						HttpResponseNotFound, \
@@ -18,15 +18,25 @@ def find_game_command(request):
 	except json.JSONDecodeError:
 		print("Invalid JSON format")
 		return HttpResponseBadRequest()
+
 	try:
-		map = Map.objects.get(game__id=game_id)
+		game = Game.objects.get(id=game_id)
+	except Game.DoesNotExist:
+		print(f"No game matches the given query 'gameId={game_id}'")
+		return HttpResponseServerError()
+	except Game.MultipleObjectsReturned:
+		print(f"Multiple games matches the given query 'gameId={game_id}'")
+		return HttpResponseServerError()
+		
+	try:
+		map = Map.objects.get(game=game)
 	except Map.DoesNotExist:
-		print(f"No map matches the given query 'game__id={game_id}', using placeholder")
+		print(f"No map matches the given query 'game={game.name}', using placeholder")
 		map = get_placeholder_map()
 		if not map:
 			return HttpResponseServerError()
 	except Map.MultipleObjectsReturned:
-		print(f"Multiple maps matches the given query 'gameId={game_id}'")
+		print(f"Multiple maps matches the given query 'game={game.name}'")
 		return HttpResponseServerError()
 
 	if map.tile_depth == 0:
@@ -34,7 +44,7 @@ def find_game_command(request):
 		map = get_placeholder_map()
 	return JsonResponse({
 		"mapId": map.id,
-		"prettyGameName": map.game.pretty_name
+		"prettyGameName": game.pretty_name
 	})
 
 
