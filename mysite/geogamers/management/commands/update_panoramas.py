@@ -9,7 +9,7 @@ class Command(BaseCommand):
 		parser.add_argument("data_path", type=str)
 
 
-	def create_pano_obj(self, pano_data, game_obj):
+	def create_pano_obj(self, pano_data, game_obj, map_obj):
 		pano_settings_path = f"{pano_data["path"]}/data.json"
 
 		if not os.path.exists(pano_settings_path):
@@ -22,6 +22,7 @@ class Command(BaseCommand):
 		try:
 			pano_obj, created = Pano.objects.get_or_create(
 				game = game_obj,
+				map = map_obj,
 				number = pano_data["number"],
 				lat = pano_data["lat"],
 				lng = pano_data["lng"],
@@ -41,6 +42,7 @@ class Command(BaseCommand):
 		try:
 			map_obj, created = Map.objects.get_or_create(
 				game = game_obj,
+				name = map_data["name"],
 				tile_depth = map_data["tile_depth"],
 				attribution = map_data["attribution"],
 				bounds = map_data["bounds"],
@@ -72,11 +74,16 @@ class Command(BaseCommand):
 		else:
 			self.stdout.write(f"Game already exist     : {game_obj.__str__()}")
 		
-		self.create_map_obj(game_data["map"], game_obj)
+		for map in game_data["maps"]:
+			self.create_map_obj(map, game_obj)
 
 		for pano_data in game_data["panoramas"]:
 			pano_data["path"] = f"{game_data["path"]}/{pano_data["number"]}"
-			self.create_pano_obj(pano_data, game_obj)
+			if pano_data["map_name"] == "":
+				map_obj = Map.objects.get(game__name="placeholder", name="placeholder")
+			else:
+				map_obj = Map.objects.get(game=game_obj, name=pano_data["map_name"])
+			self.create_pano_obj(pano_data, game_obj, map_obj)
 
 
 	def handle(self, *args, **options):

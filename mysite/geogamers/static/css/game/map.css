@@ -1,4 +1,93 @@
 
+/* CONTROLS */
+.map-control {
+	position: absolute;
+	z-index: 500;
+	transition: opacity 200ms;
+}
+.map-control a {
+	display: block;
+	color: black !important;
+	text-decoration: none;
+	font-weight: bold;
+	text-align: center;
+	background-color: white;
+}
+.map-control a:hover {
+	filter: brightness(85%);
+}
+.map-control a:active {
+	filter: brightness(60%);
+}
+
+/* SELECT MAP MENU */
+.map-control-map-selection {
+	display: none;
+	top: 0;
+	left: 0;
+}
+.map-control-map-selection-header {
+	position: relative;
+	z-index: 501;
+	padding: 5px 20px 5px 20px;
+	border-radius: 0 0 10px 0;
+	background-color: white;
+	font-size: large;
+	font-weight: bold;
+	cursor: default;
+	transition: transform 200ms ease;
+}
+.map-control-map-selection-list {
+	border-radius: 0 0 10px 0;
+	overflow: hidden;
+	width: 70%;
+	transform: translateY(-100%);
+	transition: transform 200ms ease;
+}
+.map-control-map-selection-list .current-map {
+	background-color: #06f;
+	color: white !important;
+}
+.map-control-map-selection-list .answer-map {
+	border-style: solid;
+	border-width: 2px;
+	border-color: green;
+}
+.map-control-map-selection-list a {
+	padding: 7px;
+	border-top-color: black;
+	border-top-width: 1px;
+	border-top-style: solid;
+	font-size: large;
+}
+
+/* MINIMAP SCALE BUTTONS */
+.map-control-scale {
+	bottom: 15px;
+	right: 15px;
+}
+.map-control-scale a {
+	font-size: x-large;
+	line-height: 0.8;
+	border-radius: 5px;
+	width: 20px;
+	height: 20px;
+	margin-bottom: 3px;
+	padding: 10px 6px 10px 6px;
+}
+
+/* MINIMAP ATTRIBUTION */
+.map-control-attribution {
+	bottom: 0;
+	right: 0;
+}
+.map-control-attribution a {
+	color: #0078A8 !important;
+	padding: 3px 7px 3px 7px;
+	text-decoration: underline;
+	border-radius: 10px 0 0 0;
+}
+
 /* MINIMAP SCALES */
 .minimap.scale0 {
 	height: 300px;
@@ -20,33 +109,28 @@
 	height: 800px;
 	width: 1300px;
 }
-
-/* MINIMAP SCALE BUTTONS */
-.minimap.scale4 #scale_up_map,
-.minimap.scale0 #scale_down_map {
+.scale4 .scale_up_map, 
+.scale0 .scale_down_map { 
 	color: grey !important;
 }
 
-.minimap .leaflet-control-attribution {
-	display: none;
-}
-
 /* MINIMAP MOUSE OUT */
-.minimap.map_mouse_out {
+.minimap {
 	height: 300px;
 	width: 300px;
-	opacity: 0.5 !important;
+	opacity: 0.65;
 }
-.minimap .leaflet-control-scale, 
-.minimap .leaflet-control-attribution {
-	transition: opacity 200ms;
+.minimap:hover {
+	opacity: 1;
 }
-.minimap.map_mouse_out .leaflet-control-scale, 
-.minimap.map_mouse_out .leaflet-control-attribution,
-.minimap.map_mouse_out #guess_pos_btn {
+.minimap .map-control {
 	opacity: 0;
 }
+.minimap:hover .map-control { 
+	opacity: 1;
+}
 
+/* MINIMAP */
 .minimap {
 	transition: 
 		width 350ms ease, 
@@ -64,26 +148,21 @@
 	position: relative;
 	flex: 1 1 auto;
 	height: 100%;
+	transition: opacity 200ms;
 }
 .map_result #guess_pos_btn {
 	display: none !important;
 }
-.map_result .leaflet-control-scale {
+.map_result .map-control-scale {
 	display: none;
 }
-
-/* SCALE BUTTONS */
-.leaflet-control-scale {
-	margin-bottom: 10px !important;
-	margin-right: 3px !important;
-}
-.leaflet-control-scale > a {
-	font-size:x-large;
-	font-weight: bold;
+.minimap .map-control-attribution {
+	display: none;
 }
 
 /* GUESS POSTIONS BUTTON */
 #guess_pos_btn {
+	display: none;
 	position: inherit;
 	bottom: 5%;
 	left: 50%;
@@ -115,4 +194,7 @@
 
 .leaflet-container.crosshair-cursor-enabled {
     cursor:crosshair;
+}
+.leaflet-control-attribution {
+	display: none;
 }

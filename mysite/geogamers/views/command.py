@@ -1,11 +1,11 @@
-from geogamers.models import Pano, Map, Game
+from geogamers.models import Pano, Game
 from django.http import JsonResponse, \
 						HttpResponseBadRequest, \
 						HttpResponseNotFound, \
 						HttpResponseServerError, \
 						HttpResponseNotAllowed
 import json, random
-from .map import get_placeholder_map
+from .game import return_game_infos
 
 
 def find_game_command(request):
@@ -27,25 +27,7 @@ def find_game_command(request):
 	except Game.MultipleObjectsReturned:
 		print(f"Multiple games matches the given query 'gameId={game_id}'")
 		return HttpResponseServerError()
-		
-	try:
-		map = Map.objects.get(game=game)
-	except Map.DoesNotExist:
-		print(f"No map matches the given query 'game={game.name}', using placeholder")
-		map = get_placeholder_map()
-		if not map:
-			return HttpResponseServerError()
-	except Map.MultipleObjectsReturned:
-		print(f"Multiple maps matches the given query 'game={game.name}'")
-		return HttpResponseServerError()
-
-	if map.tile_depth == 0:
-		print("invalid map, using placeholder")
-		map = get_placeholder_map()
-	return JsonResponse({
-		"mapId": map.id,
-		"prettyGameName": game.pretty_name
-	})
+	return return_game_infos(game)
 
 
 def	goto_pano_command(request):

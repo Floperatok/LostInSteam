@@ -24,58 +24,76 @@ function logMapLayers(map) {
 }
 
 
-async function displayResultMap(map, container, result) {
+function displayResultUI(map, answerPos) {
+	const icon = L.icon({
+		iconUrl: '/static/image/marker-icon.png',
+		shadowUrl: '/static/image/marker-shadow.png',
+		iconAnchor: [12, 41],
+	})
+	var answerMarker = new L.marker(L.latLng(answerPos.lat, answerPos.lng), {icon: icon})
+		.addTo(mapLayerGroup)
+	if (map._userMarker._mapId == map._id) {
+		var polyline = L.polyline([map._userMarker.getLatLng(), answerMarker.getLatLng()], {
+			color: "white",
+			dashArray: "20, 20",
+		}).addTo(mapLayerGroup);
+		map.setView(polyline.getCenter(), map.getBoundsZoom(polyline.getBounds()) - 1, true);
+	} else {
+		map.setView(answerMarker.getLatLng(), map.getMaxZoom() - 2, true);
+	}
+}
 
+
+async function centerMap(map) {
+	const center = L.latLng(
+		(map._bounds[0][0] + map._bounds[1][0]) / 2, 
+		(map._bounds[0][1] + map._bounds[1][1]) / 2
+	);
+	const zoom = map.getBoundsZoom(map._bounds) + 1;
+	map.setView(center, zoom, true);
+}
+
+
+async function displayResultMap(map, mapsData, container, result) {
+	container.style.opacity = "0";
 	if (!container.classList.contains("map_result")) {
 		container.classList.toggle("map_result");
 	}
 	if (container.classList.contains("minimap")) {
 		container.classList.toggle("minimap");
 	}
-
+	map._resultPos = result.answerPos;
+	
+	await loadMap(map, result.answerMapId, container);
+	const mapSelectionListDiv = mapSelectionListControl(map, mapsData, container);
+	if (mapSelectionListDiv) {
+		mapSelectionListDiv.querySelector(".current-map").classList.add("answer-map");
+	}
+	
+	displayResultUI(map, result.answerPos);
 	disableMarkerOnClick(map);
-	disableMouseHover(map);
-
-	const guessMarker = mapLayerGroup.getLayers()[0];
-	const icon = L.icon({
-		iconUrl: '/static/image/marker-icon.png',
-		shadowUrl: '/static/image/marker-shadow.png',
-		iconAnchor: [12, 41],
-	})
-
-	var answerMarker = new L.marker(L.latLng(result.answerLat, result.answerLng), {icon: icon})
-		.addTo(mapLayerGroup).bindPopup(`${L.latLng(result.answerLat, result.answerLng)}`);
-	var polyline = L.polyline([guessMarker.getLatLng(), answerMarker.getLatLng()], {
-		color: "white",
-		dashArray: "20, 20",
-	}).addTo(mapLayerGroup);
-	L.DomUtil.removeClass(map._container, 'crosshair-cursor-enabled');
-
-	map.setView(polyline.getCenter(), map.getBoundsZoom(polyline.getBounds()));
+	container.classList.remove("crosshair-cursor-enabled");
+	container.style.opacity = "";
 }
 
 
-async function displayMinimap(map, mapId, container) {
-	container.querySelector("#guess_pos_btn").style.display = "none";
+async function displayMinimap(map, mapsData, container) {
 	if (container.classList.contains("map_result")) {
 		container.classList.toggle("map_result");
 	}
 	if (!container.classList.contains("minimap")) {
 		container.classList.toggle("minimap");
 	}
+
+	mapSelectionListControl(map, mapsData, container);
+
 	container.style.opacity = "0";
 	container.style.display = "block";
+	container.classList.remove(getContainerScaleClass(container));
 	map.invalidateSize(false);
-
-	const mapData = await loadMap(map, mapId, container);
-	var center = L.latLng(
-		(mapData.bounds[0][0] + mapData.bounds[1][0]) / 2, 
-		(mapData.bounds[0][1] + mapData.bounds[1][1]) / 2
-	);
-	map.setView(center, map.getBoundsZoom(mapData.bounds) + 1, false);
+	centerMap(map);
 
 	enableMarkerOnClick(map);
-	enableMouseHover(map, container);
-	L.DomUtil.addClass(map._container, 'crosshair-cursor-enabled');
-	container.style.opacity = "1";
+	container.classList.add("crosshair-cursor-enabled");
+	container.style.opacity = "";
 }

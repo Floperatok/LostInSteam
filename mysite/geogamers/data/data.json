@@ -6,15 +6,18 @@
 			"placeholder"
 		],
 		"panoramas": [],
-		"map": {
-			"tile_depth": 6,
-			"attribution": "",
-			"bounds": [
-				[-5, -28],
-				[-212, 264]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "placeholder",
+				"tile_depth": 6,
+				"attribution": "",
+				"bounds": [
+					[-5, -28],
+					[-212, 264]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "american_truck_simulator",
@@ -25,34 +28,41 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -100.071,
 				"lng": 62.954
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -94.383,
 				"lng": 83.953
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -120.951,
 				"lng": 102.937
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -71.766,
 				"lng": 54.074
 			}
 		],
-		"map": {
-			"tile_depth": 9,
-			"attribution": "https://mapgenie.io/american-truck-simulator/maps/north-america",
-			"bounds": [
-				[-57, 38], 
-				[-137, 126]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 9,
+				"attribution": "https://mapgenie.io/american-truck-simulator/maps/north-america",
+				"bounds": [
+					[-57, 38], 
+					[-137, 126]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "assassins_creed_mirage",
@@ -64,44 +74,53 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -99.256,
 				"lng": 122.155
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -116.280,
 				"lng": 119.893
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -142.192,
 				"lng": 145.02
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -165.927,
 				"lng": 150.370
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -153.267,
 				"lng": 90.793
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -116.221,
 				"lng": 68.789
 			}
 		],
-		"map": {
-			"tile_depth": 6,
-			"attribution": "https://mapgenie.io/assassins-creed-mirage/maps/baghdad",
-			"bounds": [
-				[-12.06, 14.38], 
-				[-244.21, 241.95]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 6,
+				"attribution": "https://mapgenie.io/assassins-creed-mirage/maps/baghdad",
+				"bounds": [
+					[-12.06, 14.38], 
+					[-244.21, 241.95]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "borderlands_2",
@@ -113,49 +132,59 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://mapgenie.io/borderlands-2/maps/world",
-			"bounds": [
-				[0, 0], 
-				[-255, 255]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/borderlands-2/maps/world",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "borderlands_3",
@@ -167,49 +196,59 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": 0.0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 8,
-			"attribution": "https://mapgenie.io/borderlands-3/maps/pandora",
-			"bounds": [
-				[-37.97, 25.31], 
-				[-148.40, 224.35]
-			],
-			"bg_color": "#1a1624"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/borderlands-3/maps/pandora",
+				"bounds": [
+					[-37.97, 25.31], 
+					[-148.40, 224.35]
+				],
+				"bg_color": "#1a1624"
+			}
+		]
 	},
 	{
 		"name": "fallout_new_vegas",
@@ -221,44 +260,53 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -142.845,
 				"lng": 84.249
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -139.798,
 				"lng": 115.438
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -96.389,
 				"lng": 109.423
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -80.069,
 				"lng": 117.559
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -68.312,
 				"lng": 134.949
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -71.869,
 				"lng": 176.284
 			}
 		],
-		"map": {
-			"tile_depth": 5,
-			"attribution": "https://fallout.fandom.com/wiki/Fallout:_New_Vegas_high_resolution_maps?file=Mojave_Wasteland_map.jpg",
-			"bounds": [
-				[-7.70, 7.72], 
-				[-248.31, 248.29]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 5,
+				"attribution": "https://fallout.fandom.com/wiki/Fallout:_New_Vegas_high_resolution_maps?file=Mojave_Wasteland_map.jpg",
+				"bounds": [
+					[-7.70, 7.72], 
+					[-248.31, 248.29]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "forza_horizon_5",
@@ -270,39 +318,47 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -125.161,
 				"lng": 136.197
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -115.537,
 				"lng": 140.935
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -116.00,
 				"lng": 109.427
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -151.540,
 				"lng": 145.00
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -155.066,
 				"lng": 134.039
 			}
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://mapgenie.io/forza-horizon-5/maps/mexico",
-			"bounds": [
-				[-64.00, 64.00], 
-				[-191.99, 192.01]
-			],
-			"bg_color": "#242621"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/forza-horizon-5/maps/mexico",
+				"bounds": [
+					[-64.00, 64.00], 
+					[-191.99, 192.01]
+				],
+				"bg_color": "#242621"
+			}
+		]
 	},
 	{
 		"name": "god_of_war_2018",
@@ -314,34 +370,41 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -159.564,
 				"lng": 46.026
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -166.453,
 				"lng": 152.441
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -131.980,
 				"lng": 119.837
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -87.628,
 				"lng": 140.873
 			}
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://mapgenie.io/god-of-war-2018/maps/midgard",
-			"bounds": [
-				[0, 0], 
-				[-255.00, 255.00]
-			],
-			"bg_color": "#212121"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/god-of-war-2018/maps/midgard",
+				"bounds": [
+					[0, 0], 
+					[-255.00, 255.00]
+				],
+				"bg_color": "#212121"
+			}
+		]
 	},
 	{
 		"name": "grounded",
@@ -352,49 +415,59 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -173.136,
 				"lng": 126.693
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -144.664,
 				"lng": 168.211
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -122.127,
 				"lng": 165.756
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -119.250,
 				"lng": 131.062
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -130.303,
 				"lng": 89.995
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -176.145,
 				"lng": 69.927
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": -134.156,
 				"lng": 98.914
 			}
 		],
-		"map": {
-			"tile_depth": 4,
-			"attribution": "https://mapgenie.io/grounded/maps/yard",
-			"bounds": [
-				[0, 0], 
-				[-255.00, 255.00]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 4,
+				"attribution": "https://mapgenie.io/grounded/maps/yard",
+				"bounds": [
+					[0, 0], 
+					[-255.00, 255.00]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "hellblade_senuas_sacrifice",
@@ -406,24 +479,18 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 1,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 0,
-			"attribution": "",
-			"bounds": [
-				[0, 0], 
-				[0, 0]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": []
 	},
 	{
 		"name": "hitman",
@@ -435,49 +502,48 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 1,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 2,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 3,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 4,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 5,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 6,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 0,
-			"attribution": "",
-			"bounds": [
-				[0, 0], 
-				[0, 0]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": []
 	},
 	{
 		"name": "hogwarts_legacy",
@@ -489,59 +555,71 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -99.444,
 				"lng": 122.074
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -91.258,
 				"lng": 128.977
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -83.435,
 				"lng": 128.390
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -117.498,
 				"lng": 118.327
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -133.576,
 				"lng": 105.810
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -136.269,
 				"lng": 128.949
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": -105.250,
 				"lng": 119.794
 			},
 			{
 				"number": 7,
+				"map_name": "main",
 				"lat": -84.789,
 				"lng": 120.122
 			},
 			{
 				"number": 8,
+				"map_name": "main",
 				"lat": -73.745,
 				"lng": 121.99
 			}
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://mapgenie.io/hogwarts-legacy/maps/world",
-			"bounds": [
-				[-63.99, 78.06], 
-				[-191.99, 177.96]
-			],
-			"bg_color": "#2c3039"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/hogwarts-legacy/maps/world",
+				"bounds": [
+					[-63.99, 78.06], 
+					[-191.99, 177.96]
+				],
+				"bg_color": "#2c3039"
+			}
+		]
 	},
 	{
 		"name": "metro_exodus",
@@ -552,59 +630,60 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 1,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 2,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 3,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 4,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 5,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 6,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 7,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			},
 			{
 				"number": 8,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 0,
-			"attribution": "",
-			"bounds": [
-				[0, 0], 
-				[0, 0]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": []
 	},
 	{
 		"name": "mirrors_edge",
@@ -616,19 +695,12 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 0,
-			"attribution": "",
-			"bounds": [
-				[0, 0], 
-				[0, 0]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": []
 	},
 	{
 		"name": "morrowind",
@@ -649,44 +721,53 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -172.211,
 				"lng": 115.976
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -155.433,
 				"lng": 124.826
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -96.693,
 				"lng": 91.875
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -156.888,
 				"lng": 137.980
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -91.779,
 				"lng": 188.799
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -114.269,
 				"lng": 146.471
 			}
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://gamemap.uesp.net/mw/",
-			"bounds": [
-				[-26.30, 17.53], 
-				[-215.26, 234.28]
-			],
-			"bg_color": "#7076aa"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://gamemap.uesp.net/mw/",
+				"bounds": [
+					[-26.30, 17.53], 
+					[-215.26, 234.28]
+				],
+				"bg_color": "#7076aa"
+			}
+		]
 	},
 	{
 		"name": "outer_wilds",
@@ -698,34 +779,30 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 1,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 2,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 3,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 0,
-			"attribution": "",
-			"bounds": [
-				[0, 0], 
-				[0, 0]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": []
 	},
 	{
 		"name": "palworld",
@@ -736,34 +813,41 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -145.697,
 				"lng": 135.913
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -143.336,
 				"lng": 130.129
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -123.321,
 				"lng": 113.789
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -119.604,
 				"lng": 105.211
 			}
 		],
-		"map": {
-			"tile_depth": 8,
-			"attribution": "https://mapgenie.io/palworld/maps/palpagos-islands",
-			"bounds": [
-				[-87.54, 43.77], 
-				[-200.25, 171.25]
-			],
-			"bg_color": "#172537"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/palworld/maps/palpagos-islands",
+				"bounds": [
+					[-87.54, 43.77], 
+					[-200.25, 171.25]
+				],
+				"bg_color": "#172537"
+			}
+		]
 	},
 	{
 		"name": "portal_1",
@@ -776,39 +860,47 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -222.197,
 				"lng": 176.459
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -220.985,
 				"lng": 175.406
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -205.143,
 				"lng": 189.589
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -166.288,
 				"lng": 172.451
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -129.158,
 				"lng": 161.447
 			}
 		],
-		"map": {
-			"tile_depth": 5,
-			"attribution": "https://www.reddit.com/r/Portal/comments/uagkpk/every_portal_1_map_on_one_image/#lightbox",
-			"bounds": [
-				[-35.21, 56.54], 
-				[-228.41, 211.61]
-			],
-			"bg_color": "#040605"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 5,
+				"attribution": "https://www.reddit.com/r/Portal/comments/uagkpk/every_portal_1_map_on_one_image/#lightbox",
+				"bounds": [
+					[-35.21, 56.54], 
+					[-228.41, 211.61]
+				],
+				"bg_color": "#040605"
+			}
+		]
 	},
 	{
 		"name": "portal_2",
@@ -819,29 +911,24 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 1,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			},
 			{
 				"number": 2,
+				"map_name": "",
 				"lat": 0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 0,
-			"attribution": "",
-			"bounds": [
-				[0, 0], 
-				[0, 0]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": []
 	},
 	{
 		"name": "satisfactory",
@@ -852,50 +939,60 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -189.415,
 				"lng": 83.807
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -93.218,
 				"lng": 122.796
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -130.337,
 				"lng": 146.417
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -80.411,
 				"lng": 111.050
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -80.614,
 				"lng": 196.015
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -97.483,
 				"lng": 15.412
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": -191.801,
 				"lng": 116.413
 			}
 			
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://satisfactory-calculator.com/en/interactive-map",
-			"bounds": [
-				[0, 0], 
-				[-255, 255]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://satisfactory-calculator.com/en/interactive-map",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "sea_of_thieves",
@@ -907,19 +1004,23 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -108.793,
 				"lng": 73.394
 			}
 		],
-		"map": {
-			"tile_depth": 9,
-			"attribution": "https://maps.seaofthieves.rarethief.com",
-			"bounds": [
-				[-32.22, 30.08], 
-				[-220, 218]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 9,
+				"attribution": "https://maps.seaofthieves.rarethief.com",
+				"bounds": [
+					[-32.22, 30.08], 
+					[-220, 218]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "shadow_of_war",
@@ -935,19 +1036,12 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "",
 				"lat": 0.0,
 				"lng": 0.0
 			}
 		],
-		"map": {
-			"tile_depth": 0,
-			"attribution": "",
-			"bounds": [
-				[0, 0], 
-				[0, 0]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": []
 	},
 	{
 		"name": "skyrim",
@@ -969,54 +1063,75 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -165.491,
 				"lng": 126.501
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -132.316,
 				"lng": 140.090
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -103.644,
 				"lng": 138.554
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -143.316,
 				"lng": 168.080
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -160.482,
 				"lng": 205.175
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -144.126,
 				"lng": 162.213
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": -142.012,
 				"lng": 67.506
 			},
 			{
 				"number": 7,
+				"map_name": "main",
 				"lat": -97.574,
 				"lng": 86.415
 			}
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://mapgenie.io/skyrim/maps/skyrim",
-			"bounds": [
-				[-33.99, 8.01], 
-				[-221.98, 248.02]
-			],
-			"bg_color": "#000000"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/skyrim/maps/skyrim",
+				"bounds": [
+					[-33.99, 8.01], 
+					[-221.98, 248.02]
+				],
+				"bg_color": "#000000"
+			},
+			{
+				"name": "fallout",
+				"tile_depth": 5,
+				"attribution": "https://fallout.fandom.com/wiki/Fallout:_New_Vegas_high_resolution_maps?file=Mojave_Wasteland_map.jpg",
+				"bounds": [
+					[-7.70, 7.72], 
+					[-248.31, 248.29]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "sons_of_the_forest",
@@ -1029,49 +1144,59 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -107.884,
 				"lng": 110.833
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -104.938,
 				"lng": 111.773
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -120.114,
 				"lng": 115.111
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -131.229,
 				"lng": 112.819
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -140.698,
 				"lng": 118.038
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -123.911,
 				"lng": 110.867
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": -131.395,
 				"lng": 133.299
 			}
 		],
-		"map": {
-			"tile_depth": 8,
-			"attribution": "https://mapgenie.io/sons-of-the-forest/maps/world",
-			"bounds": [
-				[-88.43, 87.26], 
-				[-165.95, 166.54]
-			],
-			"bg_color": "#9eb5d5"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/sons-of-the-forest/maps/world",
+				"bounds": [
+					[-88.43, 87.26], 
+					[-165.95, 166.54]
+				],
+				"bg_color": "#9eb5d5"
+			}
+		]
 	},
 	{
 		"name": "subnautica_1",
@@ -1085,39 +1210,47 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -124.212,
 				"lng": 112.379
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -105.476,
 				"lng": 120.702
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -120.539,
 				"lng": 108.737
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -137.412,
 				"lng": 100.757
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -109.822,
 				"lng": 115.629
 			}
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://mapgenie.io/subnautica/maps/world",
-			"bounds": [
-				[-87.11, 74.45], 
-				[-163.80, 178.78]
-			],
-			"bg_color": "#070908"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/subnautica/maps/world",
+				"bounds": [
+					[-87.11, 74.45], 
+					[-163.80, 178.78]
+				],
+				"bg_color": "#070908"
+			}
+		]
 	},
 	{
 		"name": "subnautica_below_zero",
@@ -1129,49 +1262,59 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -102.994,
 				"lng": 124.699
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -109.049,
 				"lng": 127.468
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -121.261,
 				"lng": 121.723
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -129.501,
 				"lng": 129.772
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -145.589,
 				"lng": 150.104
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -129.237,
 				"lng": 112.423
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": -131.917,
 				"lng": 96.525
 			}
 		],
-		"map": {
-			"tile_depth": 6,
-			"attribution": "https://mapgenie.io/subnautica-below-zero/maps/world",
-			"bounds": [
-				[-72.85, 66.22], 
-				[-179.95, 189.20]
-			],
-			"bg_color": "#070908"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 6,
+				"attribution": "https://mapgenie.io/subnautica-below-zero/maps/world",
+				"bounds": [
+					[-72.85, 66.22], 
+					[-179.95, 189.20]
+				],
+				"bg_color": "#070908"
+			}
+		]
 	},
 	{
 		"name": "the_forest",
@@ -1182,49 +1325,59 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -171.730,
 				"lng": 150.190
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -157.435,
 				"lng": 150.211
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -153.168,
 				"lng": 134.417
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -143.907,
 				"lng": 131.717
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -136.149,
 				"lng": 115.294
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -145.099,
 				"lng": 124.298
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": -168.263,
 				"lng": 133.166
 			}
 		],
-		"map": {
-			"tile_depth": 7,
-			"attribution": "https://mapgenie.io/the-forest/maps/the-peninsula",
-			"bounds": [
-				[-53.78, 66.50], 
-				[-193.32, 199.59]
-			],
-			"bg_color": "#0c1b26"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/the-forest/maps/the-peninsula",
+				"bounds": [
+					[-53.78, 66.50], 
+					[-193.32, 199.59]
+				],
+				"bg_color": "#0c1b26"
+			}
+		]
 	},
 	{
 		"name": "the_witness",
@@ -1235,48 +1388,58 @@
 		"panoramas": [
 			{
 				"number": 0,
+				"map_name": "main",
 				"lat": -158.767,
 				"lng": 79.128
 			},
 			{
 				"number": 1,
+				"map_name": "main",
 				"lat": -88.062,
 				"lng": 130.434
 			},
 			{
 				"number": 2,
+				"map_name": "main",
 				"lat": -76.575,
 				"lng": 189.397
 			},
 			{
 				"number": 3,
+				"map_name": "main",
 				"lat": -144.473,
 				"lng": 180.208
 			},
 			{
 				"number": 4,
+				"map_name": "main",
 				"lat": -170.253,
 				"lng": 110.269
 			},
 			{
 				"number": 5,
+				"map_name": "main",
 				"lat": -70.705,
 				"lng": 156.725
 			},
 			{
 				"number": 6,
+				"map_name": "main",
 				"lat": -82.957,
 				"lng": 32.672
 			}
 		],
-		"map": {
-			"tile_depth": 1,
-			"attribution": "",
-			"bounds": [
-				[0, 0], 
-				[-256, 256]
-			],
-			"bg_color": "#ab8441"
-		}
+		"maps": [
+			{
+				"name": "main",
+				"tile_depth": 1,
+				"attribution": "",
+				"bounds": [
+					[0, 0], 
+					[-256, 256]
+				],
+				"bg_color": "#ab8441"
+			}
+		]
 	}
 ]

@@ -1,4 +1,4 @@
-from geogamers.models import Pano, Map, Game
+from geogamers.models import Pano, Game
 from django.http import JsonResponse, \
 						HttpResponseBadRequest, \
 						HttpResponseNotFound, \
@@ -6,7 +6,7 @@ from django.http import JsonResponse, \
 						HttpResponseNotAllowed
 import json, math
 from geogamers.input_parsing import valid_game_guess
-from .map import get_placeholder_map
+from .game import return_game_infos
 
 
 def guess_game(request):
@@ -30,31 +30,13 @@ def guess_game(request):
 		print(f"Multiple games matches the given query 'id={game_id}'")
 		return HttpResponseServerError()
 	
-	try:
-		map = Map.objects.get(game__id=game_id)
-	except Map.DoesNotExist:
-		print(f"No map matches the given query 'game__id={game_id}', using placeholder")
-		map = get_placeholder_map()
-		if not map:
-			return HttpResponseServerError()
-	except Map.MultipleObjectsReturned:
-		print(f"Multiple maps matches the given query 'game__id={game_id}'")
-		return HttpResponseServerError()
-	
-	if map.tile_depth == 0:
-		print("invalid map, using placeholder")
-		map = get_placeholder_map()
 	if valid_game_guess(game, guess):
-		return JsonResponse({
-			"valid": True,
-			"prettyGameName": game.pretty_name,
-			"mapId": map.id,
-		})
+		return return_game_infos(game)
 	else:
 		return JsonResponse({
 			"valid": False,
 			"prettyGameName": "",
-			"mapId": 0,
+			"mapsData": [],
 		})
 	
 
@@ -64,6 +46,7 @@ def guess_pos(request):
 		return HttpResponseNotAllowed()
 	try:
 		request_body = json.loads(request.body)
+		guessed_map_id = request_body.get("mapId")
 		pano_id = request_body.get("panoId")
 		pos = request_body.get("pos")
 	except json.JSONDecodeError:
@@ -78,10 +61,13 @@ def guess_pos(request):
 	except Pano.MultipleObjectsReturned:
 		print(f"Multiple panos matches the given query 'id={pano_id}'")
 		return HttpResponseServerError()
-	
-	distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
+
+	if str(pano.map.id) != guessed_map_id:
+		distance = 9999
+	else:
+		distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
 	return JsonResponse({
-		"answerLng": pano.lng,
-		"answerLat": pano.lat,
+		"answerPos": {"lng": pano.lng, "lat": pano.lat},
+		"answerMapId": pano.map.id,
 		"distance": round(distance, 2),
 	})

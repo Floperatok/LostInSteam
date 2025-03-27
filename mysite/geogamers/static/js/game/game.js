@@ -7,7 +7,7 @@ function createMapContainer() {
 
 	guessPosBtn.id = "guess_pos_btn";
 	guessPosBtn.innerText = "Guess";
-	
+
 	mapDiv.id = "map";
 	mapDiv.classList.add("scale1");
 	mapDiv.appendChild(guessPosBtn);
@@ -23,7 +23,7 @@ function incorrectGuess() {
 }
 
 
-async function correctGuess(gameId, prettyGameName) {
+async function displayGameAnswer(gameId, prettyGameName) {
 	try {
 		var posterImage = await getApiImage(`/api/game/${gameId}/poster`);
 	} catch (error) {
@@ -32,15 +32,10 @@ async function correctGuess(gameId, prettyGameName) {
 	}
 	document.getElementById("guess_game_form").style.display = "none";
 	document.getElementById("guess_input").style.color = "";
-	await displayGameAnswer(posterImage, prettyGameName);
-}
 
-
-async function displayGameAnswer(posterImage, prettyGameName) {
 	const imageUrl = URL.createObjectURL(posterImage);
 	const imageElement = document.createElement("img");
 	imageElement.src = imageUrl;
-
 	const posterContainer = document.getElementById("poster_wrapper");
 	posterContainer.innerHTML = "";
 	posterContainer.appendChild(imageElement);
@@ -65,13 +60,12 @@ async function displayGameAnswer(posterImage, prettyGameName) {
 }
 
 
-function resultScreen(map, mapDiv, result) {
+function resultScreen(map, mapsData, mapDiv, result) {
 	const resultScreenDiv = document.getElementById("result_screen"); 
 	resultScreenDiv.insertBefore(mapDiv, resultScreenDiv.firstChild);
 	document.getElementById("distance").innerText = `Distance: ${result.distance}`;
-	displayResultMap(map, mapDiv, result);
+	displayResultMap(map, mapsData, mapDiv, result);
 	displayScreen("result_screen");
-
 }
 
 
@@ -92,9 +86,10 @@ document.addEventListener("DOMContentLoaded", game)
 async function game() {
 
 	const	mapDiv = createMapContainer();
+	const	map = initLeaflet(mapDiv);
+	let 	mapsData = [];
 
 	const	viewer = initMarzipano();
-	const	map = initLeaflet(mapDiv);
 	let		pano = {};
 
 	const resizeObserver = new ResizeObserver(entries => {
@@ -109,9 +104,12 @@ async function game() {
 	const	guessGameForm	= document.getElementById("guess_game_form");
 	const	guessInput		= document.getElementById("guess_input");
 	const	nextBtn			= document.getElementById("next_btn");
-
+	const	guessPosBtn		= mapDiv.querySelector("#guess_pos_btn");
+	
 	guessGameForm.addEventListener("submit", handleGuessGame);
 	nextBtn.addEventListener("click", handleNext);
+	guessPosBtn.addEventListener("click", handleGuessPos);
+
 
 	async function handleGuessGame(event) {
 		event.preventDefault();
@@ -125,7 +123,6 @@ async function game() {
 			return ;
 		}
 		try {
-			guessInput.style.color = "grey";
 			var response = await postApiJson("/api/guess/game/", {
 				gameId: pano.gameId, 
 				guess: guess,
@@ -135,10 +132,12 @@ async function game() {
 			return ;
 		}
 		if (response.valid) {
-			await correctGuess(pano.gameId, response.prettyGameName);
-			displayMinimap(map, response.mapId, mapDiv);
+			mapsData = response.mapsData;
+			const mapPromise = loadMap(map, mapsData[0].id, mapDiv);
+			await displayGameAnswer(pano.gameId, response.prettyGameName);
+			await mapPromise;
+			displayMinimap(map, mapsData, mapDiv);
 		} else {
-			guessInput.style.color = "";
 			incorrectGuess();
 		}
 	}
@@ -148,10 +147,11 @@ async function game() {
 		event.stopPropagation();
 		try {
 			let result = await postApiJson("/api/guess/pos/", {
+				mapId: map._id,
 				pos: mapLayerGroup.getLayers()[0]._latlng,
 				panoId: pano.id,
 			});
-			resultScreen(map, mapDiv, result);
+			resultScreen(map, mapsData, mapDiv, result);
 			pano = await switchToRandomScene(viewer);
 		} catch (error) {
 			errorScreen(error.status, error.message);
@@ -160,7 +160,8 @@ async function game() {
 	}
 
 
-	async function handleNext(event) {
+	function handleNext(event) {
+		map._userMarker = null;
 		gameScreen(mapDiv);
 	}
 
@@ -179,6 +180,7 @@ async function game() {
 				break;
 			case "find":
 				cheatFindGame();
+				guessInput.value = "";
 				break;
 			default:
 				console.log(`Unknown command "${guessWords[0]}"`);
@@ -207,9 +209,11 @@ async function game() {
 			const response = await postApiJson("/api/command/find/", {
 				gameId: pano.gameId,
 			});
-			await correctGuess(pano.gameId, response.prettyGameName);
-			guessInput.value = "";
-			displayMinimap(map, response.mapId, mapDiv);
+			mapsData = response.mapsData;
+			const mapPromise = loadMap(map, mapsData[0].id, mapDiv);
+			await displayGameAnswer(pano.gameId, response.prettyGameName);
+			await mapPromise;
+			displayMinimap(map, mapsData, mapDiv);
 		} catch (error) {
 			console.error(`/find crashed : ${error.message}`);
 			return ;
@@ -245,7 +249,6 @@ async function game() {
 		gameScreen(mapDiv);
 		pano = await switchToRandomScene(viewer);
 		initCompass(viewer);
-		document.getElementById("guess_pos_btn").addEventListener("click", handleGuessPos);
 	} catch (error) {
 		console.log(error.status);
 		errorScreen(error.status, error.message);
