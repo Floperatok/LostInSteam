@@ -132,57 +132,91 @@
 		"panoramas": [
 			{
 				"number": 0,
-				"map_name": "main",
-				"lat": 0,
-				"lng": 0.0
+				"map_name": "World Map",
+				"lat": -185.369,
+				"lng": 193.023
 			},
 			{
 				"number": 1,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "World Map",
+				"lat": -159.802,
+				"lng": 38.935
 			},
 			{
 				"number": 2,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "DLC: Tiny Tina's Assault on Dragon Keep",
+				"lat": -156.851,
+				"lng": 120.847
 			},
 			{
 				"number": 3,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "DLC: Tiny Tina's Assault on Dragon Keep",
+				"lat": -123.149,
+				"lng": 62.871
 			},
 			{
 				"number": 4,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "DLC: Mister Torgues's Campaign of Carnage",
+				"lat": -105.079,
+				"lng": 160.634
 			},
 			{
 				"number": 5,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
-			},
-			{
-				"number": 6,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "World Map",
+				"lat": -153.514,
+				"lng": 86.885
 			}
 		],
 		"maps": [
 			{
-				"name": "main",
+				"name": "World Map",
 				"tile_depth": 7,
 				"attribution": "https://mapgenie.io/borderlands-2/maps/world",
 				"bounds": [
 					[0, 0], 
 					[-255, 255]
 				],
-				"bg_color": "#000000"
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "DLC: Mister Torgues's Campaign of Carnage",
+				"tile_depth": 5,
+				"attribution": "https://mapgenie.io/borderlands-2/maps/mister-torgue",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "DLC: Tiny Tina's Assault on Dragon Keep",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/borderlands-2/maps/tiny-tina",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "DLC: Sir Hammerlock's big Game Hunt",
+				"tile_depth": 5,
+				"attribution": "https://mapgenie.io/borderlands-2/maps/sir-hammerlock",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "DLC: Captain Scarlett and her Pirate's Booty",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/borderlands-2/maps/captain-scarlett",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#1a1624"
 			}
 		]
 	},
@@ -196,55 +230,105 @@
 		"panoramas": [
 			{
 				"number": 0,
-				"map_name": "main",
-				"lat": 0,
-				"lng": 0.0
+				"map_name": "Sanctuary",
+				"lat": -115.754,
+				"lng": 172.396
 			},
 			{
 				"number": 1,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Athenas",
+				"lat": -123.702,
+				"lng": 112.510
 			},
 			{
 				"number": 2,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Promethea",
+				"lat": -123.199,
+				"lng": 164.155
 			},
 			{
 				"number": 3,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Pandora",
+				"lat": -168.648,
+				"lng": 158.878
 			},
 			{
 				"number": 4,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Pandora",
+				"lat": -134.032,
+				"lng": 193.382
 			},
 			{
 				"number": 5,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Promethea",
+				"lat": -131.568,
+				"lng":  131.140
 			},
 			{
 				"number": 6,
-				"map_name": "main",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Promethea",
+				"lat": -99.710,
+				"lng": 147.187
 			}
 		],
 		"maps": [
 			{
-				"name": "main",
+				"name": "Pandora",
 				"tile_depth": 8,
 				"attribution": "https://mapgenie.io/borderlands-3/maps/pandora",
 				"bounds": [
-					[-37.97, 25.31], 
-					[-148.40, 224.35]
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "Athenas",
+				"tile_depth": 6,
+				"attribution": "https://mapgenie.io/borderlands-3/maps/athenas",
+				"bounds": [
+					[-40, 40], 
+					[-215, 215]
+				],
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "Eden-6",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/borderlands-3/maps/eden-6",
+				"bounds": [
+					[-40, 40], 
+					[-215, 215]
+				],
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "Nekrotafeyo",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/borderlands-3/maps/nekrotafeyo",
+				"bounds": [
+					[-40, 40], 
+					[-215, 215]
+				],
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "Promethea",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/borderlands-3/maps/promethea",
+				"bounds": [
+					[-40, 40], 
+					[-215, 215]
+				],
+				"bg_color": "#1a1624"
+			},
+			{
+				"name": "Sanctuary",
+				"tile_depth": 6,
+				"attribution": "https://mapgenie.io/borderlands-3/maps/sanctuary",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
 				],
 				"bg_color": "#1a1624"
 			}
@@ -497,53 +581,111 @@
 		"pretty_name": "Hitman World of Assassination",
 		"accepted_names": [
 			"hitman",
+			"hitman 1",
+			"hitman 2",
+			"hitman 3",
 			"hitman world of assassination"
 		],
 		"panoramas": [
 			{
 				"number": 0,
-				"map_name": "",
-				"lat": 0,
-				"lng": 0.0
+				"map_name": "Dartmoor",
+				"lat": -134.132,
+				"lng": 47.217
 			},
 			{
 				"number": 1,
-				"map_name": "",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Dartmoor",
+				"lat": -130.200,
+				"lng": 48.046
 			},
 			{
 				"number": 2,
-				"map_name": "",
-				"lat": 0,
-				"lng": 0.0
+				"map_name": "Paris",
+				"lat": -132.359,
+				"lng": 110.111
 			},
 			{
 				"number": 3,
-				"map_name": "",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Paris",
+				"lat": -132.056,
+				"lng": 101.510
 			},
 			{
 				"number": 4,
-				"map_name": "",
-				"lat": 0,
-				"lng": 0.0
+				"map_name": "Miami",
+				"lat": -130.659,
+				"lng": 131.893
 			},
 			{
 				"number": 5,
-				"map_name": "",
-				"lat": 0.0,
-				"lng": 0.0
-			},
-			{
-				"number": 6,
-				"map_name": "",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Chongqing",
+				"lat": -132.651,
+				"lng": 132.954
 			}
 		],
-		"maps": []
+		"maps": [
+			{
+				"name": "Paris",
+				"tile_depth": 7,
+				"attribution": "https://mapgenie.io/hitman/maps/paris-the-showstopper",
+				"bounds": [
+					[0, 0], 
+					[-255.00, 255.00]
+				],
+				"bg_color": "#333333"
+			},
+			{
+				"name": "Miami",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/hitman-2/maps/miami-the-finish-line",
+				"bounds": [
+					[0, 0], 
+					[-255.00, 255.00]
+				],
+				"bg_color": "#333333"
+			},
+			{
+				"name": "Dartmoor",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/hitman-3/maps/dartmoor",
+				"bounds": [
+					[0, 0], 
+					[-255.00, 255.00]
+				],
+				"bg_color": "#333333"
+			},
+			{
+				"name": "Dubai",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/hitman-3/maps/dubai",
+				"bounds": [
+					[0, 0], 
+					[-255.00, 255.00]
+				],
+				"bg_color": "#333333"
+			},
+			{
+				"name": "Berlin",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/hitman-3/maps/berlin",
+				"bounds": [
+					[0, 0], 
+					[-255.00, 255.00]
+				],
+				"bg_color": "#333333"
+			},
+			{
+				"name": "Chongqing",
+				"tile_depth": 8,
+				"attribution": "https://mapgenie.io/hitman-3/maps/chongqing",
+				"bounds": [
+					[0, 0], 
+					[-255.00, 255.00]
+				],
+				"bg_color": "#333333"
+			}
+		]
 	},
 	{
 		"name": "hogwarts_legacy",
@@ -630,33 +772,33 @@
 		"panoramas": [
 			{
 				"number": 0,
-				"map_name": "",
-				"lat": 0,
-				"lng": 0.0
+				"map_name": "Volga",
+				"lat": -152.003,
+				"lng": 49.838
 			},
 			{
 				"number": 1,
-				"map_name": "",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Volga",
+				"lat": -105.419,
+				"lng": 85.956
 			},
 			{
 				"number": 2,
-				"map_name": "",
-				"lat": 0,
-				"lng": 0.0
+				"map_name": "Taiga",
+				"lat": -237.193,
+				"lng": 33.629
 			},
 			{
 				"number": 3,
-				"map_name": "",
-				"lat": 0.0,
-				"lng": 0.0
+				"map_name": "Taiga",
+				"lat": -173.572,
+				"lng": 96.038
 			},
 			{
 				"number": 4,
-				"map_name": "",
-				"lat": 0,
-				"lng": 0.0
+				"map_name": "Deadcity",
+				"lat": -101.391,
+				"lng": 46.559
 			},
 			{
 				"number": 5,
@@ -683,7 +825,68 @@
 				"lng": 0.0
 			}
 		],
-		"maps": []
+		"maps": [
+			{
+				"name": "Caspian",
+				"tile_depth": 3,
+				"attribution": "https://metrovideogame.fandom.com/wiki/Map:Caspian",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#000000"
+			},
+			{
+				"name": "Deadcity",
+				"tile_depth": 3,
+				"attribution": "https://metrovideogame.fandom.com/wiki/Map:Dead_City",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#000000"
+			},
+			{
+				"name": "Taiga",
+				"tile_depth": 3,
+				"attribution": "https://metrovideogame.fandom.com/wiki/Map:Taiga",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#000000"
+			},
+			{
+				"name": "Vladivostok",
+				"tile_depth": 2,
+				"attribution": "https://metrovideogame.fandom.com/wiki/Map:Vladivostok",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#000000"
+			},
+			{
+				"name": "Volga",
+				"tile_depth": 3,
+				"attribution": "https://metrovideogame.fandom.com/wiki/Map:Volga",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#000000"
+			},
+			{
+				"name": "Yamantau",
+				"tile_depth": 3,
+				"attribution": "https://metrovideogame.fandom.com/wiki/Map:Yamantau",
+				"bounds": [
+					[0, 0], 
+					[-255, 255]
+				],
+				"bg_color": "#000000"
+			}
+		]
 	},
 	{
 		"name": "mirrors_edge",
@@ -1118,16 +1321,6 @@
 				"bounds": [
 					[-33.99, 8.01], 
 					[-221.98, 248.02]
-				],
-				"bg_color": "#000000"
-			},
-			{
-				"name": "fallout",
-				"tile_depth": 5,
-				"attribution": "https://fallout.fandom.com/wiki/Fallout:_New_Vegas_high_resolution_maps?file=Mojave_Wasteland_map.jpg",
-				"bounds": [
-					[-7.70, 7.72], 
-					[-248.31, 248.29]
 				],
 				"bg_color": "#000000"
 			}

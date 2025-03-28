@@ -20,29 +20,88 @@
 	filter: brightness(60%);
 }
 
+
+/* GUESS POSTIONS BUTTON */
+.map-control-guess-pos {
+	display: none;
+	z-index: 505;
+	bottom: 0;
+	left: 0;
+
+	width: 60px;
+	height: 60px;
+}
+.map-control-guess-pos a {
+	width: 100%;
+	height: 100%;
+
+	border-radius: 0 15px 0 0;
+}
+.check-mark {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	width: 25%;
+	height: 55%;
+	
+	border-color: green;
+	border-style: solid;
+	border-width: 0 10px 10px 0;
+	transform: translate(-50%, -55%) rotate(40deg);
+}
 /* SELECT MAP MENU */
 .map-control-map-selection {
 	display: none;
-	top: 0;
-	left: 0;
+	bottom: 0;
+	right: 0;
+	
+	height: 40px;
+	width: 300px;
 }
 .map-control-map-selection-header {
-	position: relative;
+	position: absolute;
+	right: 0;
 	z-index: 501;
-	padding: 5px 20px 5px 20px;
-	border-radius: 0 0 10px 0;
+
+	height: 100%;
+	width: 100%;
+
+	text-align: center;
+	border-radius: 10px 0 0 0;
 	background-color: white;
+
 	font-size: large;
 	font-weight: bold;
+	line-height: 40px;
+
 	cursor: default;
-	transition: transform 200ms ease;
+	transition:
+		width 200ms ease,
+		transform 200ms ease,
+		border-radius 200ms ease;
+}
+.scale0 .map-control-map-selection-header {
+	width: 240px;
 }
 .map-control-map-selection-list {
-	border-radius: 0 0 10px 0;
-	overflow: hidden;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform: translateY(0);
+	max-height: 460px;
+	
 	width: 70%;
-	transform: translateY(-100%);
-	transition: transform 200ms ease;
+	overflow: scroll;
+	
+	border-radius: 10px 0 0 0;
+	transition: 
+		transform 200ms ease,
+		max-height 200ms ease,
+		width 200ms ease;
+}
+.scale0 .map-control-map-selection-list {
+	max-height: 260px;
 }
 .map-control-map-selection-list .current-map {
 	background-color: #06f;
@@ -50,21 +109,22 @@
 }
 .map-control-map-selection-list .answer-map {
 	border-style: solid;
-	border-width: 2px;
+	border-width: 4px;
 	border-color: green;
 }
 .map-control-map-selection-list a {
-	padding: 7px;
-	border-top-color: black;
-	border-top-width: 1px;
-	border-top-style: solid;
+	padding: 5px;
+	border-bottom-color: black;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
 	font-size: large;
 }
 
 /* MINIMAP SCALE BUTTONS */
 .map-control-scale {
-	bottom: 15px;
-	right: 15px;
+	top: 15px;
+	left: 15px;
+	z-index: 505;
 }
 .map-control-scale a {
 	font-size: x-large;
@@ -79,33 +139,37 @@
 /* MINIMAP ATTRIBUTION */
 .map-control-attribution {
 	bottom: 0;
-	right: 0;
+	left: 0;
 }
 .map-control-attribution a {
 	color: #0078A8 !important;
-	padding: 3px 7px 3px 7px;
+	width: 60px;
+	height: 30px;
+	font-size: medium;
+	line-height: 30px;
+	text-align: center;
 	text-decoration: underline;
-	border-radius: 10px 0 0 0;
+	border-radius: 0 10px 0 0;
 }
 
 /* MINIMAP SCALES */
-.minimap.scale0 {
+.minimap.scale0.map-mouse-over {
 	height: 300px;
 	width: 300px;
 }
-.minimap.scale1 {
+.minimap.scale1.map-mouse-over {
 	height: 500px;
 	width: 500px;
 }
-.minimap.scale2 {
+.minimap.scale2.map-mouse-over {
 	height: 600px;
 	width: 700px;
 }
-.minimap.scale3 {
+.minimap.scale3.map-mouse-over {
 	height: 700px;
 	width: 1000px;
 }
-.minimap.scale4 {
+.minimap.scale4.map-mouse-over {
 	height: 800px;
 	width: 1300px;
 }
@@ -120,13 +184,13 @@
 	width: 300px;
 	opacity: 0.65;
 }
-.minimap:hover {
+.minimap.map-mouse-over {
 	opacity: 1;
 }
 .minimap .map-control {
 	opacity: 0;
 }
-.minimap:hover .map-control { 
+.minimap.map-mouse-over .map-control { 
 	opacity: 1;
 }
 
@@ -150,7 +214,7 @@
 	height: 100%;
 	transition: opacity 200ms;
 }
-.map_result #guess_pos_btn {
+.map_result .map-control-guess-pos {
 	display: none !important;
 }
 .map_result .map-control-scale {
@@ -158,38 +222,6 @@
 }
 .minimap .map-control-attribution {
 	display: none;
-}
-
-/* GUESS POSTIONS BUTTON */
-#guess_pos_btn {
-	display: none;
-	position: inherit;
-	bottom: 5%;
-	left: 50%;
-	transform: translateX(-50%);
-	max-width: 400px;
-
-	z-index: 500;
-	height: 3em;
-	width: 50%;
-
-	border-radius: 100px;
-	border-width: 0;
-	font-family: sans-serif;
-	font-weight: bold;
-	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-	
-	transition: 
-		opacity 200ms ,
-		transform 50ms ease-in-out,
-		scale 100ms ease;
-	transform-origin: left;
-}
-#guess_pos_btn:hover {
-	scale: 1.05;
-}
-#guess_pos_btn:active {
-	scale: 0.95;
 }
 
 .leaflet-container.crosshair-cursor-enabled {

@@ -3,14 +3,9 @@
 
 function createMapContainer() {
 	const	mapDiv = document.createElement("div");
-	const	guessPosBtn = document.createElement("button");
-
-	guessPosBtn.id = "guess_pos_btn";
-	guessPosBtn.innerText = "Guess";
 
 	mapDiv.id = "map";
 	mapDiv.classList.add("scale1");
-	mapDiv.appendChild(guessPosBtn);
 	return (mapDiv);
 }
 
@@ -104,7 +99,7 @@ async function game() {
 	const	guessGameForm	= document.getElementById("guess_game_form");
 	const	guessInput		= document.getElementById("guess_input");
 	const	nextBtn			= document.getElementById("next_btn");
-	const	guessPosBtn		= mapDiv.querySelector("#guess_pos_btn");
+	const	guessPosBtn		= mapDiv.querySelector(".guess-pos");
 	
 	guessGameForm.addEventListener("submit", handleGuessGame);
 	nextBtn.addEventListener("click", handleNext);

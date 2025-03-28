@@ -6,7 +6,8 @@ async function loadMap(map, mapId, container) {
 
 	map._id = mapId;
 	map._bounds = mapSettings.bounds;
-	
+
+	map._zoom = 0;
 	// attributions
 	const attributionA = document.querySelector(".map-attribution"); 
 	if (mapSettings.attribution) {
@@ -27,11 +28,11 @@ async function loadMap(map, mapId, container) {
 		}
 	});
 	if (map._userMarker && map._userMarker._mapId == map._id) {
-		document.getElementById("guess_pos_btn").style.display = "block";
+		container.querySelector(".map-control-guess-pos").style.display = "block";
 		map._userMarker.addTo(mapLayerGroup);
 	}
 	else {
-		document.getElementById("guess_pos_btn").style.display = "";
+		container.querySelector(".map-control-guess-pos").style.display = "";
 	}
 	
 	L.tileLayer(`/api/map/${map._id}/{z}/{y}/{x}.jpg`, {
@@ -41,6 +42,8 @@ async function loadMap(map, mapId, container) {
 		minZoom: 0,
 		keepBuffer: 20,
 	}).addTo(map);
+
+	console.log(map);
 }
 
 

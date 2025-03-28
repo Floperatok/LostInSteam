@@ -65,10 +65,8 @@ async function displayResultMap(map, mapsData, container, result) {
 	map._resultPos = result.answerPos;
 	
 	await loadMap(map, result.answerMapId, container);
-	const mapSelectionListDiv = mapSelectionListControl(map, mapsData, container);
-	if (mapSelectionListDiv) {
-		mapSelectionListDiv.querySelector(".current-map").classList.add("answer-map");
-	}
+	mapSelectionListControl(map, mapsData, container);
+
 	
 	displayResultUI(map, result.answerPos);
 	disableMarkerOnClick(map);
@@ -89,7 +87,6 @@ async function displayMinimap(map, mapsData, container) {
 
 	container.style.opacity = "0";
 	container.style.display = "block";
-	container.classList.remove(getContainerScaleClass(container));
 	map.invalidateSize(false);
 	centerMap(map);
 

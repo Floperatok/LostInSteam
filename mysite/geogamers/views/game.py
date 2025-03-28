@@ -7,7 +7,6 @@ from .accel_redirect_response import HttpResponseAccelRedirect
 from .map import get_placeholder_map
 
 
-
 def get_poster(request, game_id):
 	if request.method != "GET":
 		print(f"{request.method} not allowed")
