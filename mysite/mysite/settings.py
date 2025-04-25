@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "geogamers", "static"),
+    os.path.join(BASE_DIR, "lost_in_steam", "static"),
 ]
 # Application definition
 
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'geogamers',
+    'lost_in_steam',
 ]
 
 MIDDLEWARE = [
