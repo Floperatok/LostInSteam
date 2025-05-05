@@ -1,4 +1,7 @@
 
+body {
+	background-color: rgb(17, 23, 44);
+}
 
 #start-game {
 	position: absolute;
@@ -15,4 +18,26 @@
 	border-radius: 30px;
 
 	font-size: x-large;
+}
+
+#preamble {
+	position: absolute;
+	top: 30vh;
+	left: 50vw;
+	transform: translateX(-50%);
+	text-align: center;
+	width: 600px;
+}
+#preamble h1 {
+	color: white;
+	margin-bottom: 10px;
+}
+
+#warning {
+	width: 600px;
+	position :absolute;
+	top: 80vh;
+	left: 50vw;
+	transform: translateX(-50%);
+	text-align: center;
 }
