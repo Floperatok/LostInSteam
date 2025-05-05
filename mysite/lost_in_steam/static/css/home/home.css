@@ -3,12 +3,29 @@ body {
 	background-color: rgb(17, 23, 44);
 }
 
-#start-game {
+#home-wrapper {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	left: 50vw;
+	width: 600px;
+	height: 100vh;
+	transform: translateX(-50%);
+}
 
+
+#preamble {
+	margin-top: 20vh;
+	text-align: center;
+}
+#preamble h1 {
+	color: white;
+	margin-bottom: 10px;
+}
+
+#start-game {
+	margin-top: 5vh;
+	position:relative;
+	left: 50%;
+	transform: translateX(-50%);
 	width: 200px;
 	height: 75px;
 }
@@ -20,24 +37,8 @@ body {
 	font-size: x-large;
 }
 
-#preamble {
-	position: absolute;
-	top: 30vh;
-	left: 50vw;
-	transform: translateX(-50%);
-	text-align: center;
-	width: 600px;
-}
-#preamble h1 {
-	color: white;
-	margin-bottom: 10px;
-}
-
 #warning {
-	width: 600px;
-	position :absolute;
-	top: 80vh;
-	left: 50vw;
-	transform: translateX(-50%);
+	margin-top: 20vh;
+
 	text-align: center;
 }
