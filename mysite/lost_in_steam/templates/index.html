@@ -1,0 +1,17 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'css/home/home.css' %}">
+
+        <title>Lost in Steam</title>
+    </head>
+    <body>
+		<form id="start-game" action="/game">
+			<button>Start</button>
+		</form>
+    </body>
+</html>

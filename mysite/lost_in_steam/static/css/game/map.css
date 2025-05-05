@@ -1,0 +1,232 @@
+
+/* CONTROLS */
+.map-control {
+	position: absolute;
+	z-index: 500;
+	transition: opacity 200ms;
+}
+.map-control a {
+	display: block;
+	color: black !important;
+	text-decoration: none;
+	font-weight: bold;
+	text-align: center;
+	background-color: white;
+}
+.map-control a:hover {
+	filter: brightness(85%);
+}
+.map-control a:active {
+	filter: brightness(60%);
+}
+
+
+/* GUESS POSTIONS BUTTON */
+.map-control-guess-pos {
+	display: none;
+	z-index: 505;
+	bottom: 0;
+	left: 0;
+
+	width: 60px;
+	height: 60px;
+}
+.map-control-guess-pos a {
+	width: 100%;
+	height: 100%;
+
+	border-radius: 0 15px 0 0;
+}
+.check-mark {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	width: 25%;
+	height: 55%;
+	
+	border-color: green;
+	border-style: solid;
+	border-width: 0 10px 10px 0;
+	transform: translate(-50%, -55%) rotate(40deg);
+}
+/* SELECT MAP MENU */
+.map-control-map-selection {
+	display: none;
+	bottom: 0;
+	right: 0;
+	
+	height: 40px;
+	width: 300px;
+}
+.map-control-map-selection-header {
+	position: absolute;
+	right: 0;
+	z-index: 501;
+
+	height: 100%;
+	width: 100%;
+
+	text-align: center;
+	border-radius: 10px 0 0 0;
+	background-color: white;
+
+	font-size: large;
+	font-weight: bold;
+	line-height: 40px;
+
+	cursor: default;
+	transition:
+		width 200ms ease,
+		transform 200ms ease,
+		border-radius 200ms ease;
+}
+.scale0 .map-control-map-selection-header {
+	width: 240px;
+}
+.map-control-map-selection-list {
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform: translateY(0);
+	max-height: 460px;
+	
+	width: 70%;
+	overflow: scroll;
+	
+	border-radius: 10px 0 0 0;
+	transition: 
+		transform 200ms ease,
+		max-height 200ms ease,
+		width 200ms ease;
+}
+.scale0 .map-control-map-selection-list {
+	max-height: 260px;
+}
+.map-control-map-selection-list .current-map {
+	background-color: #06f;
+	color: white !important;
+}
+.map-control-map-selection-list .answer-map {
+	border-style: solid;
+	border-width: 4px;
+	border-color: green;
+}
+.map-control-map-selection-list a {
+	padding: 5px;
+	border-bottom-color: black;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	font-size: large;
+}
+
+/* MINIMAP SCALE BUTTONS */
+.map-control-scale {
+	top: 15px;
+	left: 15px;
+	z-index: 505;
+}
+.map-control-scale a {
+	font-size: x-large;
+	line-height: 0.8;
+	border-radius: 5px;
+	width: 20px;
+	height: 20px;
+	margin-bottom: 3px;
+	padding: 10px 6px 10px 6px;
+}
+
+/* MINIMAP ATTRIBUTION */
+.map-control-attribution {
+	bottom: 0;
+	left: 0;
+}
+.map-control-attribution a {
+	color: #0078A8 !important;
+	width: 60px;
+	height: 30px;
+	font-size: medium;
+	line-height: 30px;
+	text-align: center;
+	text-decoration: underline;
+	border-radius: 0 10px 0 0;
+}
+
+/* MINIMAP SCALES */
+.minimap.scale0.map-mouse-over {
+	height: 300px;
+	width: 300px;
+}
+.minimap.scale1.map-mouse-over {
+	height: 500px;
+	width: 500px;
+}
+.minimap.scale2.map-mouse-over {
+	height: 600px;
+	width: 700px;
+}
+.minimap.scale3.map-mouse-over {
+	height: 700px;
+	width: 1000px;
+}
+.minimap.scale4.map-mouse-over {
+	height: 800px;
+	width: 1300px;
+}
+.scale4 .scale_up_map, 
+.scale0 .scale_down_map { 
+	color: grey !important;
+}
+
+/* MINIMAP MOUSE OUT */
+.minimap {
+	height: 300px;
+	width: 300px;
+	opacity: 0.65;
+}
+.minimap.map-mouse-over {
+	opacity: 1;
+}
+.minimap .map-control {
+	opacity: 0;
+}
+.minimap.map-mouse-over .map-control { 
+	opacity: 1;
+}
+
+/* MINIMAP */
+.minimap {
+	transition: 
+		width 350ms ease, 
+		height 350ms ease,
+		opacity 200ms;
+	position: absolute !important;
+	bottom: 1em;
+	right: 1em;
+	background-color: rgb(0, 0, 0);
+	border-radius: 10px;
+}
+
+/* MAP RESULT */
+.map_result {
+	position: relative;
+	flex: 1 1 auto;
+	height: 100%;
+	transition: opacity 200ms;
+}
+.map_result .map-control-guess-pos {
+	display: none !important;
+}
+.map_result .map-control-scale {
+	display: none;
+}
+.minimap .map-control-attribution {
+	display: none;
+}
+
+.leaflet-container.crosshair-cursor-enabled {
+    cursor:crosshair;
+}
+.leaflet-control-attribution {
+	display: none;
+}

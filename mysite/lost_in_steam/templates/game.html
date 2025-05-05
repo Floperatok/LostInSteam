@@ -1,0 +1,215 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <title>Lost in Steam</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+        <style>@-ms-viewport { width: device-width; }</style>
+
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'css/game/game.css' %}">
+        <link rel="stylesheet" href="{% static 'css/game/map.css' %}">
+        <link rel="stylesheet" href="{% static 'css/game/result.css' %}">
+        <link rel="stylesheet" href="{% static 'css/game/error.css' %}">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+			integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+			crossorigin=""/>
+
+		<link rel="icon" href="{% static 'image/logocat.png' %}"/>
+    </head>
+    <body>
+		<header id="header">
+		</header>
+
+		<!-- GAME SCREEN -->
+		<div class="screen" id="game_screen">
+			<div id="pano"></div>
+			<div id="compass">
+				<div id="compass_middle">
+					<span class="top"></span>
+					<span class="bottom"></span>
+				</div>
+				<div id="compass_graduations">
+					<div class="compass_graduations_chunk">
+						<p class="compass_cardinal">N</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_semi_cardinal">NE</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_cardinal">E</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_semi_cardinal">SE</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_cardinal">S</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_semi_cardinal">SW</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_cardinal">W</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_semi_cardinal">NW</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+					</div>
+					<div class="compass_graduations_chunk">
+						<p class="compass_cardinal">N</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_semi_cardinal">NE</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_cardinal">E</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_semi_cardinal">SE</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_cardinal">S</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_semi_cardinal">SW</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_cardinal">W</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<p class="compass_semi_cardinal">NW</p>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="big_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+						<span class="small_grad"></span>
+					</div>
+				</div>
+			</div>
+
+			<div id="game_answer">
+				<div id="poster_wrapper"></div>
+				<div id="game_name"></div>
+			</div>
+
+
+			<form id="guess_game_form" autocomplete="off">
+				{% csrf_token %}
+				<input id="guess_input" type="text">
+				<button id="guess_game_button">Submit</button>
+			</form>
+		</div>
+
+		<!-- RESULT SCREEN -->
+		<div class="screen" id="result_screen">
+			<div id="bottom_bar">
+				<p id="distance"></p>
+				<button id="next_btn"> NEXT </button>
+				<p id="points">Points: ???</p>
+			</div>
+		</div>
+
+		<!-- ERROR SCREEN -->
+		 <div class="screen" id="error_screen">
+			<div id="error_text_div">
+				<h2 id="error_title"></h2>
+				<p id="error_msg"></p>
+			</div>
+		 </div>
+
+		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+			integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+			crossorigin=""></script>
+		<script src="{% static 'js/main.js' %}"></script>
+		<script src="{% static 'js/game/imports/marzipano.js' %}"></script>
+		<script src="{% static 'js/game/imports/SmoothWheelZoom.js' %}"></script>
+		<script src="{% static 'js/game/panorama.js' %}"></script>
+		<script src="{% static 'js/game/map/display.js' %}"></script>
+		<script src="{% static 'js/game/map/controls/map_selection_menu.js' %}"></script>
+		<script src="{% static 'js/game/map/controls/scale_buttons.js' %}"></script>
+		<script src="{% static 'js/game/map/controls/controls.js' %}"></script>
+		<script src="{% static 'js/game/map/load.js' %}"></script>
+		<script src="{% static 'js/game/game.js' %}"></script>
+    </body>
+</html>
