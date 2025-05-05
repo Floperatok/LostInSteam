@@ -4,6 +4,4 @@ mysite/lost_in_steam/migrations
 todo
 *.sqlite3
 *.log
-*.png
-*.jpg
 *.xml
