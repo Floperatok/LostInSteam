@@ -11,6 +11,7 @@ There are currently 28 different games available, with around 120 locations to g
 
 Future goals for the projects :
 - Online multiplayer
+- Mobile support
 - Leaderboard
 - New game modes (e.g. sound-based or static image guessing)
 
