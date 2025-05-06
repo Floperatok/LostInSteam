@@ -5,3 +5,4 @@ todo
 *.sqlite3
 *.log
 *.xml
+.env
