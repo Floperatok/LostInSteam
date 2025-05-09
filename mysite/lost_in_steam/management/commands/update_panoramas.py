@@ -87,7 +87,7 @@ class Command(BaseCommand):
 
 
 	def handle(self, *args, **options):
-		data_path = f"{options["data_path"].strip("/ ")}/data.json"
+		data_path = f"{options["data_path"].rstrip("/ ")}/data.json"
 
 		if not os.path.exists(data_path):
 			self.stdout.write(self.style.ERROR(f"Error: {data_path} not found"))
