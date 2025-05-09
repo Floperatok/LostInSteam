@@ -20,13 +20,15 @@ class Command(BaseCommand):
 		pano_settings = json.load(pano_settings_file)
 
 		try:
-			pano_obj, created = Pano.objects.get_or_create(
+			pano_obj, created = Pano.objects.update_or_create(
 				game = game_obj,
-				map = map_obj,
 				number = pano_data["number"],
-				lat = pano_data["lat"],
-				lng = pano_data["lng"],
-				settings = pano_settings,
+				defaults={
+					"map": map_obj,
+					"lat": pano_data["lat"],
+					"lng": pano_data["lng"],
+					"settings": pano_settings,
+				},
 			)
 		except Exception as err:
 			self.stderr.write(self.style.ERROR(f"Error creating panoramas {pano_data["number"]} for the game {game_obj.name}: {err}"))
@@ -40,13 +42,15 @@ class Command(BaseCommand):
 	
 	def create_map_obj(self, map_data, game_obj):
 		try:
-			map_obj, created = Map.objects.get_or_create(
+			map_obj, created = Map.objects.update_or_create(
 				game = game_obj,
 				name = map_data["name"],
-				tile_depth = map_data["tile_depth"],
-				attribution = map_data["attribution"],
-				bounds = map_data["bounds"],
-				bg_color = map_data["bg_color"],
+				defaults={
+					"tile_depth": map_data["tile_depth"],
+					"attribution": map_data["attribution"],
+					"bounds": map_data["bounds"],
+					"bg_color": map_data["bg_color"],
+				}
 			)
 		except Exception as err:
 			self.stderr.write(self.style.ERROR(f"Error creating map for the game {game_obj.name}: {err}"))
