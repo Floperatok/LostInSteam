@@ -85,6 +85,7 @@ async function game() {
 	let 	mapsData = [];
 
 	const	viewer = initMarzipano();
+	const	compass = new Compass(viewer);
 	let		pano = {};
 
 	const resizeObserver = new ResizeObserver(entries => {
@@ -148,6 +149,7 @@ async function game() {
 			});
 			resultScreen(map, mapsData, mapDiv, result);
 			pano = await switchToRandomScene(viewer);
+			compass.set_yaw(pano.settings.initialViewParameters.yaw);
 		} catch (error) {
 			errorScreen(error.status, error.message);
 			return ;
@@ -187,6 +189,7 @@ async function game() {
 		try {
 			gameScreen(mapDiv);
 			pano = await switchToRandomScene(viewer);
+			compass.set_yaw(pano.settings.initialViewParameters.yaw);
 		} catch (error) {
 			if (error.status == 404) {
 				console.error("/skip tried to skip to an inexistent scene");
@@ -236,6 +239,7 @@ async function game() {
 		}
 		gameScreen(mapDiv);
 		var scene = await loadPanoScene(viewer, pano);
+		compass.set_yaw(pano.settings.initialViewParameters.yaw);
 		scene.switchTo();
 	}
 
@@ -243,7 +247,7 @@ async function game() {
 	try {
 		gameScreen(mapDiv);
 		pano = await switchToRandomScene(viewer);
-		initCompass(viewer);
+		compass.set_yaw(pano.settings.initialViewParameters.yaw);
 	} catch (error) {
 		console.log(error.status);
 		errorScreen(error.status, error.message);
