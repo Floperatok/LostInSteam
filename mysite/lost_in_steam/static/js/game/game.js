@@ -220,6 +220,10 @@ async function game() {
 
 
 	async function cheatGotoScene(gameName, panoNumber) {
+		if (!(/^\d+$/.test(panoNumber))) {
+			console.error(`goto: '${panoNumber}' is not a valid number`);
+			return ;
+		}
 		try {
 			pano = await postApiJson("/api/command/goto/", {
 				gameName: gameName,
