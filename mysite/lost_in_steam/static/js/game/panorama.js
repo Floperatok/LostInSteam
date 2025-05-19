@@ -64,7 +64,6 @@ function initMarzipano() {
 
 
 async function switchToRandomScene(viewer) {
-	const mapWrapper = document.getElementById("map_wrapper");
 	const guessGameForm = document.getElementById("guess_game_form");
 	guessGameForm.style.display = "flex";
 

@@ -173,13 +173,14 @@
 			</div>
 
 			<div id="game_answer">
-				<div id="poster_wrapper"></div>
+				<div id="poster_wrapper">
+					<img id="poster_img">
+				</div>
 				<div id="game_name"></div>
 			</div>
 
 
 			<form id="guess_game_form" autocomplete="off">
-				{% csrf_token %}
 				<input id="guess_input" type="text">
 				<button id="guess_game_button">Submit</button>
 			</form>
@@ -205,9 +206,24 @@
 		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 			integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 			crossorigin=""></script>
-		<script src="{% static 'js/main.js' %}"></script>
 		<script src="{% static 'js/game/imports/marzipano.js' %}"></script>
-		<script src="{% static 'js/game/imports/SmoothWheelZoom.js' %}"></script>
+
+		<script src="{% static 'js/main.js' %}"></script>
+		<script src="{% static 'js2/game.js' %}"></script>
+		<script src="{% static 'js2/app.js' %}"></script>
+		<script src="{% static 'js2/compass.js' %}"></script>
+		<script src="{% static 'js2/panoManager.js' %}"></script>
+		<script src="{% static 'js2/gamePoster.js' %}"></script>
+		<script src="{% static 'js2/guessGameFormManager.js' %}"></script>
+		<script src="{% static 'js2/map/mapManager.js' %}"></script>
+		<script src="{% static 'js2/map/mapControls.js' %}"></script>
+		<script src="{% static 'js2/map/mapControlGuessButton.js' %}"></script>
+		<script src="{% static 'js2/map/mapControlMarker.js' %}"></script>
+		<script src="{% static 'js2/map/mapControlScale.js' %}"></script>
+		<script src="{% static 'js2/map/mapControlSelect.js' %}"></script>
+			
+			
+		<!-- <script src="{% static 'js/game/imports/SmoothWheelZoom.js' %}"></script>
 		<script src="{% static 'js/game/panorama.js' %}"></script>
 		<script src="{% static 'js/game/map/display.js' %}"></script>
 		<script src="{% static 'js/game/map/controls/map_selection_menu.js' %}"></script>
@@ -215,6 +231,6 @@
 		<script src="{% static 'js/game/map/controls/controls.js' %}"></script>
 		<script src="{% static 'js/game/map/load.js' %}"></script>
 		<script src="{% static 'js/game/game.js' %}"></script>
-		<script src="{% static 'js/game/compass.js' %}"></script>
+		<script src="{% static 'js/game/compass.js' %}"></script> -->
     </body>
 </html>

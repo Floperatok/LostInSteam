@@ -126,7 +126,6 @@ html, body {
 
 /* GAME ANSWER */
 #game_answer {
-	display: none;
 	justify-content: center;
 	flex-direction: column;
 	position: absolute;
