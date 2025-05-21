@@ -4,10 +4,12 @@
 class MapControlScale {
 	constructor(mapContainer) {
 		console.log(`[MAP-CONTROL-SCALE] - constructor : mapContainer=${mapContainer}`);
-		this.mapContainer = mapContainer;
-		if (!this.mapContainer) {
+		this.type = "scale";
+		if (!mapContainer) {
 			console.error("[MAP-CONTROL-SCALE] - map container element not found");
 		}
+
+		this._mapContainer = mapContainer;
 		this.#create();
 		this.#setupListeners();
 	}
@@ -38,41 +40,41 @@ class MapControlScale {
 	#scaleUpHandler = (event) => {
 		event.stopPropagation();
 		event.preventDefault();
-		const scale = this.#getScaleLevel(this.mapContainer);
+		const scale = this.#getScaleLevel(this._mapContainer);
 		if (scale >= 4) {
 			return ;
 		}
 		console.log(`[MAP-CONTROL-SCALE] - handling scale up to scale : ${scale + 1}`);
-		this.mapContainer.classList.remove(`scale${scale}`);
-		this.mapContainer.classList.add(`scale${scale + 1}`);
+		this._mapContainer.classList.remove(`scale${scale}`);
+		this._mapContainer.classList.add(`scale${scale + 1}`);
 	}
 
 	#scaleDownHandler = (event) => {
 		event.stopPropagation();
 		event.preventDefault();
-		const scale = this.#getScaleLevel(this.mapContainer);
+		const scale = this.#getScaleLevel(this._mapContainer);
 		if (scale <= 0) {
 			return ;
 		}
 		console.log(`[MAP-CONTROL-SCALE] - handling scale down to scale : ${scale - 1}`);
-		this.mapContainer.classList.remove(`scale${scale}`);
-		this.mapContainer.classList.add(`scale${scale - 1}`);
+		this._mapContainer.classList.remove(`scale${scale}`);
+		this._mapContainer.classList.add(`scale${scale - 1}`);
 	}
 
 	#setupListeners() {
 		console.log("[MAP-CONTROL-SCALE] - setting up listeners");
-		this.scaleUpButton.addEventListener("click", this.#scaleUpHandler);
-		this.scaleDownButton.addEventListener("click", this.#scaleDownHandler);
+		this._scaleUpButton.addEventListener("click", this.#scaleUpHandler);
+		this._scaleDownButton.addEventListener("click", this.#scaleDownHandler);
 	}
 	
 	#create() {
 		console.log("[MAP-CONTROL-SCALE] - creating DOM elements");
 		this.element = document.createElement("div");
 		this.element.classList.add("map-control", "scale");
-		this.scaleUpButton = this.#createControlButton("scale-up", "+");
-		this.scaleDownButton = this.#createControlButton("scale-down", "-");
-		this.element.appendChild(this.scaleUpButton);
-		this.element.appendChild(this.scaleDownButton);
+		this._scaleUpButton = this.#createControlButton("scale-up", "+");
+		this._scaleDownButton = this.#createControlButton("scale-down", "-");
+		this.element.appendChild(this._scaleUpButton);
+		this.element.appendChild(this._scaleDownButton);
 	}
 
 	hide() {
@@ -87,8 +89,8 @@ class MapControlScale {
 
 	destroy() {
 		console.log("[MAP-CONTROL-SCALE] - destroy");
-		this.scaleUpButton.removeEventListener("click", this.#scaleUpHandler);
-		this.scaleDownButton.removeEventListener("click", this.#scaleDownHandler);
+		this._scaleUpButton.removeEventListener("click", this.#scaleUpHandler);
+		this._scaleDownButton.removeEventListener("click", this.#scaleDownHandler);
 		this.element.remove();
 	}
 }

@@ -11,7 +11,7 @@
 /* screens */
 .screen {
 	position: relative;
-	height: 95vh;
+	height: 100vh;
 	width: 100vw;
 }
 
@@ -43,10 +43,3 @@ button:active {
 	transform: scale(0.9);
 }
 
-
-
-/* header */
-#header {
-	background-color: #2436426e;
-	height: 50px;
-}

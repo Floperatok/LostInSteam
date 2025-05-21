@@ -20,9 +20,6 @@
 
     </head>
     <body>
-		<header id="header">
-		</header>
-
 		<!-- GAME SCREEN -->
 		<div class="screen" id="game_screen">
 			<div id="pano"></div>
@@ -172,7 +169,7 @@
 				</div>
 			</div>
 
-			<div id="game_answer">
+			<div id="game_answer", class="hidden">
 				<div id="poster_wrapper">
 					<img id="poster_img">
 				</div>
@@ -188,9 +185,8 @@
 
 		<!-- RESULT SCREEN -->
 		<div class="screen" id="result_screen">
-			<div id="bottom_bar">
-				<p id="distance"></p>
-				<button id="next_btn"> NEXT </button>
+			<div id="result_island">
+				<button id="next_btn"> NEXT GAME </button>
 				<p id="points">Points: ???</p>
 			</div>
 		</div>
@@ -207,6 +203,7 @@
 			integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 			crossorigin=""></script>
 		<script src="{% static 'js/game/imports/marzipano.js' %}"></script>
+		<script src="{% static 'js/game/imports/SmoothWheelZoom.js' %}"></script>
 
 		<script src="{% static 'js/main.js' %}"></script>
 		<script src="{% static 'js2/game.js' %}"></script>
@@ -214,16 +211,15 @@
 		<script src="{% static 'js2/compass.js' %}"></script>
 		<script src="{% static 'js2/panoManager.js' %}"></script>
 		<script src="{% static 'js2/gamePoster.js' %}"></script>
+		<script src="{% static 'js2/resultUI.js' %}"></script>
 		<script src="{% static 'js2/guessGameFormManager.js' %}"></script>
 		<script src="{% static 'js2/map/mapManager.js' %}"></script>
 		<script src="{% static 'js2/map/mapControls.js' %}"></script>
-		<script src="{% static 'js2/map/mapControlGuessButton.js' %}"></script>
-		<script src="{% static 'js2/map/mapControlMarker.js' %}"></script>
+		<script src="{% static 'js2/map/mapControlGuess.js' %}"></script>
 		<script src="{% static 'js2/map/mapControlScale.js' %}"></script>
 		<script src="{% static 'js2/map/mapControlSelect.js' %}"></script>
 			
-			
-		<!-- <script src="{% static 'js/game/imports/SmoothWheelZoom.js' %}"></script>
+<!-- 			
 		<script src="{% static 'js/game/panorama.js' %}"></script>
 		<script src="{% static 'js/game/map/display.js' %}"></script>
 		<script src="{% static 'js/game/map/controls/map_selection_menu.js' %}"></script>

@@ -4,34 +4,36 @@
 class GamePoster {
 	constructor(gamePosterId) {
 		console.log(`[GAME-POSTER] - constructor : gamePosterId=${gamePosterId}`);
-		this.element = document.getElementById(gamePosterId);
-		if (!this.element) {
+		this.container = document.getElementById(gamePosterId);
+		if (!this.container) {
 			console.error(`[GAME-POSTER] - game poster element not found`);
 		}
-		this.posterElement = this.element.querySelector("img");
-		if (!this.posterElement) {
+
+		this._posterElement = this.container.querySelector("img");
+		if (!this._posterElement) {
 			console.error(`[GAME-POSTER] - poster image element not found`);
 		}
-		this.gameNameElement = this.element.querySelector("#game_name");
-		if (!this.gameNameElement) {
+		this._gameNameElement = this.container.querySelector("#game_name");
+		if (!this._gameNameElement) {
 			console.error(`[GAME-POSTER] - game name element not found`);
 		}
+		this._posterData = null;
+		this._posterUrl = null;
+
 		this.hide();
-		this.posterData = null;
-		this.posterUrl = null;
 	}
 
 	async loadPoster(gameId) {
-		this.posterData = null;
-		this.posterUrl = null;
-		this.posterElement.src = "";
+		this._posterData = null;
+		this._posterUrl = null;
+		this._posterElement.src = "";
 		if (!gameId) {
-			console.error("[GAME-POSTER] - cannot fetch poster, gameId is null");
+			console.error("[GAME-POSTER] - cannot fetch poster, gameId is not defined");
 			return ;
 		}
 		console.log(`[GAME-POSTER] - loading poster from gameId: ${gameId}`);
 		try {
-			this.posterData = await getApiImage(`/api/game/${gameId}/poster`);
+			this._posterData = await getApiImage(`/api/game/${gameId}/poster`);
 		} catch (error) {
 			console.error(`[GAME-POSTER] - error fetching poster image: ${error.message}`);
 			return ;
@@ -40,7 +42,7 @@ class GamePoster {
 
 	#closingHandler = async () => {
 		await new Promise((resolve) => {
-			this.element.style.opacity = "0";
+			this.container.style.opacity = "0";
 			setTimeout(() => {
 				this.hide();
 				document.body.removeEventListener("click", this.#closingHandler);
@@ -54,25 +56,25 @@ class GamePoster {
 		if (!prettyGameName) {
 			console.error("[GAME-POSTER] - game name not provided");
 		}
-		if (!this.posterData) {
+		if (!this._posterData) {
 			console.error("[GAME-POSTER] - poster image not found");
 		}
-		if (this.posterUrl) {
+		if (this._posterUrl) {
 			console.warn("[GAME-POSTER] - poster unchanged");
 		} else {
-			this.posterUrl = URL.createObjectURL(this.posterData);
-			this.posterElement.src = this.posterUrl;
+			this._posterUrl = URL.createObjectURL(this._posterData);
+			this._posterElement.src = this._posterUrl;
 		}
-		this.gameNameElement.textContent = `${prettyGameName}`;
-		this.element.style.opacity = "";
-		this.element.classList.remove("hidden");
+		this._gameNameElement.textContent = `${prettyGameName}`;
+		this.container.style.opacity = "";
+		this.container.classList.remove("hidden");
 		document.body.addEventListener("click", this.#closingHandler);
 	
 	}
 
 	hide() {
 		console.log("[GAME-POSTER] - hide");
-		this.element.style.opacity = "";
-		this.element.classList.add("hidden");
+		this.container.style.opacity = "";
+		this.container.classList.add("hidden");
 	}
 }

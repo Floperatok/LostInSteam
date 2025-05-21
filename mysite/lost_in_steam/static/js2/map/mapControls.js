@@ -4,40 +4,44 @@
 class MapControls {
 	constructor(mapContainer) {
 		console.log(`[MAP-CONTROLS] - constructor : mapContainer=${mapContainer}`);
-		this.mapContainer = mapContainer;
-		if (!this.mapContainer) {
-			console.error("[MAP-CONTROLS] - map container element is null");
+		if (!mapContainer) {
+			console.error("[MAP-CONTROLS] - map container element is not defined");
 		}
 		this.scale = null;
 		this.select = null;
-		this.marker = null;
-		this.guessButton = null;
+		this.guess = null;
+
+		this._mapContainer = mapContainer;
 	}
 
-	new(control) {
-		console.log(`[MAP-CONTROLS] - new control : ${typeof control}`);
-		switch (typeof control) {
-			case "MapControlScale":
+	add(control) {
+		if (!control.type) {
+			console.error("[MAP-CONTROLS] - no control type found");
+			return ;
+		}
+		console.log(`[MAP-CONTROLS] - new control : ${control.type}`);
+		switch (control.type) {
+			case "scale":
 				this.destroyScale();
 				this.scale = control;
 				break;
-			case "MapControlSelect":
+			case "select":
 				this.destroySelect();
 				this.select = control;
 				break;
-			case "MapControlMarker":
-				this.destroyMarker();
-				this.marker = control;
-				break;
-			case "MapControlGuessButton":
-				this.destroyGuessButton();
-				this.guessButton = control;
+			case "guess":
+				this.destroyGuess();
+				this.guess = control;
 				break;
 			default:
-				console.warn(`[MAP-CONTROLS] - unrecognized control type : ${typeof control}`)
+				console.warn(`[MAP-CONTROLS] - unrecognized control type : ${control.type}`)
 				break;
 		}
-		this.mapContainer.appendChild(control.element);
+		if (!control.element) {
+			console.warn(`[MAP-CONTROLS] - no element found for '${control.type}'`);
+		} else {
+			this._mapContainer.appendChild(control.element);
+		}
 	}
 
 	displayScale() {
@@ -54,17 +58,10 @@ class MapControls {
 		}
 	}
 
-	displayMarker() {
-		if (this.marker) {
-			console.log("[MAP-CONTROLS] - display marker");
-			this.marker.display();
-		}
-	}
-
-	displayGuessButton() {
-		if (this.guessButton) {
-			console.log("[MAP-CONTROLS] - display guess button");
-			this.guessButton.display();
+	displayGuess() {
+		if (this.guess) {
+			console.log("[MAP-CONTROLS] - display guess");
+			this.guess.display();
 		}
 	}
 
@@ -72,8 +69,7 @@ class MapControls {
 		console.log("[MAP-CONTROLS] - display all controls");
 		this.displayScale();
 		this.displaySelect();
-		this.displayMarker();
-		this.displayGuessButton();
+		this.displayGuess();
 	}
 
 	hideScale() {
@@ -90,17 +86,10 @@ class MapControls {
 		}
 	}
 
-	hideMarker() {
-		if (this.marker) {
-			console.log("[MAP-CONTROLS] - hide marker");
-			this.marker.hide();
-		}
-	}
-
-	hideGuessButton() {
-		if (this.guessButton) {
-			console.log("[MAP-CONTROLS] - hide guess button");
-			this.guessButton.hide();
+	hideGuess() {
+		if (this.guess) {
+			console.log("[MAP-CONTROLS] - hide guess");
+			this.guess.hide();
 		}
 	}
 
@@ -108,15 +97,14 @@ class MapControls {
 		console.log("[MAP-CONTROLS] - hide all controls");
 		this.hideScale();
 		this.hideSelect();
-		this.hideMarker();
-		this.hideGuessButton();
+		this.hideGuess();
 	}
 
 	destroyScale() {
 		if (this.scale) {
 			console.log("[MAP-CONTROLS] - destroy scale");
+			this._mapContainer.removeChild(this.scale.element);
 			this.scale.destroy();
-			this.mapContainer.removeChild(this.scale.element);
 			this.scale = null;
 		}
 	}
@@ -124,35 +112,25 @@ class MapControls {
 	destroySelect() {
 		if (this.select) {
 			console.log("[MAP-CONTROLS] - destroy select");
+			this._mapContainer.removeChild(this.select.element);
 			this.select.destroy();
-			this.mapContainer.removeChild(this.select.element);
 			this.select = null;
 		}
 	}
 
-	destroyMarker() {
-		if (this.marker) {
-			console.log("[MAP-CONTROLS] - destroy marker");
-			this.marker.destroy();
-			this.mapContainer.removeChild(this.marker.element);
-			this.marker = null;
-		}
-	}
-
-	destroyGuessButton() {
-		if (this.guessButton) {
-			console.log("[MAP-CONTROLS] - destroy guess button");
-			this.guessButton.destroy();
-			this.mapContainer.removeChild(this.guessButton.element);
-			this.guessButton = null;
+	destroyGuess() {
+		if (this.guess) {
+			console.log("[MAP-CONTROLS] - destroy guess");
+			this._mapContainer.removeChild(this.guess.element);
+			this.guess.destroy();
+			this.guess = null;
 		}
 	}
 
 	destroyAll() {
-		console.log("[MAP-CONTROLS] - destroy all controls");
+		console.log("[MAP-CONTROLS] - destroying all controls");
 		this.destroyScale();
 		this.destroySelect();
-		this.destroyMarker();
-		this.destroyGuessButton();
+		this.destroyGuess();
 	}
 }

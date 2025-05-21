@@ -4,39 +4,41 @@
 class Compass {
 	constructor(compassContainerId, viewer) {
 		console.log(`[COMPASS] - constructor : compassContainerId=${compassContainerId}, viewer=${viewer}`);
+		if (!viewer) {
+			console.error("[COMPASS] - viewer is not defined");
+		}
 		this.container = document.getElementById(compassContainerId);
 		if (!this.container) {
 			console.error("[COMPASS] - compass container element not found");
 		}
-		this.viewer = viewer;
-		if (!this.viewer) {
-			console.error("[COMPASS] - viewer is null");
-		}
-		this.graduations = this.container.querySelector("#compass_graduations");
-		if (!this.graduations) {
+
+		this._graduations = this.container.querySelector("#compass_graduations");
+		if (!this._graduations) {
 			console.error("[COMPASS] - graduations element not found");
 		}
-		this.chunk = this.container.querySelector(".compass_graduations_chunk");
-		if (!this.chunk) {
+		this._chunk = this.container.querySelector(".compass_graduations_chunk");
+		if (!this._chunk) {
 			console.error("[COMPASS] - chunk element not found");
 		}
-		this.chunkWidth = this.chunk.offsetWidth;
-		this.centerOffset = this.chunkWidth 
-			- this.graduations.offsetWidth / 2 
-			+ this.graduations.querySelector(".compass_cardinal").offsetWidth / 2;
-		this.yaw = 0;
+		this._chunkWidth = this._chunk.offsetWidth;
+		this._centerOffset = this._chunkWidth 
+			- this._graduations.offsetWidth / 2 
+			+ this._graduations.querySelector(".compass_cardinal").offsetWidth / 2;
+		this._yaw = 0;
+		this._viewer = viewer;
+
 		this.#setupListeners();
 	}
 
 	#viewChangeHandler = () => {
-		const translateX = -(this.viewer.view()._yaw - this.yaw) 
-			* (this.chunkWidth / Math.PI / 2) - this.centerOffset;
-		this.graduations.style.transform = `translateX(${translateX}px)`;
+		const translateX = -(this._viewer.view()._yaw - this._yaw) 
+			* (this._chunkWidth / Math.PI / 2) - this._centerOffset;
+		this._graduations.style.transform = `translateX(${translateX}px)`;
 	}
 
 	#setupListeners() {
 		console.log("[COMPASS] - setting up listeners");
-		this.viewer.addEventListener("viewChange", this.#viewChangeHandler);
+		this._viewer.addEventListener("viewChange", this.#viewChangeHandler);
 	}
 
 	set_yaw(yaw) {
@@ -44,7 +46,7 @@ class Compass {
 			return ;
 		}
 		console.log(`[COMPASS] - set yaw to : ${yaw}`);
-		this.yaw = yaw;
+		this._yaw = yaw;
 	}
 
 	display() {
