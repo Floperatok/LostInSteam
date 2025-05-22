@@ -42,16 +42,18 @@ class MapManager {
 	}
 
 	#onMouseOverHandler = () => {
+		if (this._mouseOutTimeout) {
+			clearTimeout(this._mouseOutTimeout);
+			this._mouseOutTimeout = null;
+		}
 		this.container.classList.add("map-mouse-over");
 	}
 
 	#onMouseOutHandler = async () => {
-		this.container.classList.add("map-mouse-over");
-		await new Promise(r => setTimeout(r, 1000));
-		if (document.querySelector(`#${this.container.id}:hover`)) {
-			return ;
-		}
-		this.container.classList.remove("map-mouse-over");
+		this._mouseOutTimeout = setTimeout(() => {
+			this.container.classList.remove("map-mouse-over");
+			this._mouseOutTimeout = null;
+		}, 1000);
 	}
 
 	#forceOnMouseOutHandler = async (event) => {
@@ -135,6 +137,7 @@ class MapManager {
 			return ;
 		}
 		this._mapBounds = response.bounds;
+		this.mapAttribution = response.attribution;
 		this.container.style.backgroundColor = response.bgColor;
 		L.tileLayer(`/api/map/${mapId}/{z}/{y}/{x}.jpg`, {
 			noWrap: true,

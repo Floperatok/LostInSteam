@@ -44,6 +44,22 @@ class App {
 		this.gameFound(response);
 	}
 
+	async cheatGoto(gameName, panoNumber) {
+		console.log(`[APP] - 'goto' cheat: going to game : "${gameName}" pano : "${panoNumber}"`);
+		var response;
+		try {
+			response = await postApiJson("/api/command/goto/", {
+				gameName: gameName,
+				panoNumber: panoNumber,
+			});
+		} catch (error) {
+			console.error(`[PANO-MANAGER] - error fetching '/api/command/goto/': ${error.message}`);
+			return ;
+		}
+		this.panoManager.unloadPano();
+		this.panoManager.loadPano(response.id, response.gameId, response.settings);
+	}
+
 	displayMinimap() {
 		console.log("[APP] - display minimap");
 		this.mapManager.container.classList.remove("result_map");
@@ -63,7 +79,7 @@ class App {
 		this.mapManager.controls.destroyScale();
 		this.mapManager.controls.guess.disableMarkerPlacement();
 		this.mapManager.controls.guess.hide();
-		// this.mapManager.controls.add(new MapControlAttribution());
+		this.mapManager.controls.add(new MapControlAttribution(this.mapManager.mapAttribution));
 		this.mapManager.newMarker({
 			pos: result.answerPos,
 			iconUrl: '/static/image/marker-icon.png',
@@ -85,6 +101,7 @@ class App {
 		this.guessGameFormManager.clearInputField();
 		this.guessGameFormManager.display();
 		displayScreen(this.gameScreen.id);
+		this.panoManager._viewer.updateSize();
 	}
 
 	displayResultScreen() {
@@ -105,6 +122,7 @@ class App {
 		}
 		this.mapManager.destroyMap();
 		await this.mapManager.load(gameInfos.mapsData[0].id);
+		await waitForEvent(document.body, "click");
 		this.displayMinimap(); 
 	}
 

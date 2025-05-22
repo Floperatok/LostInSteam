@@ -45,19 +45,11 @@ class PanoManager {
 		this.#load(this._viewer, response);
 	}
 	
-	async loadPano(gameName, panoNumber) {
-		console.log("[PANO-MANAGER] - loading pano");
-		if (!gameName) {
-			console.error("Error: cannot fetch pano: no game name provided");
-			return ;
-		}
-		const data = await postApiJson("/api/command/goto", {
-			gameName: gameName,
-			panoNumber: panoNumber,
-		});
-		this.panoId = data.id;
-		this.gameId = data.gameId;
-		this._settings = data.settings;
+	async loadPano(panoId, gameId, settings) {
+		console.log(`[PANO-MANAGER] - loading pano from id ${panoId}`);
+		this.panoId = panoId;
+		this.gameId = gameId;
+		this._settings = settings;
 		this.#load();
 	}
 

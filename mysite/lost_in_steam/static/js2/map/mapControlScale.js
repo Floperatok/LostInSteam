@@ -16,7 +16,6 @@ class MapControlScale {
 
 	#createControlButton(classes, innerText) {
 		const elem = document.createElement("a");
-		elem.href = "#";
 		if (typeof classes === "string") {
 			classes = [classes];
 		}

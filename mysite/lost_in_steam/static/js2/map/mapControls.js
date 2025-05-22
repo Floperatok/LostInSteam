@@ -10,6 +10,7 @@ class MapControls {
 		this.scale = null;
 		this.select = null;
 		this.guess = null;
+		this.attribution = null;
 
 		this._mapContainer = mapContainer;
 	}
@@ -33,13 +34,20 @@ class MapControls {
 				this.destroyGuess();
 				this.guess = control;
 				break;
+			case "attribution":
+				this.destroyAttribution();
+				this.attribution = control;
+				break;
 			default:
-				console.warn(`[MAP-CONTROLS] - unrecognized control type : ${control.type}`)
+				console.error(`[MAP-CONTROLS] - unrecognized control type : ${control.type}`)
 				break;
 		}
 		if (!control.element) {
 			console.warn(`[MAP-CONTROLS] - no element found for '${control.type}'`);
 		} else {
+			if (control.type == "attribution") {
+				console.log("append attribution control to map container");
+			}
 			this._mapContainer.appendChild(control.element);
 		}
 	}
@@ -65,11 +73,19 @@ class MapControls {
 		}
 	}
 
+	displayAttribution() {
+		if (this.attribution) {
+			console.log("[MAP-CONTROLS] - display attribution");
+			this.attribution.display();
+		}
+	}
+
 	displayAll() {
 		console.log("[MAP-CONTROLS] - display all controls");
 		this.displayScale();
 		this.displaySelect();
 		this.displayGuess();
+		this.displayAttribution();
 	}
 
 	hideScale() {
@@ -93,11 +109,19 @@ class MapControls {
 		}
 	}
 
+	hideAttribution() {
+		if (this.attribution) {
+			console.log("[MAP-CONTROLS] - hide attribution");
+			this.attribution.hide();
+		}
+	}
+
 	hideAll() {
 		console.log("[MAP-CONTROLS] - hide all controls");
 		this.hideScale();
 		this.hideSelect();
 		this.hideGuess();
+		this.hideAttribution();
 	}
 
 	destroyScale() {
@@ -127,10 +151,20 @@ class MapControls {
 		}
 	}
 
+	destroyAttribution() {
+		if (this.attribution) {
+			console.log("[MAP-CONTROLS] - destroy attribution");
+			this._mapContainer.removeChild(this.attribution.element);
+			this.attribution.destroy();
+			this.attribution = null;
+		}
+	}
+
 	destroyAll() {
 		console.log("[MAP-CONTROLS] - destroying all controls");
 		this.destroyScale();
 		this.destroySelect();
 		this.destroyGuess();
+		this.destroyAttribution();
 	}
 }

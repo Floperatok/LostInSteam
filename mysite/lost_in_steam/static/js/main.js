@@ -70,6 +70,15 @@ async function postApiJson(path, data) {
 	return (await response.json());
 }
 
+function waitForEvent(element, event) {
+	return new Promise((resolve) => {
+		const listener = () => {
+			element.removeEventListener(event, listener);
+			resolve();
+		}
+		element.addEventListener(event, listener);
+	});
+}
 
 function errorScreen(status, statusText) {
 	document.getElementById("error_title").innerText = statusText;
