@@ -2,18 +2,17 @@
 'use strict';
 
 class MapControlGuess {
-	constructor(app) {
+	constructor(app, markersManager) {
 		console.log(`[MAP-CONTROL-GUESS] - constructor : app=${app}`);
 		this.type = "guess";
-		if (!leaflet) {
-			console.error("[MAP-CONTROL-GUESS] - leaflet is not defined");
-		}
-		this._marker = null;
-
 		if (!app) {
 			console.error("[MAP-CONTROL-GUESS] - app is not defined");
 		}
 		this._app = app;
+		if (!markersManager) {
+			console.error("[MAP-CONTROL-GUESS] - markersManager is not defined");
+		}
+		this._markerManager = markersManager;
 		
 		this.#create();
 		this.#setupListeners();
@@ -33,13 +32,8 @@ class MapControlGuess {
 
 	#onMapClickHandler = (event) => {
 		console.log("[MAP-CONTROL-GUESS] - handling map click");
-		if (this._marker) {
-			this._app.mapManager.leaflet.removeLayer(this._marker);
-		}
 		this.display();
-		this._marker = L.marker(event.latlng);
-		// this._marker.bindPopup(e.latlng.toString());
-		this._app.mapManager.leaflet.addLayer(this._marker);
+		this._markerManager.add(event.latlng, "player", this._app.mapManager.mapId);
 	}
 
 	#handleMapGuess = async (event) => {
@@ -50,18 +44,14 @@ class MapControlGuess {
 		try {
 			response = await postApiJson("/api/guess/pos/", {
 				gameId: this._app.panoManager.gameId,
-				pos: this._app.mapManager.controls.guess.getMarkerPos(),
+				pos: this._markerManager.player.latlng,
 				panoId: this._app.panoManager.panoId,
 			})
 		} catch (error) {
 			console.error(`[MAP-CONTROL-GUESS] - error fetching results: ${error.message}`);
 			return ;
 		}
-		this._app.displayResultScreen();
-		this._app.displayResultMap(response);
-		this._app.panoManager.unloadPano();
-		await this._app.panoManager.loadRandomPano();
-		this._app.gamePoster.loadPoster(this._app.panoManager.gameId);
+		this._app.positionGuessed(response);
 	}
 
 	enableMarkerPlacement() {
@@ -92,14 +82,6 @@ class MapControlGuess {
 		this.element.appendChild(this._guessButton);
 	}
 
-	getMarkerPos() {
-		if (this._marker) {
-			return (this._marker.getLatLng());
-		}
-		console.warn("[MAP-CONTROL-GUESS] - tried to access marker position but marker is not defined");
-		return (null);
-	}
-
 	hide() {
 		console.log("[MAP-CONTROL-GUESS] - hide");
 		this.element.classList.add("hidden");
@@ -115,7 +97,6 @@ class MapControlGuess {
 		this._app.mapManager.container.classList.remove("crosshair-cursor-enabled");
 		this._app.mapManager.leaflet.off("click", this.#onMapClickHandler);
 		this.element.removeEventListener("click", this.#handleMapGuess);
-		this._app.mapManager.leaflet.removeLayer(this._marker);
 		this.element.remove();
 	}
 }

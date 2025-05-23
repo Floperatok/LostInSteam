@@ -4,6 +4,7 @@
 	position: absolute;
 	z-index: 500;
 	transition: opacity 200ms;
+	cursor: pointer;
 }
 .map-control a {
 	display: block;
@@ -50,15 +51,14 @@
 	transform: translate(-50%, -55%) rotate(40deg);
 }
 /* SELECT MAP MENU */
-.map-control-map-selection {
-	display: none;
+.map-control.map-selection {
 	bottom: 0;
 	right: 0;
 	
 	height: 40px;
 	width: 300px;
 }
-.map-control-map-selection-header {
+.map-control .map-selection-header {
 	position: absolute;
 	right: 0;
 	z-index: 501;
@@ -80,10 +80,10 @@
 		transform 200ms ease,
 		border-radius 200ms ease;
 }
-.scale0 .map-control-map-selection-header {
+.scale0 .map-control .map-selection-header {
 	width: 240px;
 }
-.map-control-map-selection-list {
+.map-control .map-selection-list {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -99,19 +99,19 @@
 		max-height 200ms ease,
 		width 200ms ease;
 }
-.scale0 .map-control-map-selection-list {
+.scale0 .map-control .map-selection-list {
 	max-height: 260px;
 }
-.map-control-map-selection-list .current-map {
+.map-control .map-selection-list .current-map {
 	background-color: #06f;
 	color: white !important;
 }
-.map-control-map-selection-list .answer-map {
+.map-control .map-selection-list .answer-map {
 	border-style: solid;
 	border-width: 4px;
 	border-color: green;
 }
-.map-control-map-selection-list a {
+.map-control .map-selection-list .map-select {
 	padding: 5px;
 	border-bottom-color: black;
 	border-bottom-width: 2px;

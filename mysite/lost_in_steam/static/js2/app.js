@@ -25,9 +25,9 @@ class App {
 	async cheatSkip() {
 		console.log("[APP] - 'skip' cheat");
 		this.panoManager.unloadPano();
-		this.panoManager.loadRandomPano();
-		this.gamePoster.loadPoster(this.panoManager.gameId);
 		this.displayGameScreen();
+		await this.panoManager.loadRandomPano();
+		this.gamePoster.loadPoster(this.panoManager.gameId);
 	}
 
 	async cheatFind() {
@@ -57,43 +57,55 @@ class App {
 			return ;
 		}
 		this.panoManager.unloadPano();
-		this.panoManager.loadPano(response.id, response.gameId, response.settings);
+		await this.panoManager.loadPano(response.id, response.gameId, response.settings);
+		this.gamePoster.loadPoster(this.panoManager.gameId);
 	}
 
-	displayMinimap() {
-		console.log("[APP] - display minimap");
+	configureMinimap(mapsData) {
+		console.log("[APP] - configure minimap");
+		this.mapManager.controls.destroyAll();
 		this.mapManager.container.classList.remove("result_map");
 		this.mapManager.container.classList.add("minimap");
 		this.mapManager.controls.add(new MapControlScale(this.mapManager.container));
-		this.mapManager.controls.add(new MapControlGuess(this));
+		this.mapManager.controls.add(new MapControlGuess(this, this.mapManager.markers));
+		if (mapsData && mapsData.length > 1) {
+			this.mapManager.controls.add(new MapControlSelect(this.mapManager, mapsData));
+		}
 		this.mapManager.enableMouseHover();
-		this.gameScreen.appendChild(this.mapManager.container);
-		this.mapManager.displayMap();
-		this.mapManager.centerMap();
+		this.mapManager.container.classList.add("map-mouse-over");
 	}
 
-	displayResultMap(result) {
-		console.log("[APP] - display result map");
+	async configureResultMap(result) {
+		console.log("[APP] - configure result map");
 		this.mapManager.container.classList.remove("minimap");
 		this.mapManager.container.classList.add("result_map");
+		this.mapManager.disableMouseHover();
 		this.mapManager.controls.destroyScale();
 		this.mapManager.controls.guess.disableMarkerPlacement();
 		this.mapManager.controls.guess.hide();
 		this.mapManager.controls.add(new MapControlAttribution(this.mapManager.mapAttribution));
-		this.mapManager.newMarker({
-			pos: result.answerPos,
-			iconUrl: '/static/image/marker-icon.png',
-			shadowUrl: '/static/image/marker-shadow.png',
-			iconAnchor: [12, 41],
-		});
-		const polyline = this.mapManager.newPolyline({
-			pos1: this.mapManager.controls.guess.getMarkerPos(), 
-			pos2: result.answerPos,
-		});
-		this.mapManager.disableMouseHover();
-		this.resultScreen.appendChild(this.mapManager.container);
-		this.mapManager.displayMap();
-		this.mapManager.leaflet.setView(polyline.getCenter(), this.mapManager.leaflet.getBoundsZoom(polyline.getBounds()) - 1, true);
+		const answerMarker = this.mapManager.markers.add(result.answerPos, "answer", result.answerMapId);
+		if (result.answerMapId != this.mapManager.mapId) {
+			this.mapManager.unloadMap();
+			await this.mapManager.load(result.answerMapId);
+		}
+		const polyline = this.mapManager.polylines.addFromMarkers(
+			this.mapManager.markers.player,
+			this.mapManager.markers.answer
+		);
+		if (polyline) {
+			this.mapManager.leaflet.setView(
+				polyline.getCenter(), 
+				this.mapManager.leaflet.getBoundsZoom(polyline.getBounds()), 
+				true
+			);
+		} else {
+			this.mapManager.leaflet.setView(
+				answerMarker.getLatLng(), 
+				this.mapManager.leaflet.getMaxZoom() - 2, 
+				true
+			);
+		}
 	}
 
 	displayGameScreen() {
@@ -117,13 +129,25 @@ class App {
 		console.log(`[APP] - game found : ${gameInfos.prettyGameName}`);
 		this.guessGameFormManager.hide();
 		this.gamePoster.display(gameInfos.prettyGameName);
-		if (!gameInfos.mapsData[0]) {
-			console.warn("[APP] - game has no maps");
+		if (gameInfos.mapsData.length == 0) {
+			console.warn(`[APP] - game "${gameInfos.prettyGameName}" has no maps`);
 		}
-		this.mapManager.destroyMap();
 		await this.mapManager.load(gameInfos.mapsData[0].id);
 		await waitForEvent(document.body, "click");
-		this.displayMinimap(); 
+		this.configureMinimap(gameInfos.mapsData); 
+		this.gameScreen.appendChild(this.mapManager.container);
+		this.mapManager.displayMap();
+		this.mapManager.centerMap();
+	}
+
+	async positionGuessed(result) {
+		this.displayResultScreen();
+		this.configureResultMap(result);
+		this.mapManager.container.remove();
+		this.resultScreen.appendChild(this.mapManager.container);
+		this.panoManager.unloadPano();
+		await this.panoManager.loadRandomPano();
+		this.gamePoster.loadPoster(this.panoManager.gameId);
 	}
 
 	#setupListeners() {

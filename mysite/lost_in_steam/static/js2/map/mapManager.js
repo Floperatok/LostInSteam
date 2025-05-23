@@ -8,11 +8,13 @@ class MapManager {
 		if (!this.container) {
 			console.error("[MAP-MANAGER] - map container element not found");
 		}
-		this.controls = new MapControls(this.container);
 		this.leaflet = this.#initLeaflet();
 		if (!this.leaflet) {
 			console.error("[MAP-MANAGER] - leaflet initialization failed");
 		}
+		this.controls = new MapControls(this.container);
+		this.markers = new MapMarkers(this.leaflet);
+		this.polylines = new MapPolylines(this.leaflet);
 		this.mapId = 0;
 
 		this._resizeObserver = new ResizeObserver(entries => {
@@ -21,7 +23,8 @@ class MapManager {
 					this.leaflet.invalidateSize();
 				}
 			}
-		})
+		});
+		this._tileLayer = null;
 		this._mapBounds = null;
 		this._resetMouseOutCooldown = 0;
 		this._resizeObserver.observe(this.container);
@@ -100,34 +103,12 @@ class MapManager {
 		this.container.classList.add("hidden");
 	}
 
-	newMarker({pos, iconUrl, shadowUrl, iconAnchor}) {
-		console.log(`[MAP-MANAGER] - new marker at ${pos.lat},${pos.lng} with icon '${iconUrl}'`);
-		var icon;
-		try {
-			icon = L.icon({
-				iconUrl: iconUrl,
-				shadowUrl: shadowUrl,
-				iconAnchor: iconAnchor,
-			});
-		} catch {
-			console.error("[MAP-MANAGER] - error fetching marker icon");
-			return ;
-		}
-		const marker = L.marker(pos, {icon: icon}).addTo(this.leaflet);
-		return (marker);
-	}
-
-	newPolyline({pos1, pos2}) {
-		console.log(`[MAP-MANAGER] - new polyline from ${pos1.lat},${pos1.lng} to ${pos2.lat},${pos2.lng}`);
-		const polyline = L.polyline([pos1, pos2], {
-			color: "white",
-			dashArray: "20, 20",
-		}).addTo(this.leaflet);
-		return (polyline);
-	}
-
 	async load(mapId) {
 		console.log(`[MAP-MANAGER] - loading map from id : ${mapId}`);
+		if (mapId == this.mapId) {
+			console.warn("[MAP-MANAGER] - the requested map is already loaded, aborting...");
+			return ;
+		}
 		this.mapId = mapId;
 		var response;
 		try {
@@ -139,24 +120,42 @@ class MapManager {
 		this._mapBounds = response.bounds;
 		this.mapAttribution = response.attribution;
 		this.container.style.backgroundColor = response.bgColor;
-		L.tileLayer(`/api/map/${mapId}/{z}/{y}/{x}.jpg`, {
+		this._tileLayer = L.tileLayer(`/api/map/${mapId}/{z}/{y}/{x}.jpg`, {
 			noWrap: true,
 			maxNativeZoom: response.tileDepth,
 			maxZoom: response.tileDepth + 1,
 			minZoom: 0,
 			keepBuffer: 20,
 		}).addTo(this.leaflet);
+		this.markers.setCurrentMapId(this.mapId);
+		this.polylines.setCurrentMapId(this.mapId);
 	}
 
 	unloadMap() {
 		console.log("[MAP-MANAGER] - unloading map");
-		this.leaflet.eachLayer(layer => layer.remove());
+		if (this._tileLayer) {
+			this._tileLayer.remove();
+		}
+		this.mapId = null;
+		this._mapBounds = null;
+		this._tileLayer = null;
+		this.markers.setCurrentMapId(null);
+		this.polylines.setCurrentMapId(null);
+		this.container.classList.remove("map-mouse-over");
 	}
 
 	destroyMap() {
 		console.log("[MAP-MANAGER] - destroying map");
 		this.leaflet.eachLayer(layer => layer.remove());
+		this.markers.destroyAll();
+		this.markers.setCurrentMapId(null);
+		this.polylines.destroyAll();
+		this.polylines.setCurrentMapId(null);
 		this.controls.destroyAll();
 		this.container.remove();
+		this.mapId = null;
+		this._mapBounds = null;
+		this._tileLayer = null;
+		this.container.classList.remove("map-mouse-over");
 	}
 }

@@ -22,25 +22,25 @@ class MapControls {
 		}
 		console.log(`[MAP-CONTROLS] - new control : ${control.type}`);
 		switch (control.type) {
-			case "scale":
-				this.destroyScale();
-				this.scale = control;
-				break;
-			case "select":
-				this.destroySelect();
-				this.select = control;
-				break;
-			case "guess":
-				this.destroyGuess();
-				this.guess = control;
-				break;
-			case "attribution":
-				this.destroyAttribution();
-				this.attribution = control;
-				break;
-			default:
-				console.error(`[MAP-CONTROLS] - unrecognized control type : ${control.type}`)
-				break;
+		case "scale":
+			this.destroyScale();
+			this.scale = control;
+			break;
+		case "select":
+			this.destroySelect();
+			this.select = control;
+			break;
+		case "guess":
+			this.destroyGuess();
+			this.guess = control;
+			break;
+		case "attribution":
+			this.destroyAttribution();
+			this.attribution = control;
+			break;
+		default:
+			console.error(`[MAP-CONTROLS] - unrecognized control type : ${control.type}`)
+			break;
 		}
 		if (!control.element) {
 			console.warn(`[MAP-CONTROLS] - no element found for '${control.type}'`);

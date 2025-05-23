@@ -2,7 +2,7 @@
 'use strict';
 
 class MapControlSelect {
-	constructor({mapManager, mapsData}) {
+	constructor(mapManager, mapsData) {
 		console.log(`[MAP-CONTROL-SELECT] - constructor : mapManager=${mapManager}, mapsData=${mapsData}`);
 		this.type = "select";
 		if (!mapManager) {
@@ -10,9 +10,6 @@ class MapControlSelect {
 		}
 		if (!mapsData) {
 			console.error("[MAP-CONTROL-SELECT] - mapsData is not defined");
-		}
-		if (!mapContainer) {
-			console.error("[MAP-CONTROL-SELECT] - map container element not found");
 		}
 
 		this._mapContainer = mapManager.container;
@@ -40,21 +37,22 @@ class MapControlSelect {
 	}
 
 	#openMenuHandler = (event) => {
-		console.log("[MAP-CONTROL-SELECT] - handling open menu");
+		if (this._closeMenuTimeout) {
+			clearTimeout(this._closeMenuTimeout);
+			this._closeMenuTimeout = null;
+		}
 		this._listDiv.style.transform = "translateY(-100%)";
 	}
 
 	#closeMenuHandler = async (event) => {
-		console.log("[MAP-CONTROL-SELECT] - handling close menu");
 		if (this.element.contains(event.relatedTarget) &&
 			event.relatedTarget != this.element) {
 			return ;
 		}
-		await new Promise(r => setTimeout(r, 1000));
-		if (this.element.querySelector(":hover")) {
-			return ;
-		}
-		this._listDiv.style.transform = "";
+		this._closeMenuTimeout = setTimeout(() => {
+			this._listDiv.style.transform = "";
+			this._mouseOutTimeout = null;
+		}, 1000);
 	}
 
 	#forceCloseMenuHandler = (event) => {
@@ -64,12 +62,13 @@ class MapControlSelect {
 		}
 	}
 
-	#mapSelectBtnHandler = (event, index) => {
+	#mapSelectBtnHandler = async (event, index) => {
 		event.preventDefault();
 		event.stopPropagation();
 
 		this._mapManager.unloadMap();
-		this._mapManager.load(this._mapsData[index].id);
+		await this._mapManager.load(this._mapsData[index].id);
+		this._mapManager.centerMap();
 	}
 
 	#setupListeners() {
@@ -79,13 +78,12 @@ class MapControlSelect {
 		this._headerDiv.addEventListener("mouseenter", this.#openMenuHandler);
 		this.element.addEventListener("mouseout", this.#closeMenuHandler);
 		document.addEventListener("click", this.#forceCloseMenuHandler);
-
 		this._mapSelectHandlers = [];
 		for (let index = 0; index < this._mapSelectBtn.length; index++) {
 			const handler = (event) => this.#mapSelectBtnHandler(event, index);
 
 			this._mapSelectBtn[index].addEventListener("click", handler);
-			this._mapSelectHandlers.push({button, handler});
+			this._mapSelectHandlers.push({button: this._mapSelectBtn[index], handler: handler});
 		}
 	}
 
@@ -125,7 +123,7 @@ class MapControlSelect {
 		this._headerDiv.removeEventListener("mouseenter", this.#openMenuHandler);
 		this.element.removeEventListener("mouseout", this.#closeMenuHandler);
 		document.removeEventListener("click", this.#forceCloseMenuHandler);
-		this._mapSelectHandlers.forEach((button, handler) => {
+		this._mapSelectHandlers.forEach(({ button, handler }) => {
 			button.removeEventListener("click", handler);
 		});
 		this.element.remove();

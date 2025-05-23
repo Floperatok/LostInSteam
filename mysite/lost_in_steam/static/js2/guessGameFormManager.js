@@ -12,13 +12,9 @@ class GuessGameFormManager {
 			console.error("[GUESS-GAME-FORM-MANAGER] - form element not found");
 		}
 
-		this._inputField = this.container.querySelector("input");
+		this._inputField = this.container.querySelector("#guess_input");
 		if (!this._inputField) {
 			console.error("[GUESS-GAME-FORM-MANAGER] - input field element not found");
-		}
-		this._guessButton = this.container.querySelector("button");
-		if (!this._guessButton) {
-			console.error("[GUESS-GAME-FORM-MANAGER] - guess button element not found");
 		}
 		this._app = app;
 
@@ -55,20 +51,20 @@ class GuessGameFormManager {
 		console.log(`[GUESS-GAME-FORM-MANAGER] - managing cheat command : ${string}`);
 		const words = string.split(" ");
 		switch (words[0]) {
-			case "/skip":
-				this._app.cheatSkip();
-				this.clearInputField();
-				break;
-			case "/goto":
-				this._app.cheatGoto(words[1], words[2]);
-				this.clearInputField();
-				break;
-			case "/find":
-				this._app.cheatFind();
-				this.clearInputField();
-				break;
-			default:
-				console.warn(`[GUESS-GAME-FORM-MANAGER] - unknown command "${words[0]}"`);
+		case "/skip":
+			this._app.cheatSkip();
+			this.clearInputField();
+			break;
+		case "/goto":
+			this._app.cheatGoto(words[1], words[2]);
+			this.clearInputField();
+			break;
+		case "/find":
+			this._app.cheatFind();
+			this.clearInputField();
+			break;
+		default:
+			console.warn(`[GUESS-GAME-FORM-MANAGER] - unknown command "${words[0]}"`);
 		}
 	}
 

@@ -178,8 +178,8 @@
 
 
 			<form id="guess_game_form" autocomplete="off">
-				<input id="guess_input" type="text">
-				<button id="guess_game_button">Submit</button>
+				{% csrf_token %}
+				<input id="guess_input" type="text" placeholder="Game name...">
 			</form>
 		</div>
 
@@ -214,6 +214,8 @@
 		<script src="{% static 'js2/resultUI.js' %}"></script>
 		<script src="{% static 'js2/guessGameFormManager.js' %}"></script>
 		<script src="{% static 'js2/map/mapManager.js' %}"></script>
+		<script src="{% static 'js2/map/mapMarkers.js' %}"></script>
+		<script src="{% static 'js2/map/mapPolylines.js' %}"></script>
 		<script src="{% static 'js2/map/mapControls.js' %}"></script>
 		<script src="{% static 'js2/map/mapControlGuess.js' %}"></script>
 		<script src="{% static 'js2/map/mapControlScale.js' %}"></script>
