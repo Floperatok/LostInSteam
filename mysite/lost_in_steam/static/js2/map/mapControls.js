@@ -45,9 +45,6 @@ class MapControls {
 		if (!control.element) {
 			console.warn(`[MAP-CONTROLS] - no element found for '${control.type}'`);
 		} else {
-			if (control.type == "attribution") {
-				console.log("append attribution control to map container");
-			}
 			this._mapContainer.appendChild(control.element);
 		}
 	}

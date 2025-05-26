@@ -142,6 +142,7 @@ class App {
 
 	async positionGuessed(result) {
 		this.displayResultScreen();
+		this.resultUI.setPoints(result.points);
 		this.configureResultMap(result);
 		this.mapManager.container.remove();
 		this.resultScreen.appendChild(this.mapManager.container);

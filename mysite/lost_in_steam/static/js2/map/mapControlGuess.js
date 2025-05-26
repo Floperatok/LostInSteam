@@ -43,8 +43,8 @@ class MapControlGuess {
 		var response;
 		try {
 			response = await postApiJson("/api/guess/pos/", {
-				gameId: this._app.panoManager.gameId,
-				pos: this._markerManager.player.latlng,
+				guessedMapId: this._app.mapManager.markers.player.mapId,
+				pos: this._markerManager.player.getLatLng(),
 				panoId: this._app.panoManager.panoId,
 			})
 		} catch (error) {

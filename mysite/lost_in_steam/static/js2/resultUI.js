@@ -24,13 +24,18 @@ class ResultUI {
 		this.#setupListeners();
 	}
 
+	setPoints(points) {
+		console.log("[RESULT-UI] - settings points");
+		this.points.innerText = `Points: ${points}`;
+	}
+
 	#handleNextGame = (event) => {
 		event.stopPropagation();
 		event.preventDefault();
 		console.log("[RESULT-UI] - handling next game");
 		this._app.mapManager.destroyMap();
 		this._app.displayGameScreen();
-	} 
+	}
 	
 	#setupListeners() {
 		this.nextButton.addEventListener("click", this.#handleNextGame);

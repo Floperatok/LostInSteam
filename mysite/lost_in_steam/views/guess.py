@@ -1,4 +1,4 @@
-from lost_in_steam.models import Pano, Game
+from lost_in_steam.models import Pano, Game, Map
 from django.http import JsonResponse, \
 						HttpResponseBadRequest, \
 						HttpResponseNotFound, \
@@ -6,6 +6,7 @@ from django.http import JsonResponse, \
 						HttpResponseNotAllowed
 import json, math
 from lost_in_steam.input_parsing import valid_game_guess
+from lost_in_steam.points import compute_points
 from .game import return_game_infos
 
 
@@ -38,7 +39,7 @@ def guess_game(request):
 			"prettyGameName": "",
 			"mapsData": [],
 		})
-	
+
 
 def guess_pos(request):
 	if request.method != "POST":
@@ -46,9 +47,9 @@ def guess_pos(request):
 		return HttpResponseNotAllowed()
 	try:
 		request_body = json.loads(request.body)
-		guessed_map_id = request_body.get("mapId")
+		guessed_map_id = request_body.get("guessedMapId")
 		pano_id = request_body.get("panoId")
-		pos = request_body.get("pos")
+		user_pos = request_body.get("pos")
 	except json.JSONDecodeError:
 		print("Invalid JSON format")
 		return HttpResponseBadRequest()
@@ -62,12 +63,12 @@ def guess_pos(request):
 		print(f"Multiple panos matches the given query 'id={pano_id}'")
 		return HttpResponseServerError()
 
+	points = compute_points(user_pos, {"lat": pano.lat, "lng": pano.lng}, pano.map.bounds, pano.map.tile_depth)
+
 	if str(pano.map.id) != guessed_map_id:
-		distance = 9999
-	else:
-		distance = math.sqrt((pos["lng"] - pano.lng) ** 2 + (pos["lat"] - pano.lat) ** 2)
+		points = 0
 	return JsonResponse({
 		"answerPos": {"lng": pano.lng, "lat": pano.lat},
 		"answerMapId": pano.map.id,
-		"distance": round(distance, 2),
+		"points": round(points),
 	})

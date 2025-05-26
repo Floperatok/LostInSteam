@@ -88,7 +88,7 @@ class MapManager {
 			(this._mapBounds[0][0] + this._mapBounds[1][0]) / 2, 
 			(this._mapBounds[0][1] + this._mapBounds[1][1]) / 2
 		);
-		const zoom = this.leaflet.getBoundsZoom(this._mapBounds) + 1;
+		const zoom = this.leaflet.getBoundsZoom(this._mapBounds);
 		this.leaflet.setView(center, zoom, true);
 	}
 
