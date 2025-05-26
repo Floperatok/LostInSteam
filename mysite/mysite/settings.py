@@ -72,6 +72,23 @@ TEMPLATES = [
     },
 ]
 
+LOGGING = {
+	'version': 1,
+    'disable_existing_loggers': False,
+    'loggers': {
+        'django.server': {
+            'handlers': ['null'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+    'handlers': {
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+    },
+}
+
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
